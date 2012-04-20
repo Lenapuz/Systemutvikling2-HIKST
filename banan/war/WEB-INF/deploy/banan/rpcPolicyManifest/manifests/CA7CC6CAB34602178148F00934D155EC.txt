@@ -1,0 +1,2 @@
+serviceClass: com.banan.client.LoginService
+path: E9D45D0EAAF15DBC39A7EC042C6D9FA2.gwt.rpc
