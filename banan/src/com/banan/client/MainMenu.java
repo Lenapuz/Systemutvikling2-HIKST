@@ -41,7 +41,10 @@ public class MainMenu extends Composite
 		});
 		
 		panel.add(buttonSim);
-		panel.add(buttonRegister);
+		if (Main.User.getType().equals("Admin"))
+		{
+			panel.add(buttonRegister);
+		}
 		//panel.add(buttonLogout);
 	}
 }

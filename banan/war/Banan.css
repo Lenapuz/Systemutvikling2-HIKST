@@ -34,7 +34,7 @@ h1 {
 	margin-top: 20px;
 }
 
-.login input, .register input {
+.login input, .register input, .register select {
 	margin-bottom: 5px;
 }
 

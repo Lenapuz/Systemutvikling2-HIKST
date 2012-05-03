@@ -3,7 +3,7 @@ package com.banan.client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.banan.shared.FieldVerifier;
+import com.banan.shared.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -21,6 +21,8 @@ public class Main implements EntryPoint
 {
 	private final UserServiceAsync UserService = GWT.create(UserService.class);
 	
+	public static User User = new User();
+	
 	public void onModuleLoad() 
 	{
 		final DeckPanel mainPanel = new DeckPanel();
@@ -31,7 +33,7 @@ public class Main implements EntryPoint
 		final DeckPanel menuPanel = new DeckPanel();
 		RootPanel.get("menu").add(menuPanel);
 		menuPanel.setVisible(false);
-		
+	    
 		MainMenu menu = new MainMenu(mainPanel);
 		menuPanel.add(menu);	
 		
@@ -48,23 +50,24 @@ public class Main implements EntryPoint
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
 			{
-				UserService.login(login.getUsername(), login.getPassword(),
-					new AsyncCallback<String>() {
+				UserService.login(new User(login.getUsername(), login.getPassword()),
+					new AsyncCallback<User>() {
 						public void onFailure(Throwable caught) 
 						{
 							Window.alert(caught.getMessage());
 						}
 	
-						public void onSuccess(String result) 
+						public void onSuccess(User result) 
 						{
-							if (result.equals("OK"))
+							User = result;
+							if (User.isLoggedIn())
 							{
 								menuPanel.setVisible(true);
 								mainPanel.showWidget(UI.INTRO);
 							}
 							else
 							{
-								Window.alert(result);
+								Window.alert(User.getStatusMessage());
 							}
 						}
 					});		
@@ -74,16 +77,16 @@ public class Main implements EntryPoint
 		register.addRegisterHandler(new ActionHandler() {
 			public void onAction()
 			{
-				UserService.register(register.getFullName(), register.getUsername(), register.getPassword(),
-					new AsyncCallback<String>() {
+				UserService.register(new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType()),
+					new AsyncCallback<User>() {
 						public void onFailure(Throwable caught) 
 						{
 							Window.alert(caught.getMessage());
 						}
 	
-						public void onSuccess(String result) 
+						public void onSuccess(User result) 
 						{
-							Window.alert(result);
+							Window.alert(result.getStatusMessage());
 						}
 					});	
 			}

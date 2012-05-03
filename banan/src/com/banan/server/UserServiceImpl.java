@@ -2,6 +2,7 @@ package com.banan.server;
 
 import com.banan.client.UserService;
 import com.banan.shared.FieldVerifier;
+import com.banan.shared.User;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.sql.*;
 
@@ -15,25 +16,28 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
 	}
 	
-	public String login(String username, String password) throws IllegalArgumentException 
+	public User login(User user) throws IllegalArgumentException 
 	{
 		try
 		{
 			db.connect();
 			Statement statement = db.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM konsulent WHERE Brukernavn='" + username + "' AND Passord=MD5('" + password + "')");
+			ResultSet result = statement.executeQuery("SELECT * FROM konsulent WHERE Brukernavn='" + user.getUsername() + "' AND Passord=MD5('" + user.getPassword() + "')");
 			if (result.next())
 			{
-				return "OK";
+				user.login();
+				user.setType(result.getString("status"));
 			}
 			else
 			{
-				return "Brukeren finnes ikke.";
+				user.setStatusMessage("Brukeren finnes ikke.");
 			}
+			return user;
 		}
 		catch (Exception ex)
 		{
-			return ex.getMessage();
+			user.setStatusMessage(ex.getMessage());
+			return user;
 		}
 		finally
 		{
@@ -41,26 +45,28 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		}
 	}
 	
-	public String register(String fullName, String username, String password) throws IllegalArgumentException
+	public User register(User user) throws IllegalArgumentException
 	{
 		try
 		{
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT konsulent (Brukernavn, Passord) VALUES('" + username + "','" + password + "')");
+			int i = statement.executeUpdate("INSERT konsulent (Brukernavn, Passord, status) VALUES('" + user.getUsername() + "',MD5('" + user.getPassword() + "'),'" + user.getType() + "')");
 			
 			if (i > 0)
 			{
-				return "Konsulenten har blitt lagt til.";
+				user.setStatusMessage("Brukeren har blitt lagt til.");
 			}
 			else
 			{
-				return "Kunne ikke legge til konsulenten.";
+				user.setStatusMessage("Kunne ikke legge til brukeren.");
 			}
+			return user;
 		}
 		catch (Exception ex)
 		{
-			return ex.getMessage();
+			user.setStatusMessage(ex.getMessage());
+			return user;
 		}
 		finally
 		{

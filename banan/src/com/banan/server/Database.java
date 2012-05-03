@@ -10,8 +10,6 @@ public class Database
 	private String username;
 	private String password;
 	
-	private String status;
-	
 	public Database(String url, String username, String password)
 	{
 		this.url = url;
@@ -39,10 +37,5 @@ public class Database
 	public Statement createStatement() throws SQLException
 	{
 		return conn.createStatement();
-	}
-	
-	public String getStatus()
-	{
-		return status;
 	}
 }
