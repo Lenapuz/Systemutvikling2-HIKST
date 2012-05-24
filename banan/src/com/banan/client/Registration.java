@@ -24,10 +24,13 @@ public class Registration extends Composite
 		
 		textBoxFullName = new TextBox();
 		textBoxFullName.getElement().setPropertyString("placeholder", "Navn");
+		
 		textBoxUsername = new TextBox();
 		textBoxUsername.getElement().setPropertyString("placeholder", "Brukernavn");
+		
 		textBoxPassword = new PasswordTextBox();
 		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
+		
 		listBoxType = new ListBox();
 		listBoxType.addItem("Konsulent");
 		listBoxType.addItem("Kunde");
@@ -46,6 +49,8 @@ public class Registration extends Composite
 				onRegister();
 			}
 		});
+		
+		
 		
 		panel.add(textBoxFullName);
 		panel.add(textBoxUsername);

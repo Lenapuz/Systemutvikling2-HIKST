@@ -1,6 +1,7 @@
 package com.banan.client;
 
 import com.banan.shared.*;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 

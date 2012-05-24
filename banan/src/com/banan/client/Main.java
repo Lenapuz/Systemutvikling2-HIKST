@@ -3,6 +3,7 @@ package com.banan.client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.banan.server.ProfileServiceImpl;
 import com.banan.shared.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -20,9 +21,12 @@ import com.google.gwt.user.client.ui.*;
 public class Main implements EntryPoint 
 {
 	private final UserServiceAsync UserService = GWT.create(UserService.class);
-	
 	public static User User = new User();
 	
+	private final ProfileServiceAsync ProfileService = GWT.create(ProfileService.class);
+	public static ProfileReg profile = new ProfileReg();
+	
+	//onAction Events.
 	public void onModuleLoad() 
 	{
 		final DeckPanel mainPanel = new DeckPanel();
@@ -47,6 +51,12 @@ public class Main implements EntryPoint
 		p.add(register);
 		mainPanel.add(p);
 		
+		final ProfileReg profil = new ProfileReg();
+		p = new VerticalPanel();
+		p.add(profil);
+		mainPanel.add(p);
+		
+		//loginHandler, brukes får sjekke brukeren når man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
 			{
@@ -73,10 +83,11 @@ public class Main implements EntryPoint
 					});		
 			}
 		});
-		
+		// on onAction for å registree brukere,konsulent eller Administraotr
 		register.addRegisterHandler(new ActionHandler() {
 			public void onAction()
 			{
+				
 				UserService.register(new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType()),
 					new AsyncCallback<User>() {
 						public void onFailure(Throwable caught) 
@@ -91,6 +102,30 @@ public class Main implements EntryPoint
 					});	
 			}
 		});
+		
+		// Starter Profil registrering OnAction() 
+		// Fungerer ikke! feil i SQL spørring ser ut til!! hvis ikke,
+		// så ligger feilen en anne plass.
+		profil.addProfileHandler(new ActionHandler(){
+			public void onAction()
+			{
+			ProfileService.profil(new Profile(profil.getProfileID(),profil.getBuildYear(), profil.getHouseSize()),
+				new AsyncCallback<Profile>() {
+					public void onFailure(Throwable caught)
+					{
+						Window.alert(caught.getMessage());
+					}
+				
+					public void onSuccess(Profile result) {
+						// TODO Auto-generated method stub
+						Window.alert(result.getStatusMessage());
+					}
+					
+				});
+			}
+		
+		});
+					
 		
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
