@@ -30,7 +30,7 @@ private Database db;
 		{
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT profile (profilID, buildYear, houseSize) VALUES('" + profile.getProfilID() + "'('" + profile.getBuildYear() + "'),'" + profile.getHouseSize() + "')");
+			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated) VALUES('" + profile.getBuildYear() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() + "')");
 			
 			if (i >0)
 			{
@@ -58,9 +58,10 @@ private Database db;
 		// TODO Auto-generated method stub
 		try
 		{
+			
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT profile (profilID, buildYear, houseSize) VALUES('" + profile.getProfilID() + "',MD5('" + profile.getBuildYear() + "'),'" + profile.getHouseSize() + "')");
+			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated) VALUES('" + profile.getBuildYear() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() +"')");
 			
 			if (i >0)
 			{

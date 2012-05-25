@@ -109,7 +109,9 @@ public class Main implements EntryPoint
 		profil.addProfileHandler(new ActionHandler(){
 			public void onAction()
 			{
-			ProfileService.profil(new Profile(profil.getProfileID(),profil.getBuildYear(), profil.getHouseSize()),
+				
+				//String buildYear,  String typeProfile, String primHeating, String isIsolated
+			ProfileService.profil(new Profile(profil.getBuildYear(),profil.getIsisolated(),profil.getTypePofile(), profil.getPrimHeating()),
 				new AsyncCallback<Profile>() {
 					public void onFailure(Throwable caught)
 					{

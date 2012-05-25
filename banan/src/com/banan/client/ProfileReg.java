@@ -28,7 +28,7 @@ public class ProfileReg extends Composite {
 	private Button buttonRegisterProfile;
 	
 	//private textbox
-	private TextBox textBoxProfileID;
+	//private TextBox textBoxProfileID;
 	private TextBox	textBoxBuidYear;
 	private TextBox	textBoxHouseSize;
 	
@@ -45,8 +45,8 @@ public class ProfileReg extends Composite {
 		initWidget(panel);
 		
 		//Text box
-		textBoxProfileID = new TextBox();
-		textBoxProfileID.getElement().setPropertyString("placeholder", "Profil ID");
+	//	textBoxProfileID = new TextBox();
+	//	textBoxProfileID.getElement().setPropertyString("placeholder", "Profil ID");
 		
 		textBoxBuidYear = new TextBox();
 		textBoxBuidYear.getElement().setPropertyString("placeholder", "build year");
@@ -58,6 +58,7 @@ public class ProfileReg extends Composite {
 		listBoxSelect = new ListBox();
 		listBoxSelect.addItem("Varmepumpe");
 		listBoxSelect.addItem("Oljefyring");
+		listBoxSelect.addItem("Sentralvarme");
 		
 		//list box
 		listBoxIsolated = new ListBox();
@@ -76,15 +77,15 @@ public class ProfileReg extends Composite {
 		//Set pref
 		listBoxSelect.setWidth("160px");
 		listBoxIsolated.setWidth("160px");
-		textBoxProfileID.setWidth("160px");
+	//	textBoxProfileID.setWidth("160px");
 		textBoxBuidYear.setWidth("160px");
 		buttonRegisterProfile.setWidth("160px");
 		
 		
 		//adder listbox
-		panel.add(textBoxProfileID);
+	//	panel.add(textBoxProfileID);
 		panel.add(textBoxBuidYear);
-		panel.add(textBoxHouseSize);
+	//	panel.add(textBoxHouseSize);
 		panel.add(listBoxSelect);
 		panel.add(listBoxIsolated);
 		panel.add(listBoxType);
@@ -105,22 +106,32 @@ public class ProfileReg extends Composite {
 		
 	}	
 
-	public String getProfileID()
+/*	public String getProfileID()
 	{
 		return textBoxProfileID.getText();
-	}
+	}*/
 	
 	public String getBuildYear(){
 		return textBoxBuidYear.getText();
 	}
 	
-	public String getHouseSize(){
+/*	public String getHouseSize(){
 		return textBoxHouseSize.getText();
-	}
+	}*/
 	
-	public String getType()
+	public String getPrimHeating()
 	{
 		return listBoxSelect.getItemText(listBoxSelect.getSelectedIndex());
+	}
+	
+	public String getTypePofile()
+	{
+		return listBoxType.getItemText(listBoxType.getSelectedIndex());
+	}
+	
+	public String getIsisolated()
+	{
+		return listBoxIsolated.getItemText(listBoxIsolated.getSelectedIndex());
 	}
 	
 	public void addProfileHandler(ActionHandler handler)
