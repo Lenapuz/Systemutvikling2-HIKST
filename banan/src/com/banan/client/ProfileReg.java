@@ -85,7 +85,7 @@ public class ProfileReg extends Composite {
 		//adder listbox
 	//	panel.add(textBoxProfileID);
 		panel.add(textBoxBuidYear);
-	//	panel.add(textBoxHouseSize);
+		panel.add(textBoxHouseSize);
 		panel.add(listBoxSelect);
 		panel.add(listBoxIsolated);
 		panel.add(listBoxType);
@@ -132,6 +132,11 @@ public class ProfileReg extends Composite {
 	public String getIsisolated()
 	{
 		return listBoxIsolated.getItemText(listBoxIsolated.getSelectedIndex());
+	}
+	
+	public String getHouseSize()
+	{
+		return textBoxHouseSize.getText();
 	}
 	
 	public void addProfileHandler(ActionHandler handler)

@@ -14,7 +14,7 @@ public class Profile implements Serializable {
 	
 	//private String profilID;
 	private String buildYear;
-//	private String houseSize;
+    private String houseSize;
 	private String statusMessage;
 	private String typeProfile;
 	private String primHeating;
@@ -33,12 +33,12 @@ public class Profile implements Serializable {
 	
 	
 
-	public Profile(String buildYear, String typeProfile, String primHeating, String isIsolated)
+	public Profile(String buildYear, String typeProfile, String primHeating, String isIsolated, String houseSize)
 	{
 		
 		//this.profilID = profilID;
 		this.buildYear = buildYear;
-	//	this.houseSize = houseSize;
+		this.houseSize = houseSize;
 		this.typeProfile = typeProfile;
 		this.primHeating = primHeating;
 		this.isIsolated = isIsolated;
@@ -86,9 +86,9 @@ public class Profile implements Serializable {
 		return buildYear;
 	}
 	
-/*	public String getHouseSize(){
+	public String getHouseSize(){
 		return houseSize;
-	}*/
+	}
 	
 	public String getStatusMessage()
 	{

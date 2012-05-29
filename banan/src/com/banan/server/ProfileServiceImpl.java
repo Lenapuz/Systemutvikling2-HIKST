@@ -61,7 +61,7 @@ private Database db;
 			
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated) VALUES('" + profile.getBuildYear() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() +"')");
+			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated, house_size, house_residents) VALUES('" + profile.getBuildYear() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() +"','" + profile.getHouseSize() + "','" + '1' + "')");
 			
 			if (i >0)
 			{
@@ -69,7 +69,7 @@ private Database db;
 			}
 			else
 			{
-				profile.setStatusMessage("Kunne ikk elegge inn profil");
+				profile.setStatusMessage("Kunne ikke legge inn profil");
 			}
 			return profile;
 		}

@@ -1,2 +1,0 @@
-serviceClass: com.banan.client.UserService
-path: 9745A5AB33AABE6F6CC197F43AF0E2C9.gwt.rpc
