@@ -1,11 +1,11 @@
 package com.banan.client;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.*;
 
 public class Login extends Composite 
@@ -36,6 +36,17 @@ public class Login extends Composite
 			public void onClick(ClickEvent event) 
 			{
 				onLogin();
+			}
+		});
+		
+		textBoxPassword.addKeyPressHandler(new KeyPressHandler()
+		{
+			public void onKeyPress(KeyPressEvent event)
+			{
+				if(event.getCharCode() == KeyCodes.KEY_ENTER)
+				{
+					onLogin();
+				}
 			}
 		});
 		
