@@ -14,42 +14,32 @@ public class Profile implements Serializable {
 	
 	//private String profilID;
 	private String buildYear;
-    private String houseSize;
 	private String statusMessage;
 	private String typeProfile;
 	private String primHeating;
 	private String isIsolated;
-	
-	
-	
-	
-	
+	private String houseResidents;
+	private String houseSize;
+
 	//konstruktør
 	public Profile(){
 		typeProfile ="";
 		primHeating="";
 		isIsolated="";
 	}
-	
-	
 
-	public Profile(String buildYear, String typeProfile, String primHeating, String isIsolated, String houseSize)
+	public Profile(String buildYear, String typeProfile, String primHeating, String isIsolated, String houseResidents, String houseSize)
 	{
 		
-		//this.profilID = profilID;
+		
 		this.buildYear = buildYear;
-		this.houseSize = houseSize;
 		this.typeProfile = typeProfile;
 		this.primHeating = primHeating;
 		this.isIsolated = isIsolated;
+		this.houseResidents = houseResidents;
+		this.houseSize = houseSize;
 	}
-	
-	
 
-/*	public String getProfilID()
-	{
-		return profilID;
-	}*/
 	
 	public void setTypePofile(String typeProfile)
 	{
@@ -86,9 +76,18 @@ public class Profile implements Serializable {
 		return buildYear;
 	}
 	
+	public String getHouseResidents(){
+		
+		return houseResidents;
+	}
+	
 	public String getHouseSize(){
 		return houseSize;
 	}
+	
+/*	public String getHouseSize(){
+		return houseSize;
+	}*/
 	
 	public String getStatusMessage()
 	{

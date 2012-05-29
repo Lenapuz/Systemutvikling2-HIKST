@@ -28,9 +28,9 @@ public class ProfileReg extends Composite {
 	private Button buttonRegisterProfile;
 	
 	//private textbox
-	//private TextBox textBoxProfileID;
 	private TextBox	textBoxBuidYear;
 	private TextBox	textBoxHouseSize;
+	private TextBox textBoxHouseResidents;
 	
 	 
 	//ListBoxs
@@ -38,21 +38,22 @@ public class ProfileReg extends Composite {
     private ListBox listBoxType;
     private ListBox listBoxIsolated;
 	
+    //Constructor
 	public ProfileReg(){
 		
 		panel = new VerticalPanel();
 		panel.addStyleName("register");
 		initWidget(panel);
 		
-		//Text box
-	//	textBoxProfileID = new TextBox();
-	//	textBoxProfileID.getElement().setPropertyString("placeholder", "Profil ID");
 		
 		textBoxBuidYear = new TextBox();
 		textBoxBuidYear.getElement().setPropertyString("placeholder", "build year");
 		
 		textBoxHouseSize = new TextBox();
 		textBoxHouseSize.getElement().setPropertyString("placeholder", "Size(kvm)");
+		
+		textBoxHouseResidents = new TextBox();
+		textBoxHouseResidents.getElement().setPropertyString("placeholder", "Resident");
 		
 		//listbox add Items 
 		listBoxSelect = new ListBox();
@@ -77,15 +78,16 @@ public class ProfileReg extends Composite {
 		//Set pref
 		listBoxSelect.setWidth("160px");
 		listBoxIsolated.setWidth("160px");
-	//	textBoxProfileID.setWidth("160px");
 		textBoxBuidYear.setWidth("160px");
+		textBoxHouseResidents.setWidth("160px");
+		textBoxHouseSize.setWidth("160px");
 		buttonRegisterProfile.setWidth("160px");
 		
 		
-		//adder listbox
-	//	panel.add(textBoxProfileID);
+		//Add object to the panel.
 		panel.add(textBoxBuidYear);
 		panel.add(textBoxHouseSize);
+		panel.add(textBoxHouseResidents);
 		panel.add(listBoxSelect);
 		panel.add(listBoxIsolated);
 		panel.add(listBoxType);
@@ -97,27 +99,29 @@ public class ProfileReg extends Composite {
 			{
 				try {
 					onRegister();
+				
 				} catch (Exception e) {
 					// TODO: handle exception
 					Window.alert("Didnt work");
 				}
+				
 			}
 		});
 		
 	}	
 
-/*	public String getProfileID()
+	public String getHouseResidents()
 	{
-		return textBoxProfileID.getText();
-	}*/
-	
+		return textBoxHouseResidents.getText();
+	}
+
 	public String getBuildYear(){
 		return textBoxBuidYear.getText();
 	}
 	
-/*	public String getHouseSize(){
+	public String getHouseSize(){
 		return textBoxHouseSize.getText();
-	}*/
+	}
 	
 	public String getPrimHeating()
 	{
@@ -132,11 +136,6 @@ public class ProfileReg extends Composite {
 	public String getIsisolated()
 	{
 		return listBoxIsolated.getItemText(listBoxIsolated.getSelectedIndex());
-	}
-	
-	public String getHouseSize()
-	{
-		return textBoxHouseSize.getText();
 	}
 	
 	public void addProfileHandler(ActionHandler handler)
