@@ -15,10 +15,9 @@ import java.sql.*;
  */
 @SuppressWarnings("serial")
 public class ProfileServiceImpl  extends RemoteServiceServlet implements ProfileService  
-{
+{	
+	private Database db;
 	
-private Database db;
-	//Db Tilkobling mot Kark.hin.no
 	public ProfileServiceImpl()
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
