@@ -39,7 +39,6 @@ public class Profile implements Serializable {
 		this.houseResidents = houseResidents;
 		this.houseSize = houseSize;
 	}
-
 	
 	public void setTypePofile(String typeProfile)
 	{
@@ -54,6 +53,11 @@ public class Profile implements Serializable {
 	public void setIsisolated(String isIsolated)
 	{
 		this.isIsolated = isIsolated;
+	}
+	
+	public int getID()
+	{
+		return 0;
 	}
 	
 	public String getTypePofile()

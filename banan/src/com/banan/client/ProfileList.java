@@ -24,7 +24,7 @@ public class ProfileList extends Composite {
 
 					public void onSuccess(Profile[] result) 
 					{
-						for (Profile p : result)
+						for (final Profile p : result)
 						{
 							Label l = new Label( p.getBuildYear() + " StOrrelse: " + p.getHouseSize() + " Beboere: " + p.getHouseResidents());
 							l.setStyleName("profilelist_item");
@@ -41,7 +41,7 @@ public class ProfileList extends Composite {
 
 										@Override
 										public void onSuccess(SimResult result) {
-											Window.alert(result.magic + "!");											
+											Window.alert(result.getMagic() + "!");											
 										}
 										
 									});

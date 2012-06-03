@@ -1,8 +1,13 @@
 package com.banan.shared;
 
-public class SimResult
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class SimResult implements Serializable
 {
 	private int magic;
+	
+	public SimResult() {}
 	
 	public SimResult(int magic)
 	{
