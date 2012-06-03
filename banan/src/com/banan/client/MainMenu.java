@@ -25,6 +25,9 @@ public class MainMenu extends Composite
 		Button buttonAddProfile = new Button("Opprett profil");
 		buttonAddProfile.addStyleName("menu_item");
 		
+		Button buttonUserAdmin = new Button("Bruker administrasjon");
+		buttonUserAdmin.addStyleName("menu_item");
+		
 		buttonSim.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
 			{				
@@ -57,6 +60,13 @@ public class MainMenu extends Composite
 			}			
 		});
 		
+		buttonUserAdmin.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) 
+			{				
+				p.showWidget(UI.USERADMIN);
+			}			
+		});
+		
 		panel.add(buttonSim);
 		if (Main.User.getType().equals("Admin"))
 		{
@@ -66,6 +76,7 @@ public class MainMenu extends Composite
 		//panel.add(buttonLogout);
 		panel.add(buttonAddProfile);
 		panel.add(buttonRegister);
+		panel.add(buttonUserAdmin);
 		
 	}
 }

@@ -58,6 +58,7 @@ public class Main implements EntryPoint
 		p.add(profil);
 		mainPanel.add(p);
 		
+		
 		//loginHandler, brukes får sjekke brukeren når man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
