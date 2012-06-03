@@ -11,9 +11,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 public interface ProfileService extends RemoteService 
 {
-	Profile register(Profile profile) throws IllegalArgumentException;
-	
+	Profile register(Profile profile) throws IllegalArgumentException;	
 	Profile profil(Profile profile) throws IllegalArgumentException;
-	
-	
+	Profile[] getProfiles() throws IllegalArgumentException;	
 }

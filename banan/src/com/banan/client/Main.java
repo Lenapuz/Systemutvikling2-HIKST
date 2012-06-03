@@ -20,11 +20,13 @@ import com.google.gwt.user.client.ui.*;
 
 public class Main implements EntryPoint 
 {
-	private final UserServiceAsync UserService = GWT.create(UserService.class);
+	public static final UserServiceAsync UserService = GWT.create(UserService.class);
 	public static User User = new User();
 	
-	private final ProfileServiceAsync ProfileService = GWT.create(ProfileService.class);
+	public static final ProfileServiceAsync ProfileService = GWT.create(ProfileService.class);
 	public static ProfileReg profile = new ProfileReg();
+	
+	public static final SimServiceAsync SimService = GWT.create(SimService.class);
 	
 	//onAction Events.
 	public void onModuleLoad() 
@@ -132,7 +134,8 @@ public class Main implements EntryPoint
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
-		HTML sim = new HTML("<div class=\"foo\"><img src=\"sim.png\" width=\"800\" height=\"400\" /></div>");
+		//HTML sim = new HTML("<div class=\"foo\"><img src=\"sim.png\" width=\"800\" height=\"400\" /></div>");
+		ProfileList sim = new ProfileList();
 		mainPanel.add(sim);
 
 		menuPanel.showWidget(UI.MAIN_MENU);	

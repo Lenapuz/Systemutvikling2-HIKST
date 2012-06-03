@@ -6,6 +6,7 @@ import com.banan.shared.Profile;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 /***
@@ -84,5 +85,33 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 		}
 	}
 	
-
+	public Profile[] getProfiles() throws IllegalArgumentException {
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM profil");
+			
+			ArrayList<Profile> tempProfiles = new ArrayList<Profile>();
+			while (result.next())
+			{
+				tempProfiles.add(new Profile(result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size")));
+			}
+			
+			Profile[] profiles = new Profile[tempProfiles.size()];
+			for (int i = 0; i < tempProfiles.size(); i++)
+			{
+				profiles[i] = tempProfiles.get(i);
+			}
+			return profiles;
+		}
+		catch (Exception ex)
+		{
+			return null;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
 }

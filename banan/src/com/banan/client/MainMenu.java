@@ -13,7 +13,7 @@ public class MainMenu extends Composite
 		initWidget(panel);
 		
 		//Knapper til MainPanel 
-		Button buttonSim = new Button("Profile Test");
+		Button buttonSim = new Button("Simulering");
 		buttonSim.addStyleName("menu_item");
 		
 		Button buttonRegister = new Button("Legg til konsulent");
@@ -22,7 +22,7 @@ public class MainMenu extends Composite
 		Button buttonLogout = new Button("Logg ut");
 		buttonLogout.addStyleName("menu_item");
 		
-		Button buttonAddProfile = new Button("Simulering Test)");
+		Button buttonAddProfile = new Button("Opprett profil");
 		buttonAddProfile.addStyleName("menu_item");
 		
 		buttonSim.addClickHandler(new ClickHandler() {
@@ -64,8 +64,8 @@ public class MainMenu extends Composite
 			
 		}
 		//panel.add(buttonLogout);
-		panel.add(buttonRegister);
 		panel.add(buttonAddProfile);
+		panel.add(buttonRegister);
 		
 	}
 }

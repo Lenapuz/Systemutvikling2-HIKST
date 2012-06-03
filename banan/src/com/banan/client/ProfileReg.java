@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.*;
 /***
  * Classe for skjemabiten for å registrere profil. denne vil da bli brukt på annen måte!
  * men utgangspunktet er der å kan endres på.
@@ -28,7 +24,7 @@ public class ProfileReg extends Composite {
 	private Button buttonRegisterProfile;
 	
 	//private textbox
-	private TextBox	textBoxBuidYear;
+	private TextBox	textBoxBuildYear;
 	private TextBox	textBoxHouseSize;
 	private TextBox textBoxHouseResidents;
 	
@@ -45,27 +41,33 @@ public class ProfileReg extends Composite {
 		panel.addStyleName("register");
 		initWidget(panel);
 		
-		
-		textBoxBuidYear = new TextBox();
-		textBoxBuidYear.getElement().setPropertyString("placeholder", "build year");
-		
+		Label labelBuildYear = new Label("ByggeAr:");
+		labelBuildYear.setWidth("80px");
+		textBoxBuildYear = new TextBox();
+		Label labelHouseSize = new Label("StOrrelse:");
+		labelHouseSize.setWidth("80px");
 		textBoxHouseSize = new TextBox();
-		textBoxHouseSize.getElement().setPropertyString("placeholder", "Size(kvm)");
-		
+		Label labelHouseResidents = new Label("Beboere:");
+		labelHouseResidents.setWidth("80px");
 		textBoxHouseResidents = new TextBox();
-		textBoxHouseResidents.getElement().setPropertyString("placeholder", "Resident");
 		
 		//listbox add Items 
+		Label labelSelect = new Label("Fyring:");
+		labelSelect.setWidth("80px");
 		listBoxSelect = new ListBox();
 		listBoxSelect.addItem("Varmepumpe");
 		listBoxSelect.addItem("Oljefyring");
 		listBoxSelect.addItem("Sentralvarme");
 		
 		//list box
+		Label labelIsolated = new Label("Isolert:");
+		labelIsolated.setWidth("80px");
 		listBoxIsolated = new ListBox();
 		listBoxIsolated.addItem("Ja");
 		listBoxIsolated.addItem("Nei");
 		
+		Label labelType = new Label("Boligtype:");
+		labelType.setWidth("80px");
 		listBoxType = new ListBox();
 		listBoxType.addItem("Enebolig");
 		listBoxType.addItem("Tomanns Bolig");
@@ -73,25 +75,47 @@ public class ProfileReg extends Composite {
 		listBoxType.addItem("Industripark");
 		
 		//buttons
-		buttonRegisterProfile = new Button("registrer");
+		buttonRegisterProfile = new Button("Registrer");
 		
 		//Set pref
 		listBoxSelect.setWidth("160px");
 		listBoxIsolated.setWidth("160px");
-		textBoxBuidYear.setWidth("160px");
-		textBoxHouseResidents.setWidth("160px");
-		textBoxHouseSize.setWidth("160px");
+		listBoxType.setWidth("160px");
+		textBoxBuildYear.setWidth("150px");
+		textBoxHouseResidents.setWidth("150px");
+		textBoxHouseSize.setWidth("150px");
 		buttonRegisterProfile.setWidth("160px");
-		
-		
-		//Add object to the panel.
-		panel.add(textBoxBuidYear);
-		panel.add(textBoxHouseSize);
-		panel.add(textBoxHouseResidents);
-		panel.add(listBoxSelect);
-		panel.add(listBoxIsolated);
-		panel.add(listBoxType);
-		panel.add(buttonRegisterProfile);
+	    
+		HorizontalPanel p = new HorizontalPanel();
+		p.add(labelBuildYear);
+		p.add(textBoxBuildYear);
+		panel.add(p);
+		p = new HorizontalPanel();
+		p.add(labelHouseSize);
+		p.add(textBoxHouseSize);
+		panel.add(p);
+		p = new HorizontalPanel();
+		p.add(labelHouseResidents);
+		p.add(textBoxHouseResidents);
+		panel.add(p);
+		p = new HorizontalPanel();
+		p.add(labelSelect);
+		p.add(listBoxSelect);		
+		panel.add(p);
+		p = new HorizontalPanel();
+		p.add(labelIsolated);
+		p.add(listBoxIsolated);
+		panel.add(p);
+		p = new HorizontalPanel();
+		p.add(labelType);
+		p.add(listBoxType);
+		panel.add(p);
+		p = new HorizontalPanel();
+		Label l = new Label();
+		l.setWidth("80px");
+		p.add(l);
+		p.add(buttonRegisterProfile);
+		panel.add(p);
 		
 		//click event
 		buttonRegisterProfile.addClickHandler(new ClickHandler() {
@@ -116,7 +140,7 @@ public class ProfileReg extends Composite {
 	}
 
 	public String getBuildYear(){
-		return textBoxBuidYear.getText();
+		return textBoxBuildYear.getText();
 	}
 	
 	public String getHouseSize(){

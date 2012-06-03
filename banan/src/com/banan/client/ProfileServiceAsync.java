@@ -12,8 +12,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface ProfileServiceAsync 
 {
 	void register(Profile profile, AsyncCallback<Profile> callback);
-
 	void profil(Profile profile, AsyncCallback<Profile> callback);
-
-	//void profil(Profile profile, Object callback);
+	void getProfiles(AsyncCallback<Profile[]> callback);
 }
