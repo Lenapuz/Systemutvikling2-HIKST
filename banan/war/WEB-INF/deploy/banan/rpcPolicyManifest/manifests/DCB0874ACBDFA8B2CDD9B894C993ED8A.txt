@@ -1,0 +1,2 @@
+serviceClass: com.banan.client.ProfileService
+path: 6C3386698B900F51A7FA9FC4D1BB28A2.gwt.rpc
