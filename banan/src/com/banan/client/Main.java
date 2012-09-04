@@ -28,10 +28,11 @@ public class Main implements EntryPoint
 	
 	public static final SimServiceAsync SimService = GWT.create(SimService.class);
 	
+	public static final DeckPanel mainPanel = new DeckPanel();
+	
 	//onAction Events.
 	public void onModuleLoad() 
 	{
-		final DeckPanel mainPanel = new DeckPanel();
 		RootPanel.get("main_content").add(mainPanel);
 		VerticalPanel introPanel = new VerticalPanel();
 		mainPanel.add(introPanel);
@@ -144,6 +145,6 @@ public class Main implements EntryPoint
 		mainPanel.add(gg);
 
 		menuPanel.showWidget(UI.MAIN_MENU);	
-		mainPanel.showWidget(UI.SIMGRAPHICS);
+		mainPanel.showWidget(UI.LOGIN);
 	}
 }

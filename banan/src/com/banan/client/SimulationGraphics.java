@@ -1,5 +1,7 @@
 package com.banan.client;
 
+import java.util.Random;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -20,23 +22,40 @@ import com.google.gwt.visualization.client.visualizations.LineChart.Options;
 public class SimulationGraphics extends Composite {
 	
 	private VerticalPanel herp2;
+	Random r = new Random();
 	
-	//constructor
 	public SimulationGraphics() {
 		herp2 = new VerticalPanel();
 		initWidget(herp2);
 		
 		Runnable onLoadCallback = new Runnable() {
 			public void run() {
-				LineChart c = new LineChart();
+				@SuppressWarnings("deprecation")
+				
+				Options o = Options.create();
+				o.setWidth(400);
+				o.setHeight(400);				
+				
 				DataTable t = DataTable.create();
-				c.draw(t);
+				t.addColumn(ColumnType.NUMBER, "kW");
+			
+				t.addRows(24);
+				for (int i = 0; i < 24; i++)
+				{
+					t.setValue(i, 0, r.nextInt(1337));
+				}
+				
+				LineChart c = new LineChart(t, o);
+				c.setWidth("400px");
+				c.setHeight("400px");
+				c.setTitle("Herp");
+				
 				herp2.add(c);
 			}
 		};
 		
 		VisualizationUtils.loadVisualizationApi(onLoadCallback, LineChart.PACKAGE);
-	}//end of cons
+	}
 	
 	private Options createOptions() 
 	 {

@@ -1,8 +1,6 @@
 package com.banan.server;
 
-import com.banan.client.ProfileService;
-
-import com.banan.shared.Profile;
+import com.banan.shared.*;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.*;

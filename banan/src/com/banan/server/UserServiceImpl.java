@@ -1,8 +1,6 @@
 package com.banan.server;
 
-import com.banan.client.UserService;
-import com.banan.shared.FieldVerifier;
-import com.banan.shared.User;
+import com.banan.shared.*;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.sql.*;
 
