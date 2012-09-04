@@ -2,10 +2,13 @@ package com.banan.client;
 
 import java.util.Random;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -22,7 +25,9 @@ import com.google.gwt.visualization.client.visualizations.LineChart.Options;
 public class SimulationGraphics extends Composite {
 	
 	private VerticalPanel herp2;
-	Random r = new Random();
+	LineChart chart;
+	Options chartOptions;
+	Random rand = new Random();
 	
 	public SimulationGraphics() {
 		herp2 = new VerticalPanel();
@@ -32,82 +37,31 @@ public class SimulationGraphics extends Composite {
 			public void run() {
 				@SuppressWarnings("deprecation")
 				
-				Options o = Options.create();
-				o.setWidth(400);
-				o.setHeight(400);				
+				Options chartOptions = Options.create();
+				chartOptions.setWidth(960);
+				chartOptions.setHeight(400);
+				chartOptions.setTitle("Strømforbruk");
 				
-				DataTable t = DataTable.create();
-				t.addColumn(ColumnType.NUMBER, "kW");
+				DataTable data = DataTable.create();
+				data.addColumn(ColumnType.NUMBER, "kW");
 			
-				t.addRows(24);
+				data.addRows(24);
 				for (int i = 0; i < 24; i++)
 				{
-					t.setValue(i, 0, r.nextInt(1337));
+					data.setValue(i, 0, rand.nextInt(1337));
 				}
 				
-				LineChart c = new LineChart(t, o);
-				c.setWidth("400px");
-				c.setHeight("400px");
-				c.setTitle("Herp");
+				chart = new LineChart(data, chartOptions);
 				
-				herp2.add(c);
+				herp2.add(chart);
 			}
 		};
-		
+				
 		VisualizationUtils.loadVisualizationApi(onLoadCallback, LineChart.PACKAGE);
 	}
 	
-	private Options createOptions() 
-	 {
-	    Options options = Options.create();
-	    options.setWidth(400);
-	    options.setHeight(240);	    
-	    options.setTitle("Test of ssameting");
-	    return options;
-	  }
-	
-	private SelectHandler createSelectHandler(final LineChart chart){
-		return new SelectHandler(){
-			
-			public void onSelect(SelectEvent event){
-				String message = "";
-				
-			/*	// May be multiple selections.
-		        JsArray<Selection> selections = chart.getSelections();
-
-		        for (int i = 0; i < selections.length(); i++) {
-		          // add a new line for each selection
-		          message += i == 0 ? "" : "\n";
-		          
-		          Selection selection = selections.get(i);
-
-		          if (selection.isCell()) {
-		            // isCell() returns true if a cell has been selected.
-		            
-		            // getRow() returns the row number of the selected cell.
-		            int row = selection.getRow();
-		            // getColumn() returns the column number of the selected cell.
-		            int column = selection.getColumn();
-		            message += "cell " + row + ":" + column + " selected";
-		          } else if (selection.isRow()) {
-		            // isRow() returns true if an entire row has been selected.
-		            
-		            // getRow() returns the row number of the selected row.
-		            int row = selection.getRow();
-		            message += "row " + row + " selected";
-		          } else {
-		            // unreachable
-		            message += "Pie chart selections should be either row selections or cell selections.";
-		            message += "  Other visualizations support column selections as well.";
-		          }
-		        }*/
-
-				Window.alert(message);
-			}
-		};
+	public void shoveData(DataTable table)
+	{
+		chart.draw(table, chartOptions);
 	}
-	
-	
-
-
-}//end of class
+}

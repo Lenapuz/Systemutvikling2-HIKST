@@ -29,6 +29,7 @@ public class Main implements EntryPoint
 	public static final SimServiceAsync SimService = GWT.create(SimService.class);
 	
 	public static final DeckPanel mainPanel = new DeckPanel();
+	public static final SimulationGraphics simGraphics = new SimulationGraphics();
 	
 	//onAction Events.
 	public void onModuleLoad() 
@@ -136,8 +137,8 @@ public class Main implements EntryPoint
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
-		mainPanel.add(new ProfileList());		
-		mainPanel.add(new SimulationGraphics());		
+		mainPanel.add(new ProfileList());
+		mainPanel.add(simGraphics);		
 		mainPanel.add(new UserAdmin());
 
 		menuPanel.showWidget(UI.MAIN_MENU);	

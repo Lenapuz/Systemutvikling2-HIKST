@@ -7,6 +7,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.visualization.client.DataTable;
+import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 
 public class ProfileList extends Composite {
 	private VerticalPanel herp;
@@ -36,17 +38,24 @@ public class ProfileList extends Composite {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											// TODO Auto-generated method stub
-											Window.alert(caught.getMessage());
-											
+											Window.alert(caught.getMessage());											
 										}
 
 										@Override
-										public void onSuccess(SimResult result) {
-											Window.alert(result.getMagic() + "!");
-											Main.mainPanel.showWidget(UI.SIMGRAPHICS);
-										}
+										public void onSuccess(SimResult result) {	
+											DataTable data = DataTable.create();
+											Integer[] d = result.getData();
+											data.addColumn(ColumnType.NUMBER, "kW");
 										
+											data.addRows(24);
+											for (int i = 0; i < 24; i++)
+											{
+												data.setValue(i, 0, d[i]);
+											}
+																						
+											Main.mainPanel.showWidget(UI.SIMGRAPHICS);
+											Main.simGraphics.shoveData(data);
+										}										
 									});
 								}								
 							});
