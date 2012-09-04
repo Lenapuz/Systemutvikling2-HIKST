@@ -30,18 +30,20 @@ public class ProfileList extends Composite {
 							l.setStyleName("profilelist_item");
 							l.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
-									Window.alert("!");
+									//Window.alert("!");
 									Main.SimService.simulate(p.getID(), new AsyncCallback<SimResult>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
 											// TODO Auto-generated method stub
+											//Window.alert(caught.getMessage());
 											
 										}
 
 										@Override
 										public void onSuccess(SimResult result) {
-											Window.alert(result.getMagic() + "!");											
+											Window.alert(result.getMagic() + "!");	
+											
 										}
 										
 									});

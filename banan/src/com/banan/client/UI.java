@@ -16,4 +16,5 @@ public class UI
 	public static final int SIMULATION = 4;
 	public static final int PROFIL = 3;
 	public static final int USERADMIN = 5;
+	public static final int SIMGRAPHICS = 5;
 }

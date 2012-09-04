@@ -120,9 +120,10 @@ public class Main implements EntryPoint
 					{
 						Window.alert(caught.getMessage());
 					}
-				
+					
 					public void onSuccess(Profile result) {
 						// TODO Auto-generated method stub
+						
 						Window.alert(result.getStatusMessage());
 					}
 					
@@ -138,8 +139,11 @@ public class Main implements EntryPoint
 		//HTML sim = new HTML("<div class=\"foo\"><img src=\"sim.png\" width=\"800\" height=\"400\" /></div>");
 		ProfileList sim = new ProfileList();
 		mainPanel.add(sim);
+		
+		SimulationGraphics gg = new SimulationGraphics();
+		mainPanel.add(gg);
 
 		menuPanel.showWidget(UI.MAIN_MENU);	
-		mainPanel.showWidget(UI.LOGIN);
+		mainPanel.showWidget(UI.SIMGRAPHICS);
 	}
 }
