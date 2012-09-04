@@ -18,8 +18,9 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.Selection;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 import com.google.gwt.visualization.client.events.SelectHandler;
-import com.google.gwt.visualization.client.visualizations.LineChart;
-import com.google.gwt.visualization.client.visualizations.LineChart.Options;
+import com.google.gwt.visualization.client.visualizations.corechart.CoreChart;
+import com.google.gwt.visualization.client.visualizations.corechart.LineChart;
+import com.google.gwt.visualization.client.visualizations.corechart.Options;
 
 
 public class SimulationGraphics extends Composite {
@@ -35,20 +36,21 @@ public class SimulationGraphics extends Composite {
 		
 		Runnable onLoadCallback = new Runnable() {
 			public void run() {
-				@SuppressWarnings("deprecation")
 				
 				Options chartOptions = Options.create();
 				chartOptions.setWidth(960);
 				chartOptions.setHeight(400);
-				chartOptions.setTitle("Strømforbruk");
-				
+				chartOptions.setTitle("Forbruk");
+				chartOptions.setFontSize(10.0);
 				DataTable data = DataTable.create();
+				data.addColumn(ColumnType.STRING, "_");
 				data.addColumn(ColumnType.NUMBER, "kW");
-			
+				
 				data.addRows(24);
 				for (int i = 0; i < 24; i++)
 				{
-					data.setValue(i, 0, rand.nextInt(1337));
+					data.setValue(i, 0, i + ":00");
+					data.setValue(i, 1, rand.nextInt(1337));
 				}
 				
 				chart = new LineChart(data, chartOptions);
@@ -57,11 +59,11 @@ public class SimulationGraphics extends Composite {
 			}
 		};
 				
-		VisualizationUtils.loadVisualizationApi(onLoadCallback, LineChart.PACKAGE);
+		VisualizationUtils.loadVisualizationApi(onLoadCallback, CoreChart.PACKAGE);
 	}
 	
 	public void shoveData(DataTable table)
 	{
-		chart.draw(table, chartOptions);
+		//chart.draw(table, chartOptions);
 	}
 }

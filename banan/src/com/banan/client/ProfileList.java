@@ -46,7 +46,7 @@ public class ProfileList extends Composite {
 											DataTable data = DataTable.create();
 											Integer[] d = result.getData();
 											data.addColumn(ColumnType.NUMBER, "kW");
-										
+											
 											data.addRows(24);
 											for (int i = 0; i < 24; i++)
 											{
