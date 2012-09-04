@@ -58,8 +58,7 @@ public class Main implements EntryPoint
 		p = new VerticalPanel();
 		p.add(profil);
 		mainPanel.add(p);
-		
-		
+				
 		//loginHandler, brukes får sjekke brukeren når man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
@@ -137,12 +136,9 @@ public class Main implements EntryPoint
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
-		//HTML sim = new HTML("<div class=\"foo\"><img src=\"sim.png\" width=\"800\" height=\"400\" /></div>");
-		ProfileList sim = new ProfileList();
-		mainPanel.add(sim);
-		
-		SimulationGraphics gg = new SimulationGraphics();
-		mainPanel.add(gg);
+		mainPanel.add(new ProfileList());		
+		mainPanel.add(new SimulationGraphics());		
+		mainPanel.add(new UserAdmin());
 
 		menuPanel.showWidget(UI.MAIN_MENU);	
 		mainPanel.showWidget(UI.LOGIN);

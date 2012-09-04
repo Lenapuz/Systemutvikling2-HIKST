@@ -1,6 +1,6 @@
 package com.banan.shared;
 
-import com.banan.shared.Profile;
+import com.banan.shared.*;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

@@ -1,4 +1,4 @@
-package com.banan.client;
+package com.banan.shared;
 
 import com.banan.shared.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;

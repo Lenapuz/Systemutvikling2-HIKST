@@ -12,9 +12,9 @@ public class UI
 	//
 	public static final int INTRO = 0;
 	public static final int LOGIN = 1;
-	public static final int REGISTRATION = 2;
-	public static final int SIMULATION = 4;
+	public static final int REGISTRATION = 2;	
 	public static final int PROFIL = 3;
-	public static final int USERADMIN = 5;
+	public static final int SIMULATION = 4;
 	public static final int SIMGRAPHICS = 5;
+	public static final int USERADMIN = 6;	
 }
