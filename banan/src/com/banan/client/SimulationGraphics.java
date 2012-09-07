@@ -40,7 +40,7 @@ public class SimulationGraphics extends Composite {
 		Runnable onLoadCallback = new Runnable() {
 			public void run() {
 				Options chartOptions = Options.create();
-				chartOptions.setWidth(956);
+				chartOptions.setWidth(960);
 				chartOptions.setHeight(400);
 				chartOptions.setTitle("Forbruk");
 				chartOptions.setFontSize(10.0);

@@ -7,6 +7,15 @@ header, section, footer, aside, nav, article, figure, figcaption, hgroup {
 	display: block;
 }
 
+body {
+	background: #D8D8D8;
+	font: 12px Open Sans, sans-serif;
+}
+
+input, select {
+	font: 12px Open Sans, sans-serif !important;
+}
+
 #wrapper {
 	width: 960px;
 	margin: 0px auto;
@@ -26,6 +35,7 @@ h1 {
 
 button {
 	padding: 5px 0px;
+	font: 12px Open Sans, sans-serif;
 }
 
 .register {
@@ -43,7 +53,7 @@ button {
 .main_menu {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	background: #666;
+	background: #6BB7FF;
 	padding: 5px;
 }
 
@@ -55,12 +65,13 @@ button {
 .profilelist_item {
 	padding: 10px;
 	background: #AAA;
-	margin-top: 5px;
+	margin-top: 0px;
+	border-top: 1px solid #888;
 	margin-right: -10px;
 }
 
 .profilelist_item:hover {
-	background: #CCC;
+	background: #BBB;
 }
 
 .b1 {
@@ -71,7 +82,11 @@ button {
 	font-weight: bold;
 }
 
-
 .foo {
 	text-align: center;
+}
+
+header h1 {
+	color: #0084FF;
+	text-shadow: 0px 0px 5px rgba(0,0,0, 0.2);
 }

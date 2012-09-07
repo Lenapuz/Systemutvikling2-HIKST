@@ -25,7 +25,7 @@ public class MainMenu extends Composite
 		Button buttonAddProfile = new Button("Opprett profil");
 		buttonAddProfile.addStyleName("menu_item");
 		
-		Button buttonUserAdmin = new Button("Bruker administrasjon");
+		Button buttonUserAdmin = new Button("Brukeradministrasjon");
 		buttonUserAdmin.addStyleName("menu_item");
 		
 		buttonSim.addClickHandler(new ClickHandler() {
