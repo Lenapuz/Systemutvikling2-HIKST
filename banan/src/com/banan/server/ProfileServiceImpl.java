@@ -59,7 +59,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated, house_residents, house_size) VALUES('" + profile.getBuildYear() + "'," +
+			int i = statement.executeUpdate("INSERT profil (name, build_year, profil_type, prim_heating, is_isolated, house_residents, house_size) VALUES('" + profile.getName() + "','" + profile.getBuildYear() + "'," +
 					"'" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() +"','" + profile.getHouseResidents() + "','" + profile.getHouseSize() + "')");
 			
 			if (i >0)
@@ -93,7 +93,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			ArrayList<Profile> tempProfiles = new ArrayList<Profile>();
 			while (result.next())
 			{
-				tempProfiles.add(new Profile(result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size")));
+				tempProfiles.add(new Profile(result.getString("name"), result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size")));
 			}
 			
 			Profile[] profiles = new Profile[tempProfiles.size()];

@@ -30,7 +30,7 @@ public class Login extends Composite
 		
 		textBoxUsername.setWidth("150px");
 		textBoxPassword.setWidth("150px");
-		buttonOK.setWidth("160px");
+		buttonOK.setWidth("165px");
 		
 		buttonOK.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 

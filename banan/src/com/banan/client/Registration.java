@@ -40,8 +40,8 @@ public class Registration extends Composite
 		textBoxFullName.setWidth("150px");
 		textBoxUsername.setWidth("150px");
 		textBoxPassword.setWidth("150px");
-		listBoxType.setWidth("160px");
-		buttonOK.setWidth("160px");
+		listBoxType.setWidth("164px");
+		buttonOK.setWidth("165px");
 		
 		buttonOK.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 

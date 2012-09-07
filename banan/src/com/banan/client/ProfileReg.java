@@ -24,6 +24,7 @@ public class ProfileReg extends Composite {
 	private Button buttonRegisterProfile;
 	
 	//private textbox
+	private TextBox textBoxName;
 	private TextBox	textBoxBuildYear;
 	private TextBox	textBoxHouseSize;
 	private TextBox textBoxHouseResidents;
@@ -41,6 +42,9 @@ public class ProfileReg extends Composite {
 		panel.addStyleName("register");
 		initWidget(panel);
 		
+		Label labelName = new Label("Navn:");
+		labelName.setWidth("80px");
+		textBoxName = new TextBox();
 		Label labelBuildYear = new Label("ByggeAr:");
 		labelBuildYear.setWidth("80px");
 		textBoxBuildYear = new TextBox();
@@ -78,15 +82,20 @@ public class ProfileReg extends Composite {
 		buttonRegisterProfile = new Button("Registrer");
 		
 		//Set pref
-		listBoxSelect.setWidth("160px");
-		listBoxIsolated.setWidth("160px");
-		listBoxType.setWidth("160px");
+		listBoxSelect.setWidth("164px");
+		listBoxIsolated.setWidth("164px");
+		listBoxType.setWidth("164px");
+		textBoxName.setWidth("150px");
 		textBoxBuildYear.setWidth("150px");
 		textBoxHouseResidents.setWidth("150px");
 		textBoxHouseSize.setWidth("150px");
-		buttonRegisterProfile.setWidth("160px");
+		buttonRegisterProfile.setWidth("165px");
 	    
-		HorizontalPanel p = new HorizontalPanel();
+		HorizontalPanel p = new HorizontalPanel();		
+		p.add(labelName);
+		p.add(textBoxName);
+		panel.add(p);
+		p = new HorizontalPanel();
 		p.add(labelBuildYear);
 		p.add(textBoxBuildYear);
 		panel.add(p);
@@ -137,6 +146,11 @@ public class ProfileReg extends Composite {
 	public String getHouseResidents()
 	{
 		return textBoxHouseResidents.getText();
+	}
+	
+	public String getName()
+	{
+		return textBoxName.getText();
 	}
 
 	public String getBuildYear(){

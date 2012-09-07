@@ -7,10 +7,6 @@ header, section, footer, aside, nav, article, figure, figcaption, hgroup {
 	display: block;
 }
 
-body {
-	margin: 0px !important;
-}
-
 #wrapper {
 	width: 960px;
 	margin: 0px auto;
@@ -25,9 +21,11 @@ h1 {
 
 .login, .register {
 	margin: 0px auto;
-	background: #666;
-	padding: 20px;
 	border-radius: 5px;
+}
+
+button {
+	padding: 5px 0px;
 }
 
 .register {
@@ -43,13 +41,15 @@ h1 {
 }
 
 .main_menu {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	background: #666;
 	padding: 5px;
 }
 
 .menu_item {
 	margin-right: 5px !important;
-	height: 64px;
+	padding: 5px 10px;
 }
 
 .profilelist_item {

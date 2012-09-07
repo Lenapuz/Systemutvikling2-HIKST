@@ -28,7 +28,7 @@ public class ProfileList extends Composite {
 					{
 						for (final Profile p : result)
 						{
-							Label l = new Label( p.getBuildYear() + " StOrrelse: " + p.getHouseSize() + " Beboere: " + p.getHouseResidents());
+							Label l = new Label(p.getName() + p.getBuildYear() + " StOrrelse: " + p.getHouseSize() + " Beboere: " + p.getHouseResidents());
 							l.setStyleName("profilelist_item");
 							l.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {

@@ -115,7 +115,7 @@ public class Main implements EntryPoint
 			{
 				
 				//String buildYear,  String typeProfile, String primHeating, String isIsolated
-			ProfileService.profil(new Profile(profil.getBuildYear(),profil.getIsisolated(),profil.getTypePofile(), profil.getPrimHeating(), profil.getHouseResidents() , profil.getHouseSize()),
+			ProfileService.profil(new Profile(profil.getName(), profil.getBuildYear(),profil.getIsisolated(),profil.getTypePofile(), profil.getPrimHeating(), profil.getHouseResidents() , profil.getHouseSize()),
 				new AsyncCallback<Profile>() {
 					public void onFailure(Throwable caught)
 					{
