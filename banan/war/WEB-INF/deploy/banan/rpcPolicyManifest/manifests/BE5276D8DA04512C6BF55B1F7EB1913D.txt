@@ -1,2 +1,0 @@
-serviceClass: com.banan.client.SimService
-path: 488C08EB7B5006520D57103E11AD67BA.gwt.rpc

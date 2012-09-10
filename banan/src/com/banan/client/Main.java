@@ -48,6 +48,7 @@ public class Main implements EntryPoint
 		final Login login = new Login();
 		VerticalPanel p = new VerticalPanel();
 		p.add(login);
+		p.add(new HTML("<div id=\"portal\"><h3>Kunde?</h3><a id=\"linkportal\" href=\"http://gruppe2.dyndns.org/portal\">Til kundeportal</a></div>"));
 		mainPanel.add(p);
 		
 		final Registration register = new Registration();
@@ -59,7 +60,7 @@ public class Main implements EntryPoint
 		p = new VerticalPanel();
 		p.add(profil);
 		mainPanel.add(p);
-				
+		
 		//loginHandler, brukes får sjekke brukeren når man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
@@ -132,8 +133,7 @@ public class Main implements EntryPoint
 			}
 		
 		});
-					
-		
+							
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
