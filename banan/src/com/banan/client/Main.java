@@ -31,6 +31,8 @@ public class Main implements EntryPoint
 	public static final DeckPanel mainPanel = new DeckPanel();
 	public static final SimulationGraphics simGraphics = new SimulationGraphics();
 	
+	public static UserAdmin userAdmin = new UserAdmin();
+	
 	//onAction Events.
 	public void onModuleLoad() 
 	{
