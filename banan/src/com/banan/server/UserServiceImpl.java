@@ -79,8 +79,9 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		{
 			this.db.connect();
 			Statement statement = db.createStatement();
+			String query = "DELETE FROM konsulent WHERE Brukernavn='" + user.getUsername()+"'";
+			int i = statement.executeUpdate(query);
 			
-			int i = statement.executeUpdate("DELETE FROM konsulent WHERE Brukernavn=" + user.getUsername());
 			
 			if(i > 0)
 			{

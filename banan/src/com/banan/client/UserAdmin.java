@@ -55,7 +55,7 @@ public class UserAdmin extends Composite
 						flextable.setWidget(row, 3, new Label("Slett:"));
 						flextable.setWidget(row, 4, new Label("Edit:"));
 						
-						for(User u : result)
+						for(final User u : result)
 						{
 							row++;
 							flextable.setWidget(row, 0, new Label(u.getName()));
@@ -67,6 +67,30 @@ public class UserAdmin extends Composite
 							b = new Button();
 							b.setText("Slett");
 							flextable.setWidget(row, 4, b);
+							b.addClickHandler(new ClickHandler()
+							{
+								@Override 
+								public void onClick(ClickEvent event) 
+								{
+									Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
+									{
+
+										@Override 
+										public void onFailure(Throwable caught) 
+										{
+											Window.alert(caught.getMessage());	
+										}
+
+										@Override
+										public void onSuccess(User result) 
+										{
+											Window.alert(result.getStatusMessage());
+										}
+									
+									});
+								}
+								
+							});
 						}
 						panel.add(flextable);
 					}
