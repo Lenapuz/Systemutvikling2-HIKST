@@ -14,6 +14,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -30,6 +31,7 @@ public class UserAdmin extends Composite
 		panel = new VerticalPanel();
 		panel.addStyleName("userAdmin");
 		initWidget(panel);
+		
 
 		Main.UserService.GetUsers(
 				new AsyncCallback<User[]>() 
@@ -63,6 +65,15 @@ public class UserAdmin extends Composite
 							flextable.setWidget(row, 2, new Label(u.getType()));
 							b = new Button();
 							b.setText("Edit");
+							b.addStyleName("menu_item");
+							
+							b.addClickHandler(new ClickHandler() 
+							{
+								public void onClick(ClickEvent event) 
+								{				
+									Main.mainPanel.showWidget(UI.EDITUSER);
+								}			
+							});
 							flextable.setWidget(row, 3, b);
 							b = new Button();
 							b.setText("Slett");
