@@ -60,47 +60,10 @@ public class Registration extends Composite
 		panel.add(buttonOK);
 	}
 	
-	public Registration(User u)
+	public void setData(User user)
 	{
-		panel = new VerticalPanel();
-		panel.addStyleName("register");
-		initWidget(panel);
-		
-		textBoxFullName = new TextBox();
-		textBoxFullName.setText(u.getName());
-		
-		textBoxUsername = new TextBox();
-		textBoxUsername.setText(u.getUsername());
-		
-		textBoxPassword = new PasswordTextBox();
-		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
-		
-		listBoxType = new ListBox();
-		listBoxType.addItem("Konsulent");
-		listBoxType.addItem("Kunde");
-		listBoxType.addItem("Admin");
-		buttonOK = new Button("OK");
-		
-		textBoxFullName.setWidth("150px");
-		textBoxUsername.setWidth("150px");
-		textBoxPassword.setWidth("150px");
-		listBoxType.setWidth("164px");
-		buttonOK.setWidth("165px");
-		
-		buttonOK.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) 
-			{
-				onRegister();
-			}
-		});
-		
-		
-		
-		panel.add(textBoxFullName);
-		panel.add(textBoxUsername);
-		panel.add(textBoxPassword);
-		panel.add(listBoxType);
-		panel.add(buttonOK);
+		textBoxFullName.setText(user.getName());
+		textBoxUsername.setText(user.getUsername());
 	}
 	
 	public String getFullName()

@@ -1,5 +1,2 @@
 # Module banan
 # RPC service class, partial path of RPC policy file
-com.banan.shared.ProfileService, DCCFBD720DC4AB7CA163AD1F2292AFE3.gwt.rpc
-com.banan.shared.SimService, 00DE5F165B0DD9DEEFCF7D58B192EC74.gwt.rpc
-com.banan.shared.UserService, AE1CA5A34F5B44BA4A3132DD72005EEB.gwt.rpc

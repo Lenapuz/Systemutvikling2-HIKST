@@ -71,6 +71,7 @@ public class UserAdmin extends Composite
 							{
 								public void onClick(ClickEvent event) 
 								{				
+									Main.userEdit.setData(u);
 									Main.mainPanel.showWidget(UI.EDITUSER);
 								}			
 							});

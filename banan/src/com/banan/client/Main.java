@@ -32,6 +32,7 @@ public class Main implements EntryPoint
 	public static final SimulationGraphics simGraphics = new SimulationGraphics();
 	
 	public static UserAdmin userAdmin = new UserAdmin();
+	public static Registration userEdit = new Registration();
 	
 	//onAction Events.
 	public void onModuleLoad() 
@@ -142,6 +143,7 @@ public class Main implements EntryPoint
 		mainPanel.add(new ProfileList());
 		mainPanel.add(simGraphics);		
 		mainPanel.add(new UserAdmin());
+		mainPanel.add(userEdit);
 
 		menuPanel.showWidget(UI.MAIN_MENU);	
 		mainPanel.showWidget(UI.LOGIN);
