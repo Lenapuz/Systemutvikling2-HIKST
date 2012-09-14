@@ -107,8 +107,35 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	@Override
 	public User EditUser(User user) throws IllegalArgumentException 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			this.db.connect();
+			Statement statement = db.createStatement();
+			
+			String query = "UPDATE konsulent SET Brukernavn="+ user.getUsername() + ", Passord="+user.getPassword()+", status="+user.getType()+" WHERE Brukernavn="+user.getUsername();
+			int i = statement.executeUpdate(query);
+			
+			if(i > 0)
+			{
+				user.setStatusMessage("Brukeren ble oppdatert");
+				return user;
+			}
+			else
+			{
+				user.setStatusMessage("Brukeren ble ikke oppdatert");
+				return user;
+			}
+		}
+		catch(Exception ex)
+		{
+			user.setStatusMessage(ex.getMessage());
+			return user;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+		
 	}
 
 	@Override
