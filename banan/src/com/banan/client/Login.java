@@ -26,11 +26,12 @@ public class Login extends Composite
 		textBoxUsername.getElement().setPropertyString("placeholder", "Brukernavn");
 		textBoxPassword = new PasswordTextBox();
 		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
-		buttonOK = new Button("Logg inn");		
+		buttonOK = new Button("Logg inn");
+		buttonOK.addStyleName("btn btn-primary");
 		
 		textBoxUsername.setWidth("150px");
 		textBoxPassword.setWidth("150px");
-		buttonOK.setWidth("165px");
+		buttonOK.setWidth("164px");
 		
 		buttonOK.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 

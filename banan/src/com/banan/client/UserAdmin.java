@@ -24,14 +24,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class UserAdmin extends Composite 
 {
 	private VerticalPanel panel;
-	
+	private FlexTable flextable = new FlexTable();
+	private int row = 0;
 	
 	public UserAdmin()
 	{
 		panel = new VerticalPanel();
 		panel.addStyleName("userAdmin");
-		initWidget(panel);
-		
+		initWidget(panel);		
 
 		Main.UserService.GetUsers(
 				new AsyncCallback<User[]>() 
@@ -39,18 +39,12 @@ public class UserAdmin extends Composite
 					@Override
 					public void onFailure(Throwable caught) 
 					{
-						Window.alert(caught.getMessage());
-						
+						Window.alert(caught.getMessage());						
 					}
 
 					@Override
 					public void onSuccess(User[] result) 
 					{
-						int row = 0;
-						
-						FlexTable flextable = new FlexTable();
-						Button b;
-						
 						flextable.setWidget(row, 0, new Label("Fultnavn:"));
 						flextable.setWidget(row, 1, new Label("Brukernavn:"));
 						flextable.setWidget(row, 2, new Label("Type:"));
@@ -59,53 +53,59 @@ public class UserAdmin extends Composite
 						
 						for(final User u : result)
 						{
-							row++;
-							flextable.setWidget(row, 0, new Label(u.getName()));
-							flextable.setWidget(row, 1, new Label(u.getUsername()));
-							flextable.setWidget(row, 2, new Label(u.getType()));
-							b = new Button();
-							b.setText("Edit");
-							b.addStyleName("menu_item");
-							
-							b.addClickHandler(new ClickHandler() 
-							{
-								public void onClick(ClickEvent event) 
-								{				
-									Main.userEdit.setData(u);
-									Main.mainPanel.showWidget(UI.EDITUSER);
-								}			
-							});
-							flextable.setWidget(row, 3, b);
-							b = new Button();
-							b.setText("Slett");
-							flextable.setWidget(row, 4, b);
-							b.addClickHandler(new ClickHandler()
-							{
-								@Override 
-								public void onClick(ClickEvent event) 
-								{
-									Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
-									{
-
-										@Override 
-										public void onFailure(Throwable caught) 
-										{
-											Window.alert(caught.getMessage());	
-										}
-
-										@Override
-										public void onSuccess(User result) 
-										{
-											Window.alert(result.getStatusMessage());
-										}
-									
-									});
-								}
-								
-							});
+							addUser(u);
 						}
 						panel.add(flextable);
 					}
 				});
+	}
+	
+	public void addUser(final User u)
+	{
+		Button b;
+		
+		row++;
+		flextable.setWidget(row, 0, new Label(u.getName()));
+		flextable.setWidget(row, 1, new Label(u.getUsername()));
+		flextable.setWidget(row, 2, new Label(u.getType()));
+		b = new Button();
+		b.setText("Edit");
+		
+		b.addClickHandler(new ClickHandler() 
+		{
+			public void onClick(ClickEvent event) 
+			{				
+				Main.userEdit.setData(u);
+				Main.mainPanel.showWidget(UI.EDITUSER);
+			}			
+		});
+		flextable.setWidget(row, 3, b);
+		b = new Button();
+		b.setText("Slett");
+		flextable.setWidget(row, 4, b);
+		b.addClickHandler(new ClickHandler()
+		{
+			@Override 
+			public void onClick(ClickEvent event) 
+			{
+				Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
+				{
+
+					@Override 
+					public void onFailure(Throwable caught) 
+					{
+						Window.alert(caught.getMessage());	
+					}
+
+					@Override
+					public void onSuccess(User result) 
+					{
+						Window.alert(result.getStatusMessage());
+						row--;
+					}				
+				});
+			}
+			
+		});
 	}
 }

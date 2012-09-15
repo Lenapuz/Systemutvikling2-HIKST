@@ -37,12 +37,13 @@ public class Registration extends Composite
 		listBoxType.addItem("Kunde");
 		listBoxType.addItem("Admin");
 		buttonOK = new Button("OK");
+		buttonOK.addStyleName("btn");
 		
 		textBoxFullName.setWidth("150px");
 		textBoxUsername.setWidth("150px");
 		textBoxPassword.setWidth("150px");
 		listBoxType.setWidth("164px");
-		buttonOK.setWidth("165px");
+		buttonOK.setWidth("164px");
 		
 		buttonOK.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 

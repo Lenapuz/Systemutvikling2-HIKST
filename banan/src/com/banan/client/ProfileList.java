@@ -27,10 +27,9 @@ public class ProfileList extends Composite {
 					public void onSuccess(Profile[] result) 
 					{
 						for (final Profile p : result)
-						{
-							Label l = new Label(p.getName() + p.getBuildYear() + " StOrrelse: " + p.getHouseSize() + " Beboere: " + p.getHouseResidents());
-							l.setStyleName("profilelist_item");
-							l.addClickHandler(new ClickHandler() {
+						{		
+							HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "ByggeAr: " + p.getBuildYear() + ", StOrrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
+							html.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
 									//Window.alert("!");
 									
@@ -59,7 +58,7 @@ public class ProfileList extends Composite {
 									});
 								}								
 							});
-							herp.add(l);
+							herp.add(html);
 						}
 					}
 				});		

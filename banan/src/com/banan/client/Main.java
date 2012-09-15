@@ -37,6 +37,7 @@ public class Main implements EntryPoint
 	//onAction Events.
 	public void onModuleLoad() 
 	{
+		mainPanel.addStyleName("mainPanel");
 		RootPanel.get("main_content").add(mainPanel);
 		VerticalPanel introPanel = new VerticalPanel();
 		mainPanel.add(introPanel);
@@ -63,7 +64,7 @@ public class Main implements EntryPoint
 		p = new VerticalPanel();
 		p.add(profil);
 		mainPanel.add(p);
-		
+				
 		//loginHandler, brukes får sjekke brukeren når man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
@@ -95,8 +96,9 @@ public class Main implements EntryPoint
 		register.addRegisterHandler(new ActionHandler() {
 			public void onAction()
 			{
+				final User user = new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType());
 				
-				UserService.register(new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType()),
+				UserService.register(user,
 					new AsyncCallback<User>() {
 						public void onFailure(Throwable caught) 
 						{
@@ -106,6 +108,7 @@ public class Main implements EntryPoint
 						public void onSuccess(User result) 
 						{
 							Window.alert(result.getStatusMessage());
+							userAdmin.addUser(user);
 						}
 					});	
 			}
@@ -142,9 +145,9 @@ public class Main implements EntryPoint
 		
 		mainPanel.add(new ProfileList());
 		mainPanel.add(simGraphics);		
-		mainPanel.add(new UserAdmin());
+		mainPanel.add(userAdmin);
 		mainPanel.add(userEdit);
-
+		
 		menuPanel.showWidget(UI.MAIN_MENU);	
 		mainPanel.showWidget(UI.LOGIN);
 	}

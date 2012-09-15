@@ -80,6 +80,7 @@ public class ProfileReg extends Composite {
 		
 		//buttons
 		buttonRegisterProfile = new Button("Registrer");
+		buttonRegisterProfile.addStyleName("btn");
 		
 		//Set pref
 		listBoxSelect.setWidth("164px");
@@ -89,7 +90,7 @@ public class ProfileReg extends Composite {
 		textBoxBuildYear.setWidth("150px");
 		textBoxHouseResidents.setWidth("150px");
 		textBoxHouseSize.setWidth("150px");
-		buttonRegisterProfile.setWidth("165px");
+		buttonRegisterProfile.setWidth("164px");
 	    
 		HorizontalPanel p = new HorizontalPanel();		
 		p.add(labelName);
