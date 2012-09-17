@@ -28,7 +28,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 		{
 			db.connect();
 			Statement statement = db.createStatement();
-			int i = statement.executeUpdate("INSERT profil (build_year, profil_type, prim_heating, is_isolated) VALUES('" + profile.getBuildYear() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "','" + profile.getIsisolated() + "')");
+			int i = statement.executeUpdate("INSERT profil (build_year, is_isolated, profil_type, prim_heating, ) VALUES('" + profile.getBuildYear() + "','" + profile.getIsisolated() + "','" + profile.getTypePofile() + "','" + profile.getPrimHeating() + "')");
 			
 			if (i >0)
 			{
