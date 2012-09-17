@@ -29,7 +29,7 @@ public class Profile implements Serializable {
 		isIsolated="";
 	}
 
-	public Profile(String name, String buildYear, String typeProfile, String primHeating, String isIsolated, String houseResidents, String houseSize)
+	public Profile(String name, String buildYear,String isIsolated, String typeProfile, String primHeating,  String houseResidents, String houseSize)
 	{
 		this.name = name;		
 		this.buildYear = buildYear;
