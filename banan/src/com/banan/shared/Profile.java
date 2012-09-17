@@ -22,14 +22,14 @@ public class Profile implements Serializable {
 	private String houseResidents;
 	private String houseSize;
 	
-	private String FirstName;
+	/*private String FirstName;
 	private String MellomNavn;
 	private String EtterNavn;
 	private String Adresse;
 	private String ZipCode;
 	private String City;
 	private String PhoneNumber;
-	private String EmailAddress;
+	private String EmailAddress;*/
 
 	//konstrukt�r
 	public Profile(){

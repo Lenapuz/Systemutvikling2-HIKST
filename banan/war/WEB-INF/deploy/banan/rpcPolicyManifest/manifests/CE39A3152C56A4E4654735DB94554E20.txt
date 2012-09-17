@@ -1,2 +1,0 @@
-serviceClass: com.banan.shared.UserService
-path: 6654F7F9AC3916745B2194B7D7EC653A.gwt.rpc
