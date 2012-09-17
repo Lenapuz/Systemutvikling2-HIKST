@@ -1,1 +1,1 @@
-*<:o)
+Ikke commit filer med cache i navnet, .rpc, eller filer med navn som ser ut som 33D83530FE3F349E136FDB1A30016E17. Disse blir generert når du kjører prosjektet.
