@@ -7,8 +7,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 /***
- * Classe for skjemabiten for å registrere profil. denne vil da bli brukt på annen måte!
- * men utgangspunktet er der å kan endres på.
+ * Classe for skjemabiten for ï¿½ registrere profil. denne vil da bli brukt pï¿½ annen mï¿½te!
+ * men utgangspunktet er der ï¿½ kan endres pï¿½.
  * @author Martin
  *
  */
@@ -45,10 +45,10 @@ public class ProfileReg extends Composite {
 		Label labelName = new Label("Navn:");
 		labelName.setWidth("80px");
 		textBoxName = new TextBox();
-		Label labelBuildYear = new Label("ByggeAr:");
+		Label labelBuildYear = new Label("ByggeÃ¥r:");
 		labelBuildYear.setWidth("80px");
 		textBoxBuildYear = new TextBox();
-		Label labelHouseSize = new Label("StOrrelse:");
+		Label labelHouseSize = new Label("StÃ¸rrelse:");
 		labelHouseSize.setWidth("80px");
 		textBoxHouseSize = new TextBox();
 		Label labelHouseResidents = new Label("Beboere:");

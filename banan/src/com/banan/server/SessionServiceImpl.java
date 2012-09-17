@@ -6,7 +6,6 @@ import com.banan.shared.SessionService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class SessionServiceImpl extends RemoteServiceServlet implements SessionService {
-
 	@Override
 	public Integer get(String attr) {
 		HttpSession session = this.getThreadLocalRequest().getSession();
@@ -18,5 +17,4 @@ public class SessionServiceImpl extends RemoteServiceServlet implements SessionS
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		session.setAttribute(attr, value);
 	}
-
 }

@@ -160,16 +160,11 @@ public class Main implements EntryPoint
 		mainPanel.add(new ProfileList());
 		mainPanel.add(simGraphics);		
 		mainPanel.add(userAdmin);
-		mainPanel.add(userEdit);
-		
-		menuPanel.showWidget(UI.MAIN_MENU);	
-		mainPanel.showWidget(UI.LOGIN);
+		mainPanel.add(userEdit);		
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
-
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				
 			}
 
@@ -177,8 +172,14 @@ public class Main implements EntryPoint
 			public void onSuccess(Integer result) {
 				if (result != null)
 				{
-					mainPanel.showWidget(result);	
-					Window.alert(result.toString());
+					menuPanel.setVisible(true);
+					menuPanel.showWidget(UI.MAIN_MENU);
+					mainPanel.showWidget(result);
+				}
+				else
+				{
+					menuPanel.showWidget(UI.MAIN_MENU);	
+					mainPanel.showWidget(UI.LOGIN);
 				}
 			}									
 		});
