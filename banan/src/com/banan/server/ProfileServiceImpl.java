@@ -56,7 +56,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 		// TODO Auto-generated method stub
 		try
 		{
-			
+			//test
 			db.connect();
 			Statement statement = db.createStatement();
 			int i = statement.executeUpdate("INSERT profil (name, build_year, is_isolated, profil_type, prim_heating, house_residents, house_size) VALUES('" + profile.getName() + "','" + profile.getBuildYear() + "'," +
