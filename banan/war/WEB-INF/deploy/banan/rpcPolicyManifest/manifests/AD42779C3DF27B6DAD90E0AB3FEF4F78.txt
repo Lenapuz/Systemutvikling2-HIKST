@@ -1,0 +1,2 @@
+serviceClass: com.banan.shared.SessionService
+path: 68A8346BD21BDF98C1F15AFA9598B845.gwt.rpc

@@ -29,6 +29,15 @@ public class ProfileReg extends Composite {
 	private TextBox	textBoxHouseSize;
 	private TextBox textBoxHouseResidents;
 	
+	private TextBox textBoxFirstName;
+	private TextBox textBoxMiddleName;
+	private TextBox textBoxLastName;
+	private TextBox textBoxAdresse;
+	private TextBox textBoxZipCode;
+	private TextBox textBoxCity;
+	private TextBox textBoxPhoneNumber;
+	private TextBox textBoxEmailAdresse;
+	
 	 
 	//ListBoxs
 	private ListBox listBoxSelect;
@@ -42,12 +51,49 @@ public class ProfileReg extends Composite {
 		panel.addStyleName("register");
 		initWidget(panel);
 		
+		Label labelMellomRom = new Label("-------------------------------------------------------------");
+		labelMellomRom.setWidth("250px");
+		
+		Label labelFirstName = new Label("Fornavn:");
+		labelFirstName.setWidth("80px");
+		textBoxFirstName = new TextBox();
+		
+		Label labelMiddleName = new Label("Mellom navn:");
+		labelMiddleName.setWidth("80px");
+		textBoxMiddleName = new TextBox();
+		
+		Label labelLastName = new Label("Etternavn:");
+		labelLastName.setWidth("80px");
+		textBoxLastName = new TextBox();
+		
+		Label labelAdresse = new Label("Adresse");
+		labelAdresse.setWidth("80px");
+		textBoxAdresse = new TextBox();
+		
+		Label labelZipCode = new Label("Zip code:");
+		labelZipCode.setWidth("80px");
+		textBoxZipCode = new TextBox();
+		
+		Label labelCity = new Label("By");
+		labelCity.setWidth("80px");
+		textBoxCity = new TextBox();
+		
+		Label labelPhoneNumber = new Label("Telefon:");
+		labelPhoneNumber.setWidth("80px");
+		textBoxPhoneNumber = new TextBox();
+		
+		Label labelEmailAdresse = new Label("E-post:");
+		labelEmailAdresse.setWidth("80px");
+		textBoxEmailAdresse = new TextBox();
+		
 		Label labelName = new Label("Navn:");
 		labelName.setWidth("80px");
 		textBoxName = new TextBox();
+		
 		Label labelBuildYear = new Label("Byggeår:");
 		labelBuildYear.setWidth("80px");
 		textBoxBuildYear = new TextBox();
+		
 		Label labelHouseSize = new Label("Størrelse:");
 		labelHouseSize.setWidth("80px");
 		textBoxHouseSize = new TextBox();
@@ -91,12 +137,77 @@ public class ProfileReg extends Composite {
 		textBoxHouseResidents.setWidth("150px");
 		textBoxHouseSize.setWidth("150px");
 		buttonRegisterProfile.setWidth("164px");
+		textBoxFirstName.setWidth("164px");
+		textBoxMiddleName.setWidth("164px");
+		textBoxLastName.setWidth("164px");
+		textBoxAdresse.setWidth("164px");
+		textBoxZipCode.setWidth("164px");
+		textBoxCity.setWidth("164px");
+		textBoxPhoneNumber.setWidth("164px");
+		textBoxEmailAdresse.setWidth("164px");
 	    
+		//ny greier
+		HorizontalPanel p1 = new HorizontalPanel();
+		
+		
+		
+		p1.add(labelFirstName);
+		p1.add(textBoxFirstName);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelMiddleName);
+		p1.add(textBoxMiddleName);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelLastName);
+		p1.add(textBoxLastName);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelAdresse);
+		p1.add(textBoxAdresse);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelZipCode);
+		p1.add(textBoxZipCode);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelCity);
+		p1.add(textBoxCity);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelPhoneNumber);
+		p1.add(textBoxPhoneNumber);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		p1.add(labelEmailAdresse);
+		p1.add(textBoxEmailAdresse);
+		panel.add(p1);
+		p1 = new HorizontalPanel();
+		
+		
+		//andre greier
 		HorizontalPanel p = new HorizontalPanel();		
+		p.add(labelMellomRom);
+		panel.add(p);
+		p = new HorizontalPanel();
+		
+	/*	p.add(labelProfileOwner)
+		p.add(textBoxProfileOwner);
+		panel.add(p);
+		p = new HorizontalPanel();*/
+		
 		p.add(labelName);
 		p.add(textBoxName);
 		panel.add(p);
 		p = new HorizontalPanel();
+		
 		p.add(labelBuildYear);
 		p.add(textBoxBuildYear);
 		panel.add(p);
@@ -143,7 +254,47 @@ public class ProfileReg extends Composite {
 		});
 		
 	}	
-
+	
+/*	public String getFirsName()
+	{
+		return textBoxFirstName.getText();
+	}
+	
+	public String getMiddleName()
+	{
+		return textBoxMiddleName.getText();
+	}
+	
+	public String getLastName()
+	{
+		return textBoxLastName.getText();
+	}
+	
+	public String getAdresse()
+	{
+		return textBoxAdresse.getText();
+	}
+	
+	public String getZipCode()
+	{
+		return textBoxZipCode.getText();
+	}
+	
+	public String getCity()
+	{
+		return textBoxCity.getText();
+	}
+	
+	public String getPhoneNumber()
+	{
+		return textBoxPhoneNumber.getText();
+	}
+	
+	public String getEmailAdresse()
+	{
+		return textBoxEmailAdresse.getText();
+	}*/
+	
 	public String getHouseResidents()
 	{
 		return textBoxHouseResidents.getText();
