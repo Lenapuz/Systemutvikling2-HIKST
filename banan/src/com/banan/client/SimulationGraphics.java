@@ -35,6 +35,7 @@ public class SimulationGraphics extends Composite {
 	
 	public SimulationGraphics() {
 		herp2 = new TabPanel();
+		herp2.addStyleName("simResultPanel");
 		initWidget(herp2);
 		
 		Runnable onLoadCallback = new Runnable() {

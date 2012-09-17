@@ -22,6 +22,11 @@
   	<servlet-class>com.banan.server.UserServiceImpl</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>sessionServlet</servlet-name>
+  	<servlet-class>com.banan.server.SessionServiceImpl</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
 	  <servlet-name>profileServlet</servlet-name>
 	  <url-pattern>/banan/profile</url-pattern>
@@ -35,6 +40,11 @@
   <servlet-mapping>
   	<servlet-name>userServlet</servlet-name>
   	<url-pattern>/banan/user</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>sessionServlet</servlet-name>
+  	<url-pattern>/banan/session</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

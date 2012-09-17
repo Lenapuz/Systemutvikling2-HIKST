@@ -26,7 +26,8 @@ public class Main implements EntryPoint
 	public static final ProfileServiceAsync ProfileService = GWT.create(ProfileService.class);
 	public static ProfileReg profile = new ProfileReg();
 	
-	public static final SimServiceAsync SimService = GWT.create(SimService.class);
+	public static final SimServiceAsync SimService = GWT.create(SimService.class);	
+	public static final SessionServiceAsync SessionService = GWT.create(SessionService.class);
 	
 	public static final DeckPanel mainPanel = new DeckPanel();
 	public static final SimulationGraphics simGraphics = new SimulationGraphics();
@@ -83,6 +84,19 @@ public class Main implements EntryPoint
 							{
 								menuPanel.setVisible(true);
 								mainPanel.showWidget(UI.INTRO);
+								SessionService.set("login", (Integer)UI.INTRO, new AsyncCallback<Void>() {
+									@Override
+									public void onFailure(Throwable caught) {										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										
+									}
+									
+								});
+								
 							}
 							else
 							{
@@ -150,5 +164,23 @@ public class Main implements EntryPoint
 		
 		menuPanel.showWidget(UI.MAIN_MENU);	
 		mainPanel.showWidget(UI.LOGIN);
+		
+		SessionService.get("login", new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				if (result != null)
+				{
+					mainPanel.showWidget(result);	
+					Window.alert(result.toString());
+				}
+			}									
+		});
 	}
 }
