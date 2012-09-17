@@ -255,7 +255,7 @@ public class ProfileReg extends Composite {
 		
 	}	
 	
-	public String getFirsName()
+/*	public String getFirsName()
 	{
 		return textBoxFirstName.getText();
 	}
@@ -293,7 +293,7 @@ public class ProfileReg extends Composite {
 	public String getEmailAdresse()
 	{
 		return textBoxEmailAdresse.getText();
-	}
+	}*/
 	
 	public String getHouseResidents()
 	{

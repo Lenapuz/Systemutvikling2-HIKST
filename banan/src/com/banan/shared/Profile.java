@@ -49,7 +49,7 @@ public class Profile implements Serializable {
 		this.houseSize = houseSize;
 	}
 	
-	public Profile(String Firstname, String MellomNavn, String EtterNavn, String Adresse, String ZipCode, String City, String PhoneNumber, String EmailAddress)
+	/*public Profile(String Firstname, String MellomNavn, String EtterNavn, String Adresse, String ZipCode, String City, String PhoneNumber, String EmailAddress)
 	{
 		this.FirstName = Firstname;
 		this.MellomNavn = MellomNavn;
@@ -60,7 +60,7 @@ public class Profile implements Serializable {
 		this.PhoneNumber = PhoneNumber;
 		this.EmailAddress = EmailAddress;
 		
-	}
+	}*/
 	
 
 	
@@ -84,7 +84,7 @@ public class Profile implements Serializable {
 		return 0;
 	}
 	
-	public String getFirstname()
+	/*public String getFirstname()
 	{
 		return FirstName;
 	}
@@ -122,7 +122,7 @@ public class Profile implements Serializable {
 	public String getEmailAddress()
 	{
 		return EmailAddress;
-	}
+	}*/
 	public String getName()
 	{
 		return name;
