@@ -66,7 +66,7 @@ public class Main implements EntryPoint
 		p.add(profil);
 		mainPanel.add(p);
 				
-		//loginHandler, brukes får sjekke brukeren når man logger inn.
+		//loginHandler, brukes fï¿½r sjekke brukeren nï¿½r man logger inn.
 		login.addLoginHandler(new ActionHandler() {
 			public void onAction()
 			{
@@ -106,7 +106,7 @@ public class Main implements EntryPoint
 					});		
 			}
 		});
-		// on onAction for å registree brukere,konsulent eller Administraotr
+		// on onAction for ï¿½ registree brukere,konsulent eller Administraotr
 		register.addRegisterHandler(new ActionHandler() {
 			public void onAction()
 			{
@@ -129,8 +129,8 @@ public class Main implements EntryPoint
 		});
 		
 		// Starter Profil registrering OnAction() 
-		// Fungerer ikke! feil i SQL spørring ser ut til!! hvis ikke,
-		// så ligger feilen en anne plass.
+		// Fungerer ikke! feil i SQL spï¿½rring ser ut til!! hvis ikke,
+		// sï¿½ ligger feilen en anne plass.
 		profil.addProfileHandler(new ActionHandler(){
 			public void onAction()
 			{

@@ -1,2 +1,0 @@
-serviceClass: com.banan.shared.ProfileService
-path: DCCFBD720DC4AB7CA163AD1F2292AFE3.gwt.rpc
