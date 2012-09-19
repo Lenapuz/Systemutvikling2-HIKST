@@ -11,8 +11,9 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 {
 	public SimResult simulate(int profileID)
 	{
-		/*
+		
 		SimResult result = new SimResult(profileID * 1881);	
+		/*
 		Random rand = new Random();
 		
 		Integer[] data = new Integer[24];	
@@ -21,9 +22,9 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			data[i] = rand.nextInt(1337);
 		}
 		result.setData(data);
-		
+		*/
 		return result;
-		 */
+		 
 	}
 	
 }
