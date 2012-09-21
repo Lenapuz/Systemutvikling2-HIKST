@@ -12,6 +12,6 @@ public interface UserService extends RemoteService
 	User register(User user) throws IllegalArgumentException;
 	
 	User DeleteUser(User user) throws IllegalArgumentException;
-	User EditUser(User user) throws IllegalArgumentException;
+	User EditUser(User user, String oldName) throws IllegalArgumentException;
 	User[] GetUsers() throws IllegalArgumentException;
 }

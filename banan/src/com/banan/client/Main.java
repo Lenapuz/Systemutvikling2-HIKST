@@ -128,6 +128,27 @@ public class Main implements EntryPoint
 			}
 		});
 		
+		// on onAction for � registree brukere,konsulent eller Administraotr
+				userEdit.addRegisterHandler(new ActionHandler() {
+					public void onAction()
+					{
+						
+						final User user = new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType());
+						UserService.EditUser(user, register.getOldUserName(),
+							new AsyncCallback<User>() {
+								public void onFailure(Throwable caught) 
+								{
+									Window.alert(caught.getMessage());
+								}
+			
+								public void onSuccess(User result) 
+								{
+									Window.alert(result.getStatusMessage());
+								}
+							});	
+					}
+				});
+		
 		// Starter Profil registrering OnAction() 
 		// Fungerer ikke! feil i SQL sp�rring ser ut til!! hvis ikke,
 		// s� ligger feilen en anne plass.
