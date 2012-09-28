@@ -9,6 +9,6 @@ public interface UserServiceAsync
 	void register(User user, AsyncCallback<User> callback) throws IllegalArgumentException;
 	
 	void DeleteUser(User user, AsyncCallback<User> callback) throws IllegalArgumentException;
-	void EditUser(User user, AsyncCallback<User> callback) throws IllegalArgumentException;
+	void EditUser(User user, String oldName, AsyncCallback<User> callback) throws IllegalArgumentException;
 	void GetUsers(AsyncCallback<User[]> callback) throws IllegalArgumentException;
 }

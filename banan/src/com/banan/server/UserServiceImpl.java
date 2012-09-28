@@ -1,6 +1,7 @@
 package com.banan.server;
 
 import com.banan.shared.*;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.sql.*;
 import java.util.ArrayList;
@@ -105,14 +106,13 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 
 	@Override
-	public User EditUser(User user) throws IllegalArgumentException 
+	public User EditUser(User user, String oldName) throws IllegalArgumentException 
 	{
 		try
 		{
 			this.db.connect();
 			Statement statement = db.createStatement();
-			
-			String query = "UPDATE konsulent SET Brukernavn="+ user.getUsername() + ", Passord="+user.getPassword()+", status="+user.getType()+" WHERE Brukernavn="+user.getUsername();
+			String query = "UPDATE konsulent SET Brukernavn='"+ user.getUsername() + "', Passord='"+user.getPassword()+"', status='"+user.getType()+"' WHERE Brukernavn='"+ oldName+"'";
 			int i = statement.executeUpdate(query);
 			
 			if(i > 0)

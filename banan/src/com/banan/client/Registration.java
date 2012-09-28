@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.banan.shared.User;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class Registration extends Composite 
@@ -17,8 +19,11 @@ public class Registration extends Composite
 	private Button buttonOK;
 	private ArrayList<ActionHandler> registerHandlers = new ArrayList<ActionHandler>();
 	
+	private String tempOldName;
+	
 	public Registration()
 	{
+		
 		panel = new VerticalPanel();
 		panel.addStyleName("register");
 		initWidget(panel);
@@ -45,13 +50,14 @@ public class Registration extends Composite
 		listBoxType.setWidth("164px");
 		buttonOK.setWidth("164px");
 		
-		buttonOK.addClickHandler(new ClickHandler() {
+		buttonOK.addClickHandler(new ClickHandler() 
+		{
 			public void onClick(ClickEvent event) 
 			{
 				onRegister();
 			}
 		});
-		
+
 		
 		
 		panel.add(textBoxFullName);
@@ -63,8 +69,15 @@ public class Registration extends Composite
 	
 	public void setData(User user)
 	{
+		
 		textBoxFullName.setText(user.getName());
 		textBoxUsername.setText(user.getUsername());
+		tempOldName = user.getUsername();
+	}
+	
+	public String getOldUserName()
+	{
+		return tempOldName;
 	}
 	
 	public String getFullName()

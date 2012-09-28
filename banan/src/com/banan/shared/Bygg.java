@@ -1,32 +1,35 @@
 package com.banan.shared;
 
 public class Bygg {
-	private int byggeår, beboere, kvadratmeter, hovedVKId, sekundærVKId, tertiærVKId;
-	private String hoved, sekundær, tertiær, byggtype;
+	private int byggeår, beboere, kvadratmeter;
+	private String byggtype;
 	private boolean takis, veggis, vinduis;
 	private int energiPerKvm;
 	
-	String[] varmekilde;
-	double[] varmekildeFaktor;
+	private int[] varmekildeId;
+	private double[] andel;
+	
+	private String[] varmekilde;
+	private double[] varmekildeFaktor;
 
-	public Bygg(int byggeår, int hoved, int sekundær, int tertiær, 
-			boolean takis, boolean veggis, boolean vinduis, int beboere,
-			int kvadratmeter, String byggtype)
+	//Konstruktør
+	public Bygg(int byggeår, boolean takis, boolean veggis, boolean vinduis, int beboere,
+			int kvadratmeter, String byggtype, int[] varmekildeId, double[] andel)
 	{
 		this.byggeår = byggeår;
 		this.beboere = beboere;
 		this.kvadratmeter = kvadratmeter;
-		this.hovedVKId = hoved;
-		this.sekundærVKId = sekundær;
-		this.tertiærVKId = tertiær;
 		this.byggtype = byggtype;
 		this.takis = takis;
 		this.veggis = veggis;
 		this.vinduis = vinduis;
+		this.varmekildeId = varmekildeId;
+		this.andel = andel;
 		fyllVarmekilder();
-		fyllVarmekildeFaktor();
-		fyllVKStrings();
+		fyllVarmekildeFaktor();		
 	}
+	
+	//Get og set for lokale variabler
 	public int getByggeår() {
 		return byggeår;
 	}
@@ -44,25 +47,7 @@ public class Bygg {
 	}
 	public void setKvadratmeter(int kvadratmeter) {
 		this.kvadratmeter = kvadratmeter;
-	}
-	public String getHoved() {
-		return hoved;
-	}
-	public void setHoved(String hoved) {
-		this.hoved = hoved;
-	}
-	public String getSekundær() {
-		return sekundær;
-	}
-	public void setSekundær(String sekundær) {
-		this.sekundær = sekundær;
-	}
-	public String getTertiær() {
-		return tertiær;
-	}
-	public void setTertiær(String tertiær) {
-		this.tertiær = tertiær;
-	}
+	}	
 	public String getByggtype() {
 		return byggtype;
 	}
@@ -88,6 +73,7 @@ public class Bygg {
 		this.vinduis = vinduis;
 	}
 
+	
 	public double kalkulerTotalForbruk(int varmekildeId, double andel)
 	{
 		double d = varmekildeFaktor[varmekildeId];
@@ -96,10 +82,11 @@ public class Bygg {
 	}
 	public double bruktKWperTime()
 	{
-		double kwh = 1;
+		double kwh = 114;
 		kwh *= byggårForbruksFaktor(byggeår);
 		kwh *= beboereForbruksFaktor(beboere);
 		kwh *= kvadratmeter;
+		kwh *= gjennomsnittligVKFaktor();
 		return kwh;
 	}
 	public double varmeKildeForbruksFaktor()
@@ -171,10 +158,23 @@ public class Bygg {
 		varmekildeFaktor[3] = 0; //"Gassovn";
 		varmekildeFaktor[4] = 0.9;	//"Oljeovn";
 	}
-	private void fyllVKStrings()
-	{		
-		hoved = varmekilde[hovedVKId];
-		sekundær = varmekilde[sekundærVKId];
-		tertiær = varmekilde[tertiærVKId];
+	public double gjennomsnittligVKFaktor()
+	{
+		int varmekildeAntall = varmekildeId.length;
+		double totalForbruk = 0;
+		for(int i = 0;i<varmekildeAntall;i++)
+		{
+			totalForbruk+= kalkulerTotalForbruk(varmekildeId[i], andel[i]);
+		}
+		return totalForbruk;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
