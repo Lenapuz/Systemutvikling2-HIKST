@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 /***
- *  Dette er bare test Spørringer mot en test Database. Ting vil bli endret på.
+ *  Dette er bare test Spï¿½rringer mot en test Database. Ting vil bli endret pï¿½.
  * @author Martin
  *Klassen implementere ProfileService.
  */
@@ -112,4 +112,45 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			db.disconnect();
 		}
 	}
+	
+	public Heatsource[] getHeatsources() throws IllegalArgumentException {
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM heatsource");
+			
+			ArrayList<Heatsource> tempHeatsource = new ArrayList<Heatsource>();
+			while (result.next())
+			{
+				tempHeatsource.add(new Heatsource(result.getInt("id"), result.getString("name"), result.getDouble("varmefaktor")));
+			}
+			
+			Heatsource[] heatsource = new Heatsource[tempHeatsource.size()];
+			for (int i = 0; i < tempHeatsource.size(); i++)
+			{
+				heatsource[i] = tempHeatsource.get(i);
+			}
+			return heatsource;
+		}
+		catch (Exception ex)
+		{
+			System.out.println(ex.getMessage());
+			return null;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+	/**
+	 * To do med Heatsource
+	 * Skrive egen HeatsourceServiceImpl.java!
+	 * 
+	 * deleteHeatsource 		
+	 * addHeatsource
+	 * getHeatsourceById
+	 * getHeatsourceByName
+	 * editFactor(double factor)
+	 */
 }

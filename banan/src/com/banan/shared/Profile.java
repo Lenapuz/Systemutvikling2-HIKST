@@ -172,5 +172,30 @@ public class Profile implements Serializable {
 		statusMessage = message;
 		
 	}
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();				
+		sb.append("Name: " + name);
+		sb.append("\nbuildYear: " + buildYear);
+		sb.append("\nstatusMessage: " + statusMessage);
+		sb.append("\ntypeProfile: " + typeProfile);
+		sb.append("\nprimHeating: " + primHeating);
+		sb.append("\nisIsolated: " + isIsolated);
+		sb.append("\nhouseResidents: " + houseResidents);
+		sb.append("\nhouseSize: " + houseSize+"\n");
 		
+		return sb.toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
