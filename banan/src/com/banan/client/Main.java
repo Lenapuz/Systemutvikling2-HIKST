@@ -133,8 +133,8 @@ public class Main implements EntryPoint
 					public void onAction()
 					{
 						
-						final User user = new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType());
-						UserService.EditUser(user, register.getOldUserName(),
+						final User user = new User(userEdit.getFullName(), userEdit.getUsername(), userEdit.getPassword(), userEdit.getType());
+						UserService.EditUser(user, userEdit.getOldUserName(),
 							new AsyncCallback<User>() {
 								public void onFailure(Throwable caught) 
 								{
