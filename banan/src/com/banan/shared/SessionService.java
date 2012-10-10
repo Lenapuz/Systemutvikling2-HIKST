@@ -8,4 +8,5 @@ import com.banan.shared.*;
 public interface SessionService extends RemoteService {
 	Integer get(String attr);
 	void set(String attr, Integer value);
+	void clear(String attr);
 }

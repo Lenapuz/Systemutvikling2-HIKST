@@ -100,6 +100,13 @@ public class Registration extends Composite
 		return listBoxType.getItemText(listBoxType.getSelectedIndex());
 	}
 	
+	public void clear()
+	{
+		textBoxFullName.setText("");
+		textBoxUsername.setText("");
+		textBoxPassword.setText("");		
+	}
+	
 	public void addRegisterHandler(ActionHandler handler)
 	{
 		registerHandlers.add(handler);

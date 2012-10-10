@@ -10,8 +10,7 @@ import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 public class SimServiceImpl extends RemoteServiceServlet implements SimService
 {
 	public SimResult simulate(int profileID)
-	{
-		
+	{		
 		SimResult result = new SimResult(profileID * 1881);	
 		/*
 		Random rand = new Random();

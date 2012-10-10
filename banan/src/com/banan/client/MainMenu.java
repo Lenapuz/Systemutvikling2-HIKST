@@ -2,6 +2,8 @@ package com.banan.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class MainMenu extends Composite 
@@ -61,13 +63,23 @@ public class MainMenu extends Composite
 		buttonLogout.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
 			{				
-				p.showWidget(UI.LOGIN);
+				Main.SessionService.clear("login", new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+					}					
+				});
+				Window.Location.reload();
 			}			
 		});
 		
 		buttonUserAdmin.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
-			{				
+			{	
+				Main.userAdmin.reload();
 				p.showWidget(UI.USERADMIN);
 			}			
 		});
@@ -78,10 +90,10 @@ public class MainMenu extends Composite
 			panel.add(buttonRegister);
 			
 		}
-		//panel.add(buttonLogout);
+		
 		panel.add(buttonAddProfile);
 		panel.add(buttonRegister);
 		panel.add(buttonUserAdmin);
-		
+		panel.add(buttonLogout);		
 	}
 }
