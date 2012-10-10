@@ -93,8 +93,7 @@ public class Main implements EntryPoint
 									@Override
 									public void onSuccess(Void result) {
 										
-									}
-									
+									}									
 								});
 								
 							}
@@ -111,7 +110,7 @@ public class Main implements EntryPoint
 			public void onAction()
 			{
 				final User user = new User(register.getFullName(), register.getUsername(), register.getPassword(), register.getType());
-				
+								
 				UserService.register(user,
 					new AsyncCallback<User>() {
 						public void onFailure(Throwable caught) 
@@ -122,6 +121,7 @@ public class Main implements EntryPoint
 						public void onSuccess(User result) 
 						{
 							Window.alert(result.getStatusMessage());
+							register.clear();
 							userAdmin.addUser(user);
 						}
 					});	
@@ -181,7 +181,7 @@ public class Main implements EntryPoint
 		mainPanel.add(new ProfileList());
 		mainPanel.add(simGraphics);		
 		mainPanel.add(userAdmin);
-		mainPanel.add(userEdit);		
+		mainPanel.add(userEdit);
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
 			@Override

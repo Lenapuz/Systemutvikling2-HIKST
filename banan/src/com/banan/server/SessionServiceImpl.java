@@ -17,4 +17,10 @@ public class SessionServiceImpl extends RemoteServiceServlet implements SessionS
 		HttpSession session = this.getThreadLocalRequest().getSession();
 		session.setAttribute(attr, value);
 	}
+
+	@Override
+	public void clear(String attr) {
+		HttpSession session = this.getThreadLocalRequest().getSession();
+		session.setAttribute(attr, null);	
+	}
 }

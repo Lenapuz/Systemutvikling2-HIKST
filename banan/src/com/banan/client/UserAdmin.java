@@ -32,7 +32,7 @@ public class UserAdmin extends Composite
 		panel = new VerticalPanel();
 		panel.addStyleName("userAdmin");
 		initWidget(panel);		
-
+		
 		Main.UserService.GetUsers(
 				new AsyncCallback<User[]>() 
 				{
@@ -57,7 +57,36 @@ public class UserAdmin extends Composite
 						}
 						panel.add(flextable);
 					}
-				});
+				});	
+	}
+	
+	public void reload() {
+		flextable.clear();
+		Main.UserService.GetUsers(
+				new AsyncCallback<User[]>() 
+				{
+					@Override
+					public void onFailure(Throwable caught) 
+					{
+						Window.alert(caught.getMessage());						
+					}
+
+					@Override
+					public void onSuccess(User[] result) 
+					{
+						flextable.setWidget(row, 0, new Label("Fultnavn:"));
+						flextable.setWidget(row, 1, new Label("Brukernavn:"));
+						flextable.setWidget(row, 2, new Label("Type:"));
+						flextable.setWidget(row, 3, new Label("Slett:"));
+						flextable.setWidget(row, 4, new Label("Edit:"));
+						
+						for(final User u : result)
+						{
+							addUser(u);
+						}
+						panel.add(flextable);
+					}
+				});	
 	}
 	
 	public void addUser(final User u)
@@ -100,6 +129,7 @@ public class UserAdmin extends Composite
 					@Override
 					public void onSuccess(User result) 
 					{
+						reload();
 						Window.alert(result.getStatusMessage());
 						row--;
 					}				

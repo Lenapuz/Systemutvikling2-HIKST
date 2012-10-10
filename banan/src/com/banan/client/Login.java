@@ -1,11 +1,14 @@
 package com.banan.client;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.*;
 
 public class Login extends Composite 
@@ -13,6 +16,7 @@ public class Login extends Composite
 	private VerticalPanel panel;
 	private TextBox textBoxUsername;
 	private PasswordTextBox textBoxPassword;
+	private CheckBox checkBoxPassword;
 	private Button buttonOK;
 	private ArrayList<ActionHandler> loginHandlers = new ArrayList<ActionHandler>();
 	
@@ -26,6 +30,8 @@ public class Login extends Composite
 		textBoxUsername.getElement().setPropertyString("placeholder", "Brukernavn");
 		textBoxPassword = new PasswordTextBox();
 		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
+		checkBoxPassword = new CheckBox();
+		checkBoxPassword.setText("Husk passord");
 		buttonOK = new Button("Logg inn");
 		buttonOK.addStyleName("btn btn-primary");
 		
@@ -53,7 +59,16 @@ public class Login extends Composite
 		
 		panel.add(textBoxUsername);
 		panel.add(textBoxPassword);
+		panel.add(checkBoxPassword);
 		panel.add(buttonOK);
+		
+		if (Cookies.getCookie("lastUser") != null) {
+			textBoxUsername.setText(Cookies.getCookie("lastUser"));
+		}
+		if (Cookies.getCookie("lastPassword") != null) {
+			textBoxPassword.setText(Cookies.getCookie("lastPassword"));
+			checkBoxPassword.setChecked(true);
+		}
 	}
 	
 	public String getUsername()
@@ -73,6 +88,19 @@ public class Login extends Composite
 	
 	protected void onLogin()
 	{
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, 7);		
+		Cookies.setCookie("lastUser", getUsername(), cal.getTime());
+		
+		if (checkBoxPassword.isChecked()) {
+			Cookies.setCookie("lastPassword", getPassword(), cal.getTime());
+		}
+		else {
+			Cookies.setCookie("lastPassword", null);
+		}
+		
 		for (ActionHandler handler : loginHandlers)
 		{
 			handler.onAction();
