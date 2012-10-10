@@ -53,8 +53,8 @@ button {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background: #6BB7FF;
-	padding-left: 10px;
-	width: 950px !important;
+	padding: 0px 10px;
+	width: 940px !important;
 }
 
 .menu_item {
@@ -153,4 +153,8 @@ header h1 {
 
 .simResultPanel {
 	background: #FFF;
+}
+
+.floatright {
+	float: right;
 }

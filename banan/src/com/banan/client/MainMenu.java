@@ -25,6 +25,7 @@ public class MainMenu extends Composite
 		
 		Button buttonLogout = new Button("Logg ut");
 		buttonLogout.addStyleName("menu_item");
+		buttonLogout.addStyleName("floatright");
 		//buttonLogout.addStyleName("btn");
 		
 		Button buttonAddProfile = new Button("Opprett profil");
@@ -57,23 +58,16 @@ public class MainMenu extends Composite
 				p.showWidget(UI.PROFIL);
 			}			
 		});
-		
-		
-		
+				
 		buttonLogout.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
-			{				
+			{
 				Main.SessionService.clear("login", new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-					}					
+					public void onFailure(Throwable caught) { }
+					public void onSuccess(Void result) { }					
 				});
 				Window.Location.reload();
-			}			
+			}
 		});
 		
 		buttonUserAdmin.addClickHandler(new ClickHandler() {
