@@ -2,6 +2,9 @@ package com.banan.client;
 
 import java.util.Random;
 
+import com.banan.server.SimServiceImpl;
+import com.banan.shared.SimResult;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -45,20 +48,39 @@ public class SimulationGraphics extends Composite {
 				chartOptions.setHeight(400);
 				chartOptions.setTitle("Forbruk");
 				chartOptions.setFontSize(10.0);
-				DataTable data = DataTable.create();
+				final DataTable data = DataTable.create();
 				data.addColumn(ColumnType.STRING, "_");
 				data.addColumn(ColumnType.NUMBER, "kW");
 
-				String rapport = "<h1>Rapport</h1>";				
+								
+				final StringBuilder sb = new StringBuilder();
+								
+				Main.SimService.GetSimResultByProfileId(20, new AsyncCallback<SimResult[]>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(SimResult[] result) {
+						String rapport = "<h1>Rapport</h1>";
+						data.addRows(24);
+						Integer[] simdata = result[0].getData();
+						for (int i = 0; i < 24; i++)
+						{
+							data.setValue(i, 0, i + ":00");
+							data.setValue(i, 1, simdata[i]);
+							
+							
+							rapport += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
+						}
+						sb.append(rapport);
+						
+					}});
 				
-				data.addRows(24);
-				for (int i = 0; i < 24; i++)
-				{
-					data.setValue(i, 0, i + ":00");
-					data.setValue(i, 1, rand.nextInt(1337));
-					
-					rapport += "<p>" + i +":00 = " + rand.nextInt(1337) + "kW</p>";
-				}
+				
 				
 				chart = new LineChart(data, chartOptions);	
 				VerticalPanel p = new VerticalPanel();
@@ -67,7 +89,7 @@ public class SimulationGraphics extends Composite {
 				
 				VerticalPanel p2 = new VerticalPanel();
 								
-				p2.add(new HTML(rapport));
+				p2.add(new HTML(sb.toString()));
 				herp2.add(p2, "Rapport");
 				
 				herp2.selectTab(0);

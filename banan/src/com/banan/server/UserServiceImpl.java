@@ -170,4 +170,5 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 			db.disconnect();
 		}
 	}
+	
 }

@@ -2,13 +2,32 @@ package com.banan.shared;
 
 import java.io.Serializable;
 
+import org.apache.http.entity.mime.content.StringBody;
+
 import com.google.gwt.visualization.client.DataTable;
 
 @SuppressWarnings("serial")
 public class SimResult implements Serializable
 {
-	private int magic;
-	private Integer[] data;
+	private int magic, id, profil_id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getProfil_id() {
+		return profil_id;
+	}
+
+	public void setProfil_id(int profil_id) {
+		this.profil_id = profil_id;
+	}
+
+	private Integer[] data;	
+
 	
 	public SimResult() {}
 	
@@ -16,11 +35,32 @@ public class SimResult implements Serializable
 	{
 		this.magic = magic;
 	}
-	
-	public int getMagic()
+
+	public SimResult(int id, int profil_id, String  magicFromDatabase)
 	{
-		return magic;
+		this.id = id;
+		this.profil_id = profil_id;
+		
+		
+		try
+		{
+			String[] s = magicFromDatabase.split(",");
+			
+			data = new Integer[s.length];
+			
+			for(int i = 0; i < s.length; i++)
+			{
+				data[i] = Integer.parseInt(s[i]);
+			}
+			
+		}
+		catch(Exception ex){
+			
+		}
+		
+		
 	}
+	
 	
 	public void setData(Integer[] data)
 	{
@@ -30,5 +70,15 @@ public class SimResult implements Serializable
 	public Integer[] getData()
 	{
 		return data;
+	}
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < 24; i ++)
+		{
+			sb.append(data[i] + ",");
+		}
+		return sb.toString();
 	}
 }

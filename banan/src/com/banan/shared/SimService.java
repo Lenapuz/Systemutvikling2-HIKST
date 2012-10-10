@@ -8,4 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface SimService extends RemoteService
 {
 	SimResult simulate(int profileID);
+	SimResult[] GetSimResultByProfileId(int profileID);
+	
 }
