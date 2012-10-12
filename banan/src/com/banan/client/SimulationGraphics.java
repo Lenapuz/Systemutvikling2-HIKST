@@ -68,12 +68,10 @@ public class SimulationGraphics extends Composite {
 						String rapport = "<h1>Rapport</h1>";
 						data.addRows(24);
 						Integer[] simdata = result[0].getData();
-						for (int i = 0; i < 24; i++)
+						for (int i = 0; i < simdata.length; i++)
 						{
 							data.setValue(i, 0, i + ":00");
 							data.setValue(i, 1, simdata[i]);
-							
-							
 							rapport += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
 						}
 						sb.append(rapport);

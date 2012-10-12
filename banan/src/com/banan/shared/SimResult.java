@@ -10,6 +10,8 @@ import com.google.gwt.visualization.client.DataTable;
 public class SimResult implements Serializable
 {
 	private int magic, id, profil_id;
+	private Integer[] data;	
+	
 	public int getId() {
 		return id;
 	}
@@ -26,7 +28,7 @@ public class SimResult implements Serializable
 		this.profil_id = profil_id;
 	}
 
-	private Integer[] data;	
+	
 
 	
 	public SimResult() {}
