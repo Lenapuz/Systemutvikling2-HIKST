@@ -33,30 +33,25 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		Profile p = new Profile("Johansens Hybel", "1989", "true", "hybel", "panelovn", "1", "20");
 		Heatsource h1 = new Heatsource(0, "Panelovn", 0.5);
 		Heatsource h3 = new Heatsource(0, "Varmepumpe", 0.3);
+		Integer[] resultat = new Integer[24];
 		
 		//Her må vi løse hvordan vi skal behandle flere oppvarmingskilder
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		SimResult result = new SimResult(profileID * 1881);	
-		Random rand = new Random();
-		Integer[] data = new Integer[24];	
+		//I denne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			data[i] = rand.nextInt(1337);
+			int res = 1;
+			
+			res *= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
+			res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
+			res*= h1.getheatFactor();
+			//res *= tidsfaktor for å variere iløpet av døgnet
+			
+			resultat[i] = res;
 		}
-		result.setData(data);
+		
+		SimResult result = new SimResult(0,p.getID(),resultat);	
+		
 		return result;
 	}
 	//Faktorer til bruk i utregning
