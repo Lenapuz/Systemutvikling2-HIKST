@@ -56,7 +56,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			{
 				results[i] = tempResults.get(i);
 			}
-			System.out.println(results[0].toString());
+			
 			return results;
 			
 		}
@@ -69,31 +69,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-	public SimResult GetSimResultById(int id) throws IllegalArgumentException 
-	{
-		try
-		{		
-			this.db.connect();
-			Statement statement = db.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM result WHERE id='" + id +"'");			
-			SimResult s = new SimResult();
-			
-			while (result.next())
-			{
-				s = new SimResult(result.getInt("id"), result.getInt("profil_id"), result.getString("magic"));
-			}
-			return s;
-			
-		}
-		catch(Exception ex)
-		{
-			return null;
-		}
-		finally
-		{
-			db.disconnect();
-		}
-	}
+	
 	
 	
 	public void DeleteSimResult(int id) throws IllegalArgumentException 

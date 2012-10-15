@@ -43,7 +43,7 @@ public class SimulationGraphics extends Composite {
 		
 		Runnable onLoadCallback = new Runnable() {
 			public void run() {
-				Options chartOptions = Options.create();
+				final Options chartOptions = Options.create();
 				chartOptions.setWidth(960);
 				chartOptions.setHeight(400);
 				chartOptions.setTitle("Forbruk");
@@ -55,7 +55,7 @@ public class SimulationGraphics extends Composite {
 								
 				final StringBuilder sb = new StringBuilder();
 								
-				Main.SimService.GetSimResultByProfileId(20, new AsyncCallback<SimResult[]>(){
+				Main.SimService.GetSimResultByProfileId(22, new AsyncCallback<SimResult[]>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -68,6 +68,7 @@ public class SimulationGraphics extends Composite {
 						String rapport = "<h1>Rapport</h1>";
 						data.addRows(24);
 						Integer[] simdata = result[0].getData();
+						
 						for (int i = 0; i < simdata.length; i++)
 						{
 							data.setValue(i, 0, i + ":00");
@@ -75,22 +76,23 @@ public class SimulationGraphics extends Composite {
 							rapport += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
 						}
 						sb.append(rapport);
+						chart = new LineChart(data, chartOptions);	
+						VerticalPanel p = new VerticalPanel();
+						p.add(chart);
+						herp2.add(p, "Graf");
+						
+						VerticalPanel p2 = new VerticalPanel();
+										
+						p2.add(new HTML(sb.toString()));
+						herp2.add(p2, "Rapport");
+						
+						herp2.selectTab(0);
 						
 					}});
 				
 				
 				
-				chart = new LineChart(data, chartOptions);	
-				VerticalPanel p = new VerticalPanel();
-				p.add(chart);
-				herp2.add(p, "Graf");
-				
-				VerticalPanel p2 = new VerticalPanel();
-								
-				p2.add(new HTML(sb.toString()));
-				herp2.add(p2, "Rapport");
-				
-				herp2.selectTab(0);
+			
 			}
 		};
 				
