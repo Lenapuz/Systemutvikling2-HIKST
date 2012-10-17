@@ -54,6 +54,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		return result;
 	}
+	
 	//Faktorer til bruk i utregning
 	public static double byggårForbruksFaktor(int byggår)
 	{

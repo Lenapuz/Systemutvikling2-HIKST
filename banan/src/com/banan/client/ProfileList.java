@@ -31,9 +31,9 @@ public class ProfileList extends Composite {
 							HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
 							html.addClickHandler(new ClickHandler() {
 								public void onClick(ClickEvent event) {
-									//Window.alert("!");
+									Window.alert(p.getID() + "");
 									
-									Main.SimService.simulate(p.getID(), new AsyncCallback<SimResult>() {
+									Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
@@ -41,19 +41,24 @@ public class ProfileList extends Composite {
 										}
 
 										@Override
-										public void onSuccess(SimResult result) {	
-											DataTable data = DataTable.create();
-											Integer[] d = result.getData();
-											data.addColumn(ColumnType.NUMBER, "kW");
-											
-											data.addRows(24);
-											for (int i = 0; i < 24; i++)
-											{
-												data.setValue(i, 0, d[i]);
+										public void onSuccess(SimResult[] result) {	
+											if (result == null) {
+												Window.alert("Fant ikke noe resultat!");
 											}
-																						
-											Main.mainPanel.showWidget(UI.SIMGRAPHICS);
-											Main.simGraphics.shoveData(data);
+											else  {
+												DataTable data = DataTable.create();
+												Integer[] d = result[0].getData();
+												data.addColumn(ColumnType.NUMBER, "kW");
+												
+												data.addRows(24);
+												for (int i = 0; i < 24; i++)
+												{
+													data.setValue(i, 0, d[i]);
+												}
+																							
+												Main.mainPanel.showWidget(UI.SIMGRAPHICS);
+												Main.simGraphics.shoveData(data);
+											}
 										}										
 									});
 								}								

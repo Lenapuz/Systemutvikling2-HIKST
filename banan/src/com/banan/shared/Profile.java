@@ -12,11 +12,11 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Profile implements Serializable {
 	
-	//private String profilID;
+	private int ID;
 	private String name;
 	private String buildYear;
 	private String statusMessage;
-	private String typeProfile;
+	private String typeProfile; //loft/kjeller
 	private String primHeating;
 	private String isIsolated;
 	private String houseResidents;
@@ -62,7 +62,13 @@ public class Profile implements Serializable {
 		
 	}*/
 	
-
+	public void setID(int id) {
+		this.ID = id;
+	}
+	
+	public int getID() {
+		return ID;
+	}
 	
 	public void setTypePofile(String typeProfile)
 	{
@@ -77,11 +83,6 @@ public class Profile implements Serializable {
 	public void setIsisolated(String isIsolated)
 	{
 		this.isIsolated = isIsolated;
-	}
-	
-	public int getID()
-	{
-		return 0;
 	}
 	
 	/*public String getFirstname()
