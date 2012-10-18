@@ -90,10 +90,6 @@ public class SimulationGraphics extends Composite {
 						herp2.selectTab(0);
 						
 					}});
-				
-				
-				
-			
 			}
 		};
 				

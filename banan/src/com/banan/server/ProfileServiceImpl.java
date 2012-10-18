@@ -94,7 +94,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			while (result.next())
 			{
 				Profile p = new Profile(result.getString("name"), result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size"));
-				p.setID(result.getInt("id"));
+				p.setID(result.getInt("profil_id"));
 				tempProfiles.add(p);
 			}
 			
@@ -107,7 +107,9 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 		}
 		catch (Exception ex)
 		{
-			return null;
+			Profile p = new Profile();
+			p.setStatusMessage(ex.getMessage());
+			return new Profile[] { p };
 		}
 		finally
 		{

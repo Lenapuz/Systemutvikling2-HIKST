@@ -12,7 +12,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Profile implements Serializable {
 	
-	private int ID;
+	private Integer ID;
 	private String name;
 	private String buildYear;
 	private String statusMessage;
