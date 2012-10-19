@@ -21,8 +21,9 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	
 	//TODO: void newSimResult(int[] result, int profil_id) legge inn nytt resultat
 	//
-	//public Heatsource[] getAllHeatSources(); 
-	//public void changeHeatSourceFactor(int id);
+	
+
+	
 
 	
 	public SimResult simulate(int profileID)

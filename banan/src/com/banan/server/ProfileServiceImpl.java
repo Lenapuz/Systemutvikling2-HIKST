@@ -36,7 +36,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			}
 			else
 			{
-				profile.setStatusMessage("Kunne ikk elegge inn profil");
+				profile.setStatusMessage("Kunne ikke legge inn profil");
 			}
 			return profile;
 		}
@@ -68,7 +68,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			}
 			else
 			{
-				profile.setStatusMessage("Kunne ikk elegge inn profil");
+				profile.setStatusMessage("Kunne ikke legge inn profil");
 			}
 			return profile;
 		}
@@ -143,14 +143,72 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			db.disconnect();
 		}
 	}
+	
+	public Heatsource register(Heatsource heatsource) throws IllegalArgumentException
+	{
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			int i = statement.executeUpdate("INSERT heatsource (id, name, varmefaktor) VALUES('" + heatsource.getId() + "','" + heatsource.getName() + "','" + heatsource.getheatFactor() + "')");
+			
+			if (i >0)
+			{
+				heatsource.setStatusMessage("Registrering OK");
+			}
+			else
+			{
+				heatsource.setStatusMessage("Kunne ikke legge til varmefaktor");
+			}
+			return heatsource;
+		}
+		catch (Exception ex)
+		{
+			heatsource.setStatusMessage(ex.getMessage());
+			return heatsource;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+	public Heatsource delete(Heatsource heatsource) throws IllegalArgumentException
+	{
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			int i = statement.executeUpdate("DELETE heatsource ('" + heatsource.getId() + "','" + heatsource.getName() + "','" + heatsource.getheatFactor() + "')");
+			
+			if (i >0)
+			{
+				heatsource.setStatusMessage("sletting ok");
+			}
+			else
+			{
+				heatsource.setStatusMessage("Kunne ikke slette heatsource");
+			}
+			return heatsource;
+		}
+		catch (Exception ex)
+		{
+			heatsource.setStatusMessage(ex.getMessage());
+			return heatsource;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
 	/**
 	 * To do med Heatsource
 	 * Skrive egen HeatsourceServiceImpl.java!
 	 * 
-	 * deleteHeatsource 		
-	 * addHeatsource
+	 * 		
+
 	 * getHeatsourceById
 	 * getHeatsourceByName
 	 * editFactor(double factor)
 	 */
 }
+	

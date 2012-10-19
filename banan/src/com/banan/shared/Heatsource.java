@@ -11,6 +11,7 @@ oljeovn        90		3
 gassovn        0		4
 	 * 
 	 */
+	private String statusMessage;
 	private String name;
 	private int id;
 	private double heatFactor;
@@ -33,11 +34,6 @@ gassovn        0		4
 		this.heatFactor = factor;
 	}
 
-
-	public Heatsource()
-	{
-		
-	}
 	public Heatsource(int id, String name, double heatFactor)
 	{
 		this.id = id;
@@ -51,5 +47,11 @@ gassovn        0		4
 		sb.append("\nname: " + name);
 		sb.append("\nheatFactor: " + heatFactor+"\n");
 		return sb.toString();
+	}
+	public void setStatusMessage(String message) {
+		// TODO Auto-generated method stub
+		
+		statusMessage = message;
+		
 	}
 }
