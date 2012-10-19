@@ -18,49 +18,54 @@ public class ProfileList extends Composite {
 		herp = new VerticalPanel();
 		initWidget(herp);
 		Main.ProfileService.getProfiles(
-				new AsyncCallback<Profile[]>() {
-					public void onFailure(Throwable caught) 
-					{
-						Window.alert(caught.getMessage());
-					}
+			new AsyncCallback<Profile[]>() {
+				public void onFailure(Throwable caught) 
+				{
+					Window.alert(caught.getMessage());
+				}
 
-					public void onSuccess(Profile[] result) 
+				public void onSuccess(Profile[] result) 
+				{
+					for (final Profile p : result)
 					{
-						for (final Profile p : result)
-						{		
-							HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
-							html.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
-									//Window.alert("!");
-									
-									Main.SimService.simulate(p.getID(), new AsyncCallback<SimResult>() {
+						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
+						html.addClickHandler(new ClickHandler() {
+							public void onClick(ClickEvent event) {									
+								Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
 
-										@Override
-										public void onFailure(Throwable caught) {
-											Window.alert(caught.getMessage());											
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert(caught.getMessage());											
+									}
+
+									@Override
+									public void onSuccess(SimResult[] result) {	
+										if (result == null) {
+											Window.alert("Fant ikke noe resultat!");
 										}
-
-										@Override
-										public void onSuccess(SimResult result) {	
+										else  {
 											DataTable data = DataTable.create();
-											Integer[] d = result.getData();
+											Integer[] d = result[0].getData();
+											data.addColumn(ColumnType.STRING, "_");
 											data.addColumn(ColumnType.NUMBER, "kW");
 											
 											data.addRows(24);
 											for (int i = 0; i < 24; i++)
 											{
-												data.setValue(i, 0, d[i]);
+												data.setValue(i, 0, i + ":00");
+												data.setValue(i, 1, d[i]);												
 											}
 																						
 											Main.mainPanel.showWidget(UI.SIMGRAPHICS);
 											Main.simGraphics.shoveData(data);
-										}										
-									});
-								}								
-							});
-							herp.add(html);
-						}
+										}
+									}										
+								});
+							}						
+						});
+						herp.add(html);
 					}
-				});		
+				}
+			});		
 	}
 }

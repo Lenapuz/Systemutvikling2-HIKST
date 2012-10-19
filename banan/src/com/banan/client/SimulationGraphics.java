@@ -73,6 +73,7 @@ public class SimulationGraphics extends Composite {
 						{
 							data.setValue(i, 0, i + ":00");
 							data.setValue(i, 1, simdata[i]);
+							//data.setValue(i, 0, result);
 							rapport += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
 						}
 						sb.append(rapport);
@@ -89,10 +90,6 @@ public class SimulationGraphics extends Composite {
 						herp2.selectTab(0);
 						
 					}});
-				
-				
-				
-			
 			}
 		};
 				
@@ -101,6 +98,6 @@ public class SimulationGraphics extends Composite {
 	
 	public void shoveData(DataTable table)
 	{
-		//chart.draw(table, chartOptions);
+		chart.draw(table, chartOptions);
 	}
 }

@@ -62,21 +62,19 @@ public class SimResult implements Serializable
 	}
 	
 	//TODO
-	/*
-	public SimResult(int id, int profil_id, int[]data)
+	
+	public SimResult(int id, int profil_id, Integer[]data)
 	{
 		this.id = id;
 		this.profil_id = profil_id;
 		
 		try
 		{
-			String[] s = magicFromDatabase.split(",");
+			this.data = new Integer[data.length];
 			
-			data = new Integer[s.length];
-			
-			for(int i = 0; i < s.length; i++)
+			for(int i = 0; i < data.length; i++)
 			{
-				data[i] = Integer.parseInt(s[i]);
+				this.data[i] = data[i];
 			}
 		}
 		catch(Exception ex){
@@ -84,7 +82,7 @@ public class SimResult implements Serializable
 		}
 		
 		
-	}*/
+	}
 	
 	
 	public void setData(Integer[] data)
