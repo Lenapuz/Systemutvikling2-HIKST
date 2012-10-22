@@ -41,23 +41,22 @@ public class ProfileList extends Composite {
 									@Override
 									public void onSuccess(SimResult[] result) {	
 										if (result == null) {
-											Window.alert("Fant ikke noe resultat!");
+											Main.SimService.simulate(p.getID(), new AsyncCallback<SimResult>() {
+
+												@Override
+												public void onFailure(Throwable caught) {
+													Window.alert(caught.getMessage());
+												}
+
+												@Override
+												public void onSuccess(SimResult result) {
+													updateData(result.getData());
+												}
+												
+											});// :O
 										}
 										else  {
-											DataTable data = DataTable.create();
-											Integer[] d = result[0].getData();
-											data.addColumn(ColumnType.STRING, "_");
-											data.addColumn(ColumnType.NUMBER, "kW");
-											
-											data.addRows(24);
-											for (int i = 0; i < 24; i++)
-											{
-												data.setValue(i, 0, i + ":00");
-												data.setValue(i, 1, d[i]);												
-											}
-																						
-											Main.mainPanel.showWidget(UI.SIMGRAPHICS);
-											Main.simGraphics.shoveData(data);
+											updateData(result[0].getData());
 										}
 									}										
 								});
@@ -67,5 +66,21 @@ public class ProfileList extends Composite {
 					}
 				}
 			});		
+	}
+	
+	private void updateData(Integer[] d) {
+		DataTable data = DataTable.create();
+		data.addColumn(ColumnType.STRING, "_");
+		data.addColumn(ColumnType.NUMBER, "kW");
+		
+		data.addRows(24);
+		for (int i = 0; i < 24; i++)
+		{
+			data.setValue(i, 0, i + ":00");
+			data.setValue(i, 1, d[i]);												
+		}
+													
+		Main.mainPanel.showWidget(UI.SIMGRAPHICS);
+		Main.simGraphics.shoveData(data);
 	}
 }

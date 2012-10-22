@@ -62,7 +62,17 @@ public class SimResult implements Serializable
 	}
 	
 	//TODO
-	
+	public String getMagic ()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(data[0]);
+		for(int i = 1; i < data.length; i++)
+		{
+			sb.append("," + data[i]);
+			
+		}
+		return sb.toString();
+	}
 	public SimResult(int id, int profil_id, Integer[]data)
 	{
 		this.id = id;

@@ -35,6 +35,7 @@ public class SimulationGraphics extends Composite {
 	LineChart chart;
 	Options chartOptions;
 	Random rand = new Random();
+	HTML rapport;
 	
 	public SimulationGraphics() {
 		herp2 = new TabPanel();
@@ -65,7 +66,7 @@ public class SimulationGraphics extends Composite {
 
 					@Override
 					public void onSuccess(SimResult[] result) {
-						String rapport = "<h1>Rapport</h1>";
+						String r = "<h1>Rapport</h1>";
 						data.addRows(24);
 						Integer[] simdata = result[0].getData();
 						
@@ -74,17 +75,18 @@ public class SimulationGraphics extends Composite {
 							data.setValue(i, 0, i + ":00");
 							data.setValue(i, 1, simdata[i]);
 							//data.setValue(i, 0, result);
-							rapport += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
+							r += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
 						}
-						sb.append(rapport);
+						sb.append(r);
 						chart = new LineChart(data, chartOptions);	
 						VerticalPanel p = new VerticalPanel();
 						p.add(chart);
 						herp2.add(p, "Graf");
 						
 						VerticalPanel p2 = new VerticalPanel();
-										
-						p2.add(new HTML(sb.toString()));
+								
+						rapport = new HTML(sb.toString());
+						p2.add(rapport);
 						herp2.add(p2, "Rapport");
 						
 						herp2.selectTab(0);
@@ -99,5 +101,12 @@ public class SimulationGraphics extends Composite {
 	public void shoveData(DataTable table)
 	{
 		chart.draw(table, chartOptions);
+		
+		String r = "<h1>Rapport</h1>";		
+		for (int i = 0; i < 24; i++)
+		{
+			r += "<p>" + i +":00 = " + table.getValueInt(1, i) + "kW</p>";
+		}
+		rapport.setHTML(r);
 	}
 }

@@ -28,9 +28,20 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	
 	public SimResult simulate(int profileID)
 	{		
-		//TODO: hente ordentlig bygg data basert på profil_id
-		//TODO: hente alle heatsources fra database
+		int stigningsGrad = 5;
+		Integer[] dritt = new Integer[24];
+		for (int i = 0; i < 24; i++)
+		{
+			dritt[i] = 137 + stigningsGrad ;
+			stigningsGrad++;
+		}
 		
+		SimResult r = new SimResult(0,profileID,dritt);
+		this.registerSimResult(r);
+		return r;	
+		
+		//sources fra database
+		/*
 		Profile p = new Profile("Johansens Hybel", "1989", "true", "hybel", "panelovn", "1", "20");
 		Heatsource h1 = new Heatsource(0, "Panelovn", 0.5);
 		Heatsource h3 = new Heatsource(0, "Varmepumpe", 0.3);
@@ -53,7 +64,9 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
 		
-		return result;
+		// PUTT MÆ I DATABASEN
+		
+		return result;*/
 	}
 	
 	//Faktorer til bruk i utregning
@@ -105,6 +118,22 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		else return 1;
 	}
 	
+	public void registerSimResult(SimResult result) throws IllegalArgumentException {
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			int i = statement.executeUpdate("INSERT result (profil_id, magic) VALUES('" + result.getProfil_id()+ "','" + result.getMagic() + "')");
+		}
+		catch (Exception ex)
+		{
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+	
 	public SimResult[] GetSimResultByProfileId(int profile_id) throws IllegalArgumentException 
 	{
 		try
@@ -119,6 +148,10 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			{
 				tempResults.add(new SimResult(result.getInt("id"), result.getInt("profil_id"), result.getString("magic")));
 			}
+			
+			if (tempResults.size() < 1)
+				return null;
+			
 			SimResult[] results = new SimResult[tempResults.size()];
 			
 			for (int i = 0; i < tempResults.size(); i++)
