@@ -28,6 +28,10 @@ h1 {
 	text-align: center;
 }
 
+h2 {
+	font-size: 28px;
+}
+
 .login, .register {
 	margin: 0px auto;
 }
@@ -96,6 +100,12 @@ button {
 
 .foo {
 	text-align: center;
+}
+
+.intro_col {
+	width:300px;
+	float: left;
+	margin-left: 20px;
 }
 
 header h1 {
