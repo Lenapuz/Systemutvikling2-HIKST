@@ -117,6 +117,45 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 		}
 	}
 	
+	public Profile getProfileByProfileId(int profile_id) throws IllegalArgumentException {
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM profil WHERE profil_id = '"+ profile_id+"'");
+			
+			ArrayList<Profile> tempProfiles = new ArrayList<Profile>();
+			while (result.next())
+			{
+				Profile p = new Profile(result.getString("name"), result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size"));
+				p.setID(result.getInt("profil_id"));
+				tempProfiles.add(p);
+			}
+			
+			Profile[] profiles = new Profile[tempProfiles.size()];
+			for (int i = 0; i < tempProfiles.size(); i++)
+			{
+				profiles[i] = tempProfiles.get(i);
+			}
+			return profiles[0];
+		}
+		catch(Exception e)
+		{
+			Profile p = new Profile();
+			p.setStatusMessage(e.getMessage());
+			return p;
+		}
+	
+		
+		finally
+		{
+			db.disconnect();
+		}
+	}
+		
+	
+	
+	
 	public Heatsource[] getHeatsources() throws IllegalArgumentException {
 		try
 		{
@@ -147,7 +186,6 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			db.disconnect();
 		}
 	}
-	
 	public Heatsource register(Heatsource heatsource) throws IllegalArgumentException
 	{
 		try
@@ -204,6 +242,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			db.disconnect();
 		}
 	}
+	
 	/**
 	 * To do med Heatsource
 	 * Skrive egen HeatsourceServiceImpl.java!

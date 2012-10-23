@@ -22,12 +22,10 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//TODO: void newSimResult(int[] result, int profil_id) legge inn nytt resultat
 	//
 	
-
-	
-
-	
+	//Selve kalkuleringsmetoden
 	public SimResult simulate(int profileID)
 	{		
+		/*
 		int stigningsGrad = 5;
 		Integer[] dritt = new Integer[24];
 		for (int i = 0; i < 24; i++)
@@ -38,13 +36,11 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		SimResult r = new SimResult(0,profileID,dritt);
 		this.registerSimResult(r);
-		return r;	
+		return r;	*/
 		
-		//sources fra database
-		/*
-		Profile p = new Profile("Johansens Hybel", "1989", "true", "hybel", "panelovn", "1", "20");
-		Heatsource h1 = new Heatsource(0, "Panelovn", 0.5);
-		Heatsource h3 = new Heatsource(0, "Varmepumpe", 0.3);
+		
+		ProfileServiceImpl psim = new ProfileServiceImpl();
+		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
 		
 		//Her må vi løse hvordan vi skal behandle flere oppvarmingskilder
@@ -52,21 +48,19 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		//I denne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			int res = 1;
-			
+			int res = 100;
 			res *= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
 			res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
-			res*= h1.getheatFactor();
-			//res *= tidsfaktor for å variere iløpet av døgnet
-			
+			res*= this.hourlyPowerConsumption(i);
 			resultat[i] = res;
 		}
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
-		
+			
 		// PUTT MÆ I DATABASEN
+		this.registerSimResult(result);
 		
-		return result;*/
+		return result;
 	}
 	
 	//Faktorer til bruk i utregning
@@ -117,7 +111,38 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		else return 1;
 	}
+	public double hourlyPowerConsumption(int time)
+	{
+		double[] powerConsumption = new double[24];
+		powerConsumption[0] = 0.40;
+		powerConsumption[1] = 0.35;
+		powerConsumption[2] = 0.35;
+		powerConsumption[3] = 0.30;
+		powerConsumption[4] = 0.25;
+		powerConsumption[5] = 0.35;
+		powerConsumption[6] = 0.50;
+		powerConsumption[7] = 0.95;
+		powerConsumption[8] = 0.80;
+		powerConsumption[9] = 0.75;
+		powerConsumption[10] = 0.70;
+		powerConsumption[11] = 0.60;
+		powerConsumption[12] = 0.65;
+		powerConsumption[13] = 0.70;
+		powerConsumption[14] = 0.65;
+		powerConsumption[15] = 0.80;
+		powerConsumption[16] = 1.00;
+		powerConsumption[17] = 0.95;
+		powerConsumption[18] = 0.90;
+		powerConsumption[19] = 0.80;
+		powerConsumption[20] = 0.70;
+		powerConsumption[21] = 0.80;
+		powerConsumption[22] = 0.70;
+		powerConsumption[23] = 0.50;
+		
+		return powerConsumption[time];
+	}
 	
+	//Databasemetoder
 	public void registerSimResult(SimResult result) throws IllegalArgumentException {
 		try
 		{
@@ -171,9 +196,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-	
-	
-	
+
 	public void DeleteSimResult(int id) throws IllegalArgumentException 
 	{
 		try
