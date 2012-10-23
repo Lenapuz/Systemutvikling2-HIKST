@@ -38,7 +38,7 @@ public class MainMenu extends Composite
 		
 		buttonSim.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
-			{				
+			{
 				p.showWidget(UI.SIMULATION);
 			}			
 		});

@@ -155,6 +155,47 @@ header h1 {
 	background: #FFF;
 }
 
+.rapport_item {
+	padding: 10px;
+	background: #222;
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+	color: #FFF;
+	width: 86px;
+}
+
+.rapport_kw {
+	font: 20px Open Sans, sans-serif;
+}
+
+.rapport_summary {
+	margin-top: 10px;
+	margin-left: 5px;
+	font: 24px Open Sans, sans-serif;
+}
+
 .floatright {
 	float: right;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+  
+.clearfix {
+    display: inline-block;
+}
+  
+html[xmlns] .clearfix {
+    display: block;
+}
+  
+* html .clearfix {
+    height: 1%;
 }

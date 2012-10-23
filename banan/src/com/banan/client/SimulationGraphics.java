@@ -48,21 +48,16 @@ public class SimulationGraphics extends Composite {
 				chartOptions.setWidth(960);
 				chartOptions.setHeight(400);
 				chartOptions.setTitle("Forbruk");
-				chartOptions.setFontSize(10.0);
+				chartOptions.setFontSize(8.0);
 				final DataTable data = DataTable.create();
 				data.addColumn(ColumnType.STRING, "_");
 				data.addColumn(ColumnType.NUMBER, "kW");
-
 								
 				final StringBuilder sb = new StringBuilder();
 								
 				Main.SimService.GetSimResultByProfileId(22, new AsyncCallback<SimResult[]>(){
-
 					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
+					public void onFailure(Throwable caught) { }
 
 					@Override
 					public void onSuccess(SimResult[] result) {
@@ -100,12 +95,18 @@ public class SimulationGraphics extends Composite {
 	
 	public void shoveData(DataTable table)
 	{
-		String r = "<h1>Rapport</h1>";		
+		String r = "<div style=\"margin: 20px 30px; margin-top: 0px;\"><div class=\"clearfix\"><h1>Rapport</h1>";	
+		int total = 0;
 		for (int i = 0; i < 24; i++)
 		{
-			r += "<p>" + i +":00 = " + table.getValueInt(i, 1) + "kW</p>";
+			int f = table.getValueInt(i, 1);
+			total += f;
+			r += "<div class=\"rapport_item\">" +
+					"<p>" + i +":00</p>" +
+					"<p class=\"rapport_kw\">" + f + "kW</p>" +
+				 "</div>";
 		}
-				
+		r += "</div><p class=\"rapport_summary\">Totalt: <b>" + total + " kWh</b></p></div>";
 		rapport.setHTML(r);
 		chart.draw(table, chartOptions);
 	}
