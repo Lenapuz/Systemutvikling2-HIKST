@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 
 public class Login extends Composite 
 {
@@ -89,13 +90,12 @@ public class Login extends Composite
 	protected void onLogin()
 	{
 		Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, 7);		
-		Cookies.setCookie("lastUser", getUsername(), cal.getTime());
+		CalendarUtil.addDaysToDate(date, 7);
+		
+		Cookies.setCookie("lastUser", getUsername(), date);
 		
 		if (checkBoxPassword.isChecked()) {
-			Cookies.setCookie("lastPassword", getPassword(), cal.getTime());
+			Cookies.setCookie("lastPassword", getPassword(), date);
 		}
 		else {
 			Cookies.setCookie("lastPassword", null);

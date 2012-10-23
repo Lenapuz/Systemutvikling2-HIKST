@@ -85,7 +85,7 @@ public class SimulationGraphics extends Composite {
 						
 						VerticalPanel p2 = new VerticalPanel();
 								
-						rapport = new HTML(sb.toString());
+						rapport = new HTML();
 						p2.add(rapport);
 						herp2.add(p2, "Rapport");
 						
@@ -100,13 +100,13 @@ public class SimulationGraphics extends Composite {
 	
 	public void shoveData(DataTable table)
 	{
-		chart.draw(table, chartOptions);
-		
 		String r = "<h1>Rapport</h1>";		
 		for (int i = 0; i < 24; i++)
 		{
-			r += "<p>" + i +":00 = " + table.getValueInt(1, i) + "kW</p>";
+			r += "<p>" + i +":00 = " + table.getValueInt(i, 1) + "kW</p>";
 		}
+				
 		rapport.setHTML(r);
+		chart.draw(table, chartOptions);
 	}
 }

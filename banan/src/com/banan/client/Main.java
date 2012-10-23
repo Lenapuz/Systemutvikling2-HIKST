@@ -85,17 +85,9 @@ public class Main implements EntryPoint
 								menuPanel.setVisible(true);
 								mainPanel.showWidget(UI.INTRO);
 								SessionService.set("login", (Integer)UI.INTRO, new AsyncCallback<Void>() {
-									@Override
-									public void onFailure(Throwable caught) {										// TODO Auto-generated method stub
-										
-									}
-
-									@Override
-									public void onSuccess(Void result) {
-										
-									}									
-								});
-								
+									public void onFailure(Throwable caught) { }
+									public void onSuccess(Void result) { }									
+								});								
 							}
 							else
 							{
@@ -174,7 +166,7 @@ public class Main implements EntryPoint
 			}
 		
 		});
-							
+		
 		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
