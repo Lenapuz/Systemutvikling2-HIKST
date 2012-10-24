@@ -7,6 +7,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 
@@ -26,11 +27,22 @@ public class ProfileList extends Composite {
 
 				public void onSuccess(Profile[] result) 
 				{
+					FlowPanel fp = new FlowPanel();
+					fp.addStyleName("profilelist_bar");
+					
+					Label labelTemp = new Label("Temperatur:");
+					TextBox textBoxTemp = new TextBox();
+					textBoxTemp.setWidth("50px");
+					
+					fp.add(labelTemp);
+					fp.add(textBoxTemp);
+					herp.add(fp);
+					
 					for (final Profile p : result)
 					{
 						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
 						html.addClickHandler(new ClickHandler() {
-							public void onClick(ClickEvent event) {									
+							public void onClick(ClickEvent event) {					
 								Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
 
 									@Override
