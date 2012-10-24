@@ -52,7 +52,16 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
 			res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
 			res*= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
-			resultat[i] = res;
+			
+			//Hvis hus størrelse er lik 0, ingen utregning
+			if (Integer.parseInt(p.getHouseSize()) == 0)
+			{
+				resultat[i] = 0;
+			} 
+			else 
+			{		
+				resultat[i] = res;
+			}
 		}
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
@@ -123,30 +132,30 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		else if (beboere == 2)
 		{
-			residentsFactor = 1.05;
+			residentsFactor = 1.1;
 		}
 		else if (beboere == 3)
 		{
-			residentsFactor = 1.11;
+			residentsFactor = 1.18;
 		}
 		else if (beboere == 4)
 		{
-			residentsFactor = 1.17;
+			residentsFactor = 1.22;
 		}
-		else if (beboere > 4)
+		else if (beboere >= 5)
 		{
 			residentsFactor = 1.25;
 		}
 		else {
-			residentsFactor = 100.0;  // feil
+			residentsFactor = 0;  // feil
 		}
 		double faktorJustering = 0.90;
 		
 		//jamnere strømforbruk med flere folk i huset
 		// eks. 1 beboer bruker kl. 0000 20kwt og 1600 50kwt, med 5 i huset bruker samme hus 50kwt og 100kwt  (4/10 vs 5/10)
-		powerConsumption[0] = 0.40 * residentsFactor;
-		powerConsumption[1] = 0.35 * residentsFactor;
-		powerConsumption[2] = 0.35 * residentsFactor;
+		powerConsumption[0] = 0.40 * (residentsFactor/faktorJustering);
+		powerConsumption[1] = 0.35 * (residentsFactor/faktorJustering);
+		powerConsumption[2] = 0.33 * residentsFactor;
 		powerConsumption[3] = 0.30 * residentsFactor;
 		powerConsumption[4] = 0.25 * residentsFactor;
 		powerConsumption[5] = 0.35 * residentsFactor;

@@ -38,9 +38,15 @@ public class Registration extends Composite
 		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
 		
 		listBoxType = new ListBox();
-		listBoxType.addItem("Konsulent");
-		listBoxType.addItem("Kunde");
-		listBoxType.addItem("Admin");
+		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulent"))
+		{
+			listBoxType.addItem("Konsulent");
+			listBoxType.addItem("Kunde");
+			if(Main.User.getType().equals("Admin"))
+			{
+				listBoxType.addItem("Admin");
+			}
+		}
 		buttonOK = new Button("OK");
 		buttonOK.addStyleName("btn");
 		
@@ -57,15 +63,44 @@ public class Registration extends Composite
 				onRegister();
 			}
 		});
-
-		
-		
+	
+		addForm();
+	}
+	
+	public void updateForm()
+	{
+		removeForm();
+		addForm();
+	}
+	
+	private void removeForm()
+	{
+		panel.remove(textBoxFullName);
+		panel.remove(textBoxUsername);
+		panel.remove(textBoxPassword);
+		panel.remove(listBoxType);
+		panel.remove(buttonOK);
+	}
+	
+	private void addForm()
+	{
+		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulent"))
+		{
+			listBoxType.addItem("Konsulent");
+			listBoxType.addItem("Kunde");
+			if(Main.User.getType().equals("Admin"))
+			{
+				listBoxType.addItem("Admin");
+			}
+		}
 		panel.add(textBoxFullName);
 		panel.add(textBoxUsername);
 		panel.add(textBoxPassword);
 		panel.add(listBoxType);
-		panel.add(buttonOK);
+		panel.add(buttonOK);		
 	}
+	
+	
 	
 	public void setData(User user)
 	{
