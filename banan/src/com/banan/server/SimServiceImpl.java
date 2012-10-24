@@ -96,27 +96,27 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		else if(beboere == 2)
 		{
-			return 1.25;
+			return 1.2;
 		}
 		else if(beboere == 3)
 		{
-			return 1.35;
+			return 1.3;
 		}
 		else if(beboere == 4)
 		{
-			return 1.45;
+			return 1.37;
 		}
 		else if(beboere == 5)
 		{
-			return 1.6;
+			return 1.42;
 		}
 		else if(beboere == 6)
 		{
-			return 1.80;
+			return 1.46;
 		}
 		else if(beboere > 6)
 		{
-			return 2.0;
+			return 1.5;
 		}
 		else return 1;
 	}
@@ -159,17 +159,16 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		else {
 			residentsFactor = 0;  // feil
 		}
-		double faktorJustering = 0.90;
+		double faktorJustering = 0.94;
 		
-		//jamnere strømforbruk med flere folk i huset
-		// eks. 1 beboer bruker kl. 0000 20kwt og 1600 50kwt, med 5 i huset bruker samme hus 50kwt og 100kwt  (4/10 vs 5/10)
+		// * resFactor for jamnere strømforbruk med flere folk i huset
 		powerConsumption[0] = 0.40 * (residentsFactor/faktorJustering);
 		powerConsumption[1] = 0.35 * (residentsFactor/faktorJustering);
 		powerConsumption[2] = 0.33 * residentsFactor;
 		powerConsumption[3] = 0.30 * residentsFactor;
 		powerConsumption[4] = 0.25 * residentsFactor;
 		powerConsumption[5] = 0.35 * residentsFactor;
-		powerConsumption[6] = 0.50 * residentsFactor;
+		powerConsumption[6] = 0.50 * (residentsFactor/faktorJustering);
 		powerConsumption[7] = 0.95;
 		powerConsumption[8] = 0.65;
 		powerConsumption[9] = 0.50;
@@ -269,7 +268,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			}
 			else
 			{
-				//
+				//dildo
 			}
 			
 		}

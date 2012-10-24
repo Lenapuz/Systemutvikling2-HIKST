@@ -83,6 +83,9 @@ public class Main implements EntryPoint
 							if (User.isLoggedIn())
 							{
 								menu.updateButtons();
+								register.updateForm();
+								userEdit.updateForm();
+								
 								menuPanel.setVisible(true);
 								mainPanel.showWidget(UI.INTRO);
 								
