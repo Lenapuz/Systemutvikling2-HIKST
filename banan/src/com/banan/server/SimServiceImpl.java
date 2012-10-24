@@ -13,6 +13,14 @@ import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 public class SimServiceImpl extends RemoteServiceServlet implements SimService
 {
 	private Database db;	
+	//koefissienter bør kunne finjusteres fra admin panel
+	//tatt fra lærebøker om termodynamikk
+	private static final double koefissientVarmetapGamleHus = 0.50;
+	private static final double koefissientVarmetapMiddelsHus = 0.45;
+	private static final double koefissientVarmetapNyeHus = 0.40;
+	
+	//Gjennomsnittlig oppvarmingsbehov per kvm
+	private static final int gjsnittligForbrukPrKvm = 35;
 	
 	public SimServiceImpl()
 	{
@@ -26,33 +34,23 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//public SimResult simulate(int profileID, int temperatur)
 	public SimResult simulate(int profileID)
 	{		
-		/*
-		int stigningsGrad = 5;
-		Integer[] dritt = new Integer[24];
-		for (int i = 0; i < 24; i++)
-		{
-			dritt[i] = 137 + stigningsGrad ;
-			stigningsGrad++;
-		}
-		
-		SimResult r = new SimResult(0,profileID,dritt);
-		this.registerSimResult(r);
-		return r;	*/
-		
-		
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
+		int tempInne = 20;
+		int tempUte = 0;
+		int deltaTemp = (tempInne - tempUte);
 		
-		//Her må vi løse hvordan vi skal behandle flere oppvarmingskilder
+		
 		
 		//I denne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			int res = 100;
+			int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseResidents());
 			res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
 			res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
 			res*= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
+			res -= getVarmeTap(Integer.parseInt(p.getHouseSize()), deltaTemp, Integer.parseInt(p.getBuildYear()));
 			
 			//Hvis hus størrelse er lik 0, ingen utregning
 			if (Integer.parseInt(p.getHouseSize()) == 0)
@@ -66,8 +64,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
-			
-		// PUTT MÆ I DATABASEN
+		
 		this.registerSimResult(result);
 		
 		return result;
@@ -122,7 +119,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		else return 1;
 	}
 	
-	/*public static int tempToCelsius(int tempKelvin)
+	public static int tempToCelsius(int tempKelvin)
 	{
 		int res = tempKelvin-273;
 		return res;
@@ -131,7 +128,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	{
 		int res = tempCelsius + 273;
 		return res;
-	}*/
+	}
 	public double hourlyPowerConsumption(int time, int beboere)
 	{
 		double[] powerConsumption = new double[24];
@@ -197,11 +194,22 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return powerConsumption[time];
 	}
 	//strømforbruk i kWh, areal i m^2
-	public static double getVarmeTap(int stromForbruk, int areal)
+	public static double getVarmeTap(int areal, int deltaTemp, int byggår)
 	{
-		double resultat = 1;
-		resultat = (1.5*(stromForbruk/areal));
-		return resultat;
+		double res = areal * deltaTemp;
+		
+		if (byggår > 1997)
+		{		
+			return res * koefissientVarmetapNyeHus;
+		}
+		else if (byggår > 1987 && byggår < 1997)
+		{
+			return res * koefissientVarmetapMiddelsHus;
+		}
+		else
+		{
+			return res * koefissientVarmetapGamleHus;
+		}	
 	}
 	
 	//Databasemetoder
