@@ -23,7 +23,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//
 	
 	//Selve kalkuleringsmetoden
-	public SimResult simulate(int profileID)
+	public SimResult simulate(int profileID, int temperatur)
 	{		
 		/*
 		int stigningsGrad = 5;
@@ -170,6 +170,13 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		powerConsumption[23] = 0.50 * (residentsFactor/faktorJustering);
 		
 		return powerConsumption[time];
+	}
+	//strømforbruk i kWh, areal i m^2
+	public static double getVarmeTap(int stromForbruk, int areal)
+	{
+		double resultat = 1;
+		resultat = (1.5*(stromForbruk/areal));
+		return resultat;
 	}
 	
 	//Databasemetoder
