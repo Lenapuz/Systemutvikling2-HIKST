@@ -23,7 +23,8 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//
 	
 	//Selve kalkuleringsmetoden
-	public SimResult simulate(int profileID, int temperatur)
+	//public SimResult simulate(int profileID, int temperatur)
+	public SimResult simulate(int profileID)
 	{		
 		/*
 		int stigningsGrad = 5;
@@ -96,32 +97,32 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		else if(beboere == 2)
 		{
-			return 1.2;
+			return 1.3;
 		}
 		else if(beboere == 3)
 		{
-			return 1.3;
+			return 1.5;
 		}
 		else if(beboere == 4)
 		{
-			return 1.37;
+			return 1.65;
 		}
 		else if(beboere == 5)
 		{
-			return 1.42;
+			return 1.8;
 		}
 		else if(beboere == 6)
 		{
-			return 1.46;
+			return 1.9;
 		}
 		else if(beboere > 6)
 		{
-			return 1.5;
+			return 2.0;
 		}
 		else return 1;
 	}
 	
-	public static int tempToCelsius(int tempKelvin)
+	/*public static int tempToCelsius(int tempKelvin)
 	{
 		int res = tempKelvin-273;
 		return res;
@@ -130,62 +131,68 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	{
 		int res = tempCelsius + 273;
 		return res;
-	}
+	}*/
 	public double hourlyPowerConsumption(int time, int beboere)
 	{
 		double[] powerConsumption = new double[24];
-		double residentsFactor = 0;
+		double beboerFaktorMin = 0;
+		double beboerFaktorMax = 0;
 		
 		if (beboere == 1)
 		{
-			residentsFactor = 1.0;
+			beboerFaktorMin = 1.1;
+			beboerFaktorMax = 0.95;
 		}
 		else if (beboere == 2)
 		{
-			residentsFactor = 1.1;
+			beboerFaktorMin = 1.05;
+			beboerFaktorMax = 1.00;
 		}
-		else if (beboere == 3)
+		else if (beboere == 3 )
 		{
-			residentsFactor = 1.18;
+			beboerFaktorMin = 1.00;
+			beboerFaktorMax = 1.00;
 		}
 		else if (beboere == 4)
 		{
-			residentsFactor = 1.22;
+			beboerFaktorMin = 1.00;
+			beboerFaktorMax = 1.05;
 		}
 		else if (beboere >= 5)
 		{
-			residentsFactor = 1.25;
+			beboerFaktorMin = 1.00;
+			beboerFaktorMax = 1.10;
 		}
 		else {
-			residentsFactor = 0;  // feil
+			beboerFaktorMin = 1000;  // feil	
+			beboerFaktorMax = 1000;  // feil
 		}
-		double faktorJustering = 0.94;
 		
 		// * resFactor for jamnere strømforbruk med flere folk i huset
-		powerConsumption[0] = 0.40 * (residentsFactor/faktorJustering);
-		powerConsumption[1] = 0.35 * (residentsFactor/faktorJustering);
-		powerConsumption[2] = 0.33 * residentsFactor;
-		powerConsumption[3] = 0.30 * residentsFactor;
-		powerConsumption[4] = 0.25 * residentsFactor;
-		powerConsumption[5] = 0.35 * residentsFactor;
-		powerConsumption[6] = 0.50 * (residentsFactor/faktorJustering);
-		powerConsumption[7] = 0.95;
-		powerConsumption[8] = 0.65;
-		powerConsumption[9] = 0.50;
-		powerConsumption[10] = 0.48;
-		powerConsumption[11] = 0.50;
-		powerConsumption[12] = 0.52 * (residentsFactor/faktorJustering);
-		powerConsumption[13] = 0.54 * (residentsFactor/faktorJustering);
-		powerConsumption[14] = 0.55 * (residentsFactor/faktorJustering);
-		powerConsumption[15] = 0.60 * (residentsFactor/faktorJustering);
-		powerConsumption[16] = 1.00;
-		powerConsumption[17] = 0.95;
-		powerConsumption[18] = 0.67 * (residentsFactor/faktorJustering);
-		powerConsumption[19] = 0.65 * (residentsFactor/faktorJustering);
-		powerConsumption[20] = 0.63 * (residentsFactor/faktorJustering);
-		powerConsumption[21] = 0.61 * (residentsFactor/faktorJustering);
-		powerConsumption[22] = 0.58 * (residentsFactor/faktorJustering);
-		powerConsumption[23] = 0.50 * (residentsFactor/faktorJustering);
+		powerConsumption[0] = 0.86 * beboerFaktorMin;
+		powerConsumption[1] = 0.76 * beboerFaktorMax;
+		powerConsumption[2] = 0.71 * beboerFaktorMax;
+		powerConsumption[3] = 0.69 * beboerFaktorMax;
+		powerConsumption[4] = 0.68 * beboerFaktorMax;
+		powerConsumption[5] = 0.69 * beboerFaktorMax;
+		powerConsumption[6] = 0.70 * beboerFaktorMax;
+		powerConsumption[7] = 0.77 * beboerFaktorMax;
+		powerConsumption[8] = 0.89 * beboerFaktorMin;
+		powerConsumption[9] = 0.91 * beboerFaktorMin;
+		powerConsumption[10] = 0.89 * beboerFaktorMin;
+		powerConsumption[11] = 0.90 * beboerFaktorMin;
+		powerConsumption[12] = 0.80 * beboerFaktorMax;
+		powerConsumption[13] = 0.79 * beboerFaktorMax;
+		powerConsumption[14] = 0.79 * beboerFaktorMax;
+		powerConsumption[15] = 0.81 * beboerFaktorMax;
+		powerConsumption[16] = 0.91 * beboerFaktorMin;
+		powerConsumption[17] = 0.95 * beboerFaktorMin;
+		powerConsumption[18] = 0.96 * beboerFaktorMin;
+		powerConsumption[19] = 0.98 * beboerFaktorMin;
+		powerConsumption[20] = 0.99 * beboerFaktorMin;
+		powerConsumption[21] = 1.00 * beboerFaktorMin;
+		powerConsumption[22] = 0.99 * beboerFaktorMin;
+		powerConsumption[23] = 0.95 * beboerFaktorMin;
 		
 		return powerConsumption[time];
 	}
