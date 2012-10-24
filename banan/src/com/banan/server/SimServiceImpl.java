@@ -121,6 +121,16 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		else return 1;
 	}
 	
+	public static int tempToCelsius(int tempKelvin)
+	{
+		int res = tempKelvin-273;
+		return res;
+	}
+	public static int tempToKelvin(int tempCelsius)
+	{
+		int res = tempCelsius + 273;
+		return res;
+	}
 	public double hourlyPowerConsumption(int time, int beboere)
 	{
 		double[] powerConsumption = new double[24];
