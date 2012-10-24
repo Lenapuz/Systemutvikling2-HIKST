@@ -38,8 +38,15 @@ public class Registration extends Composite
 		textBoxPassword.getElement().setPropertyString("placeholder", "Passord");
 		
 		listBoxType = new ListBox();
-		listBoxType.addItem("Konsulent");
-		listBoxType.addItem("Kunde");
+		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulent"))
+		{
+			listBoxType.addItem("Konsulent");
+			listBoxType.addItem("Kunde");
+			if(Main.User.getType().equals("Admin"))
+			{
+				listBoxType.addItem("Admin");
+			}
+		}
 		listBoxType.addItem("Admin");
 		buttonOK = new Button("OK");
 		buttonOK.addStyleName("btn");
