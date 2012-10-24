@@ -185,6 +185,13 @@ header h1 {
 	font: 24px Open Sans, sans-serif;
 }
 
+.profilelist_bar {
+	padding: 10px;
+	background: #0084FF;
+	width: 940px !important;
+	color: #FFF;
+}
+
 .floatright {
 	float: right;
 }
