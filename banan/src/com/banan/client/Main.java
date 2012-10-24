@@ -47,7 +47,7 @@ public class Main implements EntryPoint
 		RootPanel.get("menu").add(menuPanel);
 		menuPanel.setVisible(false);
 	    
-		MainMenu menu = new MainMenu(mainPanel);
+		final MainMenu menu = new MainMenu(mainPanel);
 		menuPanel.add(menu);	
 		
 		final Login login = new Login();
@@ -82,8 +82,10 @@ public class Main implements EntryPoint
 							User = result;
 							if (User.isLoggedIn())
 							{
+								menu.updateButtons();
 								menuPanel.setVisible(true);
 								mainPanel.showWidget(UI.INTRO);
+								
 								SessionService.set("login", (Integer)UI.INTRO, new AsyncCallback<Void>() {
 									public void onFailure(Throwable caught) { }
 									public void onSuccess(Void result) { }									
@@ -167,23 +169,7 @@ public class Main implements EntryPoint
 		
 		});
 		
-		HTML intro = new HTML("<div class=\"foo\">" +
-				"<h1>Velkommen!</h1></div>" +
-				"<div class=\"intro_col\">" +
-				"	<h2>Ka</h2>" +
-				"	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque metus odio, volutpat sollicitudin lobortis vitae, commodo a orci. Mauris congue interdum mauris, ut condimentum magna molestie sed. Morbi dignissim nisl et tellus venenatis sit amet tristique libero interdum. Ut blandit, tellus ac suscipit molestie, lectus lacus molestie eros, sit amet semper nisl dui et purus. Duis et venenatis massa. Sed arcu risus, dapibus eu ultricies vel, blandit in libero. Quisque semper tincidunt turpis, id commodo erat vulputate eget. Sed vitae dui a sem ornare faucibus sit amet pharetra nisl. Nunc et ipsum nunc, in fringilla felis." +
-				"	</p>" +
-				"</div>" +
-				"<div class=\"intro_col\">" +
-				"	<h2>Så</h2>" +
-				"	<p>Pellentesque tempor gravida quam sed sagittis. Curabitur turpis turpis, iaculis sit amet scelerisque vitae, tincidunt ut tortor. Suspendisse feugiat ultrices risus ut tristique. Fusce placerat tristique aliquam. Sed ornare fringilla justo. Vivamus ac venenatis felis. Suspendisse potenti." +
-				"	</p>" +
-				"</div>" +
-				"<div class=\"intro_col\">" +
-				"	<h2>Skjer?</h2>" +
-				"	<p>Integer volutpat, tellus et tempus semper, erat orci convallis lectus, gravida interdum elit purus pulvinar erat. Quisque vestibulum porta neque, non interdum elit rhoncus a. Aliquam convallis auctor mi ac laoreet. Nunc metus ipsum, tempus ac rutrum a, lacinia ac ligula. Praesent massa felis, sodales ac faucibus quis, tempus nec sapien. Praesent vel libero quam, ultricies vehicula purus. Aliquam semper pretium sagittis. Fusce faucibus ornare placerat. Pellentesque vel volutpat lectus. Aenean facilisis lectus pellentesque lorem tempus ultrices. Vestibulum varius ornare odio, in sodales orci dapibus suscipit. Mauris risus odio, condimentum in imperdiet ac, vehicula imperdiet ipsum. Proin molestie, mi eget vestibulum porta, magna felis fringilla ipsum, eget eleifend lectus metus sed ante." +
-				"	</p>" +
-				"</div>");
+		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
 		introPanel.add(intro);
 		
 		mainPanel.add(new ProfileList());

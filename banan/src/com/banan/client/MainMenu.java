@@ -2,37 +2,46 @@ package com.banan.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.logging.impl.LevelImplRegular;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 public class MainMenu extends Composite 
 {
+	Button buttonSim;
+	Button buttonRegister;
+	Button buttonAddProfile;
+	Button buttonLogout;
+	Button buttonUserAdmin;
+	
+	FlowPanel panel;
+	
 	public MainMenu(final DeckPanel p)
 	{
-		FlowPanel panel = new FlowPanel();
+		panel = new FlowPanel();
 		panel.addStyleName("main_menu");
 		initWidget(panel);
 		
 		//Knapper til MainPanel 
-		Button buttonSim = new Button("Simulering");
+		buttonSim = new Button("Simulering");
 		buttonSim.addStyleName("menu_item");
 		//buttonSim.addStyleName("btn");
 		
-		Button buttonRegister = new Button("Legg til konsulent");
+		buttonRegister = new Button("Legg til konsulent");
 		buttonRegister.addStyleName("menu_item");
 		//buttonRegister.addStyleName("btn");
 		
-		Button buttonLogout = new Button("Logg ut");
+		buttonLogout = new Button("Logg ut");
 		buttonLogout.addStyleName("menu_item");
 		buttonLogout.addStyleName("floatright");
 		//buttonLogout.addStyleName("btn");
 		
-		Button buttonAddProfile = new Button("Opprett profil");
+		buttonAddProfile = new Button("Opprett profil");
 		buttonAddProfile.addStyleName("menu_item");
 		//buttonAddProfile.addStyleName("btn");
 		
-		Button buttonUserAdmin = new Button("Brukeradministrasjon");
+		buttonUserAdmin = new Button("Brukeradministrasjon");
 		buttonUserAdmin.addStyleName("menu_item");
 		//buttonUserAdmin.addStyleName("btn");
 		
@@ -78,16 +87,40 @@ public class MainMenu extends Composite
 			}			
 		});
 		
+		addButtons();		
+	}
+	
+	public void updateButtons()
+	{
+		removeButtons();
+		addButtons();
+	}
+	
+	private void addButtons()
+	{
 		panel.add(buttonSim);
-		if (Main.User.getType().equals("Admin"))
+		
+		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulenter"))
+		{
+			panel.add(buttonAddProfile);
+		}
+				
+		if(Main.User.getType().equals("Admin"))
 		{
 			panel.add(buttonRegister);
-			
+			panel.add(buttonUserAdmin);
 		}
-		
-		panel.add(buttonAddProfile);
-		panel.add(buttonRegister);
-		panel.add(buttonUserAdmin);
-		panel.add(buttonLogout);		
+		panel.add(buttonLogout);
 	}
+	
+	private void removeButtons()
+	{
+		panel.remove(buttonSim);
+		panel.remove(buttonAddProfile);
+		panel.remove(buttonRegister);
+		panel.remove(buttonUserAdmin);	
+		panel.remove(buttonLogout);
+	}
+	
+	
 }
