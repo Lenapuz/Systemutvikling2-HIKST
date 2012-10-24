@@ -32,6 +32,7 @@ import com.google.gwt.visualization.client.visualizations.corechart.Options;
 public class SimulationGraphics extends Composite {
 	
 	private TabPanel herp2;
+	
 	LineChart chart;
 	Options chartOptions;
 	Random rand = new Random();
@@ -54,39 +55,30 @@ public class SimulationGraphics extends Composite {
 				data.addColumn(ColumnType.NUMBER, "kW");
 								
 				final StringBuilder sb = new StringBuilder();
-								
-				Main.SimService.GetSimResultByProfileId(22, new AsyncCallback<SimResult[]>(){
-					@Override
-					public void onFailure(Throwable caught) { }
-
-					@Override
-					public void onSuccess(SimResult[] result) {
-						String r = "<h1>Rapport</h1>";
-						data.addRows(24);
-						Integer[] simdata = result[0].getData();
+				
+				String r = "<h1>Rapport</h1>";
+				data.addRows(24);
+				
+				for (int i = 0; i < 24; i++)
+				{
+					data.setValue(i, 0, i + ":00");
+					data.setValue(i, 1, i * 10);
+					//data.setValue(i, 0, result);
+					r += "<p>" + i +":00 = " + i * 10 + "kW</p>";
+				}
+				sb.append(r);
+				chart = new LineChart(data, chartOptions);	
+				VerticalPanel p = new VerticalPanel();
+				p.add(chart);
+				herp2.add(p, "Graf");
+				
+				VerticalPanel p2 = new VerticalPanel();
 						
-						for (int i = 0; i < simdata.length; i++)
-						{
-							data.setValue(i, 0, i + ":00");
-							data.setValue(i, 1, simdata[i]);
-							//data.setValue(i, 0, result);
-							r += "<p>" + i +":00 = " + simdata[i] + "kW</p>";
-						}
-						sb.append(r);
-						chart = new LineChart(data, chartOptions);	
-						VerticalPanel p = new VerticalPanel();
-						p.add(chart);
-						herp2.add(p, "Graf");
-						
-						VerticalPanel p2 = new VerticalPanel();
-								
-						rapport = new HTML();
-						p2.add(rapport);
-						herp2.add(p2, "Rapport");
-						
-						herp2.selectTab(0);
-						
-					}});
+				rapport = new HTML();
+				p2.add(rapport);
+				herp2.add(p2, "Rapport");
+				
+				herp2.selectTab(0);
 			}
 		};
 				
