@@ -37,7 +37,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
 		int tempInne = 20;
-		int tempUte = 0;
+		int tempUte = temperatur;
 		int deltaTemp = (tempInne - tempUte);
 		
 		
@@ -45,11 +45,13 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		//I denne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseResidents());
-			res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
-			res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
-			res*= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
-			res -= getVarmeTap(Integer.parseInt(p.getHouseSize()), deltaTemp, Integer.parseInt(p.getBuildYear()));
+			//int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseSize());
+			int res = gjsnittligForbrukPrKvm;
+			//res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
+			//res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
+			res+= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
+			
+			//res += getOppvarmingsForbruk(Integer.parseInt(p.getHouseSize()), deltaTemp, Integer.parseInt(p.getBuildYear()));
 			
 			//Hvis hus størrelse er lik 0, ingen utregning
 			if (Integer.parseInt(p.getHouseSize()) == 0)
@@ -60,6 +62,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			{		
 				resultat[i] = res;
 			}
+			res *= Integer.parseInt(p.getHouseSize());
 		}
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
@@ -85,6 +88,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			return 1;
 		}	
 	}
+	//ikke i bruk
 	public static double beboereForbruksFaktor(int beboere)	
 	{
 		if (beboere == 1)
@@ -193,7 +197,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return powerConsumption[time];
 	}
 	//strømforbruk i kWh, areal i m^2
-	public static double getVarmeTap(int areal, int deltaTemp, int byggår)
+	public static double getOppvarmingsForbruk(int areal, int deltaTemp, int byggår)
 	{
 		double res = areal * deltaTemp;
 		
