@@ -31,8 +31,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//
 	
 	//Selve kalkuleringsmetoden
-	//public SimResult simulate(int profileID, int temperatur)
-	public SimResult simulate(int profileID)
+	public SimResult simulate(int profileID, int temperatur)
 	{		
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);

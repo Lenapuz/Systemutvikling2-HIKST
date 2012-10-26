@@ -192,6 +192,11 @@ header h1 {
 	color: #FFF;
 }
 
+.profilelist_bar_item {
+	margin: 0px !important;
+	margin-right: 10px !important;
+}
+
 .floatright {
 	float: right;
 }
