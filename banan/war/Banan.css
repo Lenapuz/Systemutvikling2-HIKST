@@ -72,12 +72,37 @@ button {
 	color: #FFF;
 }
 
+.profilelist:last-child {
+	border-bottom: 5px solid #0084FF;
+}
+
 .profilelist_item {
 	padding: 10px;
 	background: #AAA;
 	margin-top: 0px;
 	border-top: 1px solid #888;
 	cursor: pointer;
+}
+
+.profilelist_pagination {
+	background: #AAA;
+	text-align: center;
+	padding: 10px;
+	border-top: 1px solid #888;
+}
+
+.profilelist_pagination a {
+	padding: 5px 10px;
+	margin-left: 5px;
+	background: #0084FF;
+	color: #FFF;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.profilelist_pagination a:hover {
+	background: #6BB7FF;
+	color: #000;
 }
 
 .profilelist_item:hover {
@@ -195,6 +220,12 @@ header h1 {
 .profilelist_bar_item {
 	margin: 0px !important;
 	margin-right: 10px !important;
+}
+
+.profilelist_button {
+	float: right;
+	margin-top: -5px;
+	margin-left: 5px;
 }
 
 .floatright {

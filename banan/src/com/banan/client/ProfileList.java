@@ -1,6 +1,8 @@
 package com.banan.client;
 
 import com.banan.shared.*;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -17,6 +19,7 @@ public class ProfileList extends Composite {
 	public ProfileList()
 	{
 		herp = new VerticalPanel();
+		herp.addStyleName("profilelist");
 		initWidget(herp);
 		Main.ProfileService.getProfiles(
 			new AsyncCallback<Profile[]>() {
@@ -46,10 +49,20 @@ public class ProfileList extends Composite {
 					
 					for (final Profile p : result)
 					{
-						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "</div>");
+						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "<button class=\"btn btn-primary profilelist_button\" id=\"new-" + p.getID() + "\">Ny simulering</button><button class=\"btn btn-primary profilelist_button\" id=\"res-" + p.getID() + "\">Resultater</button></div>");
 						
 						html.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {	
+								Element newSim = Document.get().getElementById("new-" + p.getID());
+								Element showResults = Document.get().getElementById("res-" + p.getID());
+								Element target = Element.as(event.getNativeEvent().getEventTarget());
+								if (newSim.isOrHasChild(target)) {
+									Window.alert("Ny");
+								}
+								else if (showResults.isOrHasChild(target)) {
+									Window.alert("Resultater");
+								}
+								
 								Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
 
 									@Override
@@ -65,7 +78,6 @@ public class ProfileList extends Composite {
 												temp = Integer.parseInt(textBoxTemp.getText());
 											}
 											catch (Exception e) {
-												Window.alert(e.getMessage());
 											}
 											
 											Main.SimService.simulate(p.getID(), temp, new AsyncCallback<SimResult>() {
@@ -91,6 +103,9 @@ public class ProfileList extends Composite {
 						});
 						herp.add(html);
 					}
+					
+					HTML pagination = new HTML("<div class=\"profilelist_pagination\"><a>1</a><a>2</a><a>3</a><a>4</a></div>");
+					herp.add(pagination);
 				}
 			});		
 	}
