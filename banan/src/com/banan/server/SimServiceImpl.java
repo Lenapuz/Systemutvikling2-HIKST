@@ -45,11 +45,11 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		//I denne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			//int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseSize());
-			int res = gjsnittligForbrukPrKvm;
+			int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseSize());
+			//int res = gjsnittligForbrukPrKvm;
 			//res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
 			//res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
-			res+= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
+			res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
 			
 			//res += getOppvarmingsForbruk(Integer.parseInt(p.getHouseSize()), deltaTemp, Integer.parseInt(p.getBuildYear()));
 			
@@ -73,7 +73,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	}
 	
 	//Faktorer til bruk i utregning
-	public static double byggårForbruksFaktor(int byggår)
+	/*public static double byggårForbruksFaktor(int byggår)
 	{
 		if (byggår > 1997)
 		{		
@@ -120,7 +120,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			return 2.0;
 		}
 		else return 1;
-	}
+	}*/
 	
 	public static int tempToCelsius(int tempKelvin)
 	{
@@ -140,51 +140,57 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		if (beboere == 1)
 		{
-			beboerFaktorMin = 1.1;
-			beboerFaktorMax = 0.95;
+			beboerFaktorMin = 1.0;	
+			beboerFaktorMax = 0.9;
 		}
 		else if (beboere == 2)
 		{
-			beboerFaktorMin = 1.05;
-			beboerFaktorMax = 1.00;
+			beboerFaktorMin = 1.30;  // gjennomsnitts husstand, Max = Min = Max 
+			beboerFaktorMax = 1.30;
 		}
 		else if (beboere == 3 )
 		{
-			beboerFaktorMin = 1.00;
-			beboerFaktorMax = 1.00;
+			beboerFaktorMin = 1.55;
+			beboerFaktorMax = 1.60;
 		}
 		else if (beboere == 4)
 		{
-			beboerFaktorMin = 1.00;
-			beboerFaktorMax = 1.05;
+			beboerFaktorMin = 1.70;
+			beboerFaktorMax = 2.05;
 		}
-		else if (beboere >= 5)
+		else if (beboere == 5)
 		{
-			beboerFaktorMin = 1.00;
-			beboerFaktorMax = 1.10;
+			beboerFaktorMin = 1.80;
+			beboerFaktorMax = 2.20;
 		}
 		else {
-			beboerFaktorMin = 1000;  // feil	
-			beboerFaktorMax = 1000;  // feil
+			beboerFaktorMin =  2.00; 	
+			beboerFaktorMax =  2.45;  
 		}
 		
-		// * resFactor for jamnere strømforbruk med flere folk i huset
+		// PowerConsumption tall er gitt snitt forbruk av strøm fra time til time. (gjennomsnitts husstand 2 personer)
+		
+		// beboerFaktorMin - Tiden av døgnet hvor det er minst forskjell mellom en eller flere
+		// beboere, gitt i snitt.
+		
+		// beboerFaktorMax - Tiden av døgnet hvor det er mest forskjell mellom en eller flere
+		// beboere, gitt i snitt. 
 		powerConsumption[0] = 0.86 * beboerFaktorMin;
-		powerConsumption[1] = 0.76 * beboerFaktorMax;
-		powerConsumption[2] = 0.71 * beboerFaktorMax;
-		powerConsumption[3] = 0.69 * beboerFaktorMax;
-		powerConsumption[4] = 0.68 * beboerFaktorMax;
-		powerConsumption[5] = 0.69 * beboerFaktorMax;
-		powerConsumption[6] = 0.70 * beboerFaktorMax;
-		powerConsumption[7] = 0.77 * beboerFaktorMax;
+		powerConsumption[1] = 0.66 * beboerFaktorMax;
+		powerConsumption[2] = 0.61 * beboerFaktorMax;
+		powerConsumption[3] = 0.59 * beboerFaktorMax;
+		powerConsumption[4] = 0.58 * beboerFaktorMax;
+		powerConsumption[5] = 0.59 * beboerFaktorMax;
+		powerConsumption[6] = 0.60 * beboerFaktorMax;
+		powerConsumption[7] = 0.67 * beboerFaktorMax;
 		powerConsumption[8] = 0.89 * beboerFaktorMin;
 		powerConsumption[9] = 0.91 * beboerFaktorMin;
-		powerConsumption[10] = 0.89 * beboerFaktorMin;
+		powerConsumption[10] = 0.92 * beboerFaktorMin;
 		powerConsumption[11] = 0.90 * beboerFaktorMin;
-		powerConsumption[12] = 0.80 * beboerFaktorMax;
-		powerConsumption[13] = 0.79 * beboerFaktorMax;
-		powerConsumption[14] = 0.79 * beboerFaktorMax;
-		powerConsumption[15] = 0.81 * beboerFaktorMax;
+		powerConsumption[12] = 0.70 * beboerFaktorMax;
+		powerConsumption[13] = 0.69 * beboerFaktorMax;
+		powerConsumption[14] = 0.69 * beboerFaktorMax;
+		powerConsumption[15] = 0.71 * beboerFaktorMax;
 		powerConsumption[16] = 0.91 * beboerFaktorMin;
 		powerConsumption[17] = 0.95 * beboerFaktorMin;
 		powerConsumption[18] = 0.96 * beboerFaktorMin;
