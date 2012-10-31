@@ -109,7 +109,9 @@ public class ProfileList extends Composite {
 	private void updateData(SimResult[] results) {
 		DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, "_");
-		data.addColumn(ColumnType.NUMBER, "kW");
+		for (int j = 0; j < results.length; j++) {
+			data.addColumn(ColumnType.NUMBER, "ID: " + results[j].getId());
+		}
 		
 		data.addRows(24);
 		for (int i = 0; i < 24; i++) {
