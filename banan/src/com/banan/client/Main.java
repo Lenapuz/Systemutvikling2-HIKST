@@ -53,7 +53,15 @@ public class Main implements EntryPoint
 		final Login login = new Login();
 		VerticalPanel p = new VerticalPanel();
 		p.add(login);
-		p.add(new HTML("<div id=\"portal\"><h3>Kunde?</h3><a id=\"linkportal\" href=\"http://gruppe2.dyndns.org/portal\">Til kundeportal</a></div>"));
+		
+		HTML portalHTML = new HTML("<div id=\"portal\"><h3>Kunde?</h3><a id=\"linkportal\" href=\"#\">Til kundeportal</a></div>");
+		portalHTML.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				mainPanel.showWidget(UI.PORTAL);
+			}			
+		});		
+		p.add(portalHTML);
+		
 		mainPanel.add(p);
 		
 		final Registration register = new Registration();
@@ -172,13 +180,14 @@ public class Main implements EntryPoint
 		
 		});
 		
-		HTML intro = new HTML("<div class=\"foo\"><b>Du</b> er logget inn!</div>");
+		HTML intro = new HTML("<div class=\"foo\"><h1>Velkommen!</h1></div>");
 		introPanel.add(intro);
 		
 		mainPanel.add(new ProfileList());
 		mainPanel.add(simGraphics);		
-		mainPanel.add(userAdmin);
-		mainPanel.add(userEdit);
+		mainPanel.add(userAdmin); // 6
+		mainPanel.add(userEdit); // 7
+		mainPanel.add(new Portal()); // 8...
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
 			@Override
