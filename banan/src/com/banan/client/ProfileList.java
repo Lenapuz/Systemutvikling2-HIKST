@@ -57,48 +57,44 @@ public class ProfileList extends Composite {
 								Element showResults = Document.get().getElementById("res-" + p.getID());
 								Element target = Element.as(event.getNativeEvent().getEventTarget());
 								if (newSim.isOrHasChild(target)) {
-									Window.alert("Ny");
+									int temp = 0;
+									try {
+										temp = Integer.parseInt(textBoxTemp.getText());
+									}
+									catch (Exception e) {
+									}
+									
+									Main.SimService.simulate(p.getID(), temp, new AsyncCallback<SimResult>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert(caught.getMessage());
+										}
+
+										@Override
+										public void onSuccess(SimResult result) {
+											updateData(new SimResult[] { result });
+										}
+										
+									});// :O
 								}
 								else if (showResults.isOrHasChild(target)) {
-									Window.alert("Resultater");
-								}
-								
-								Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
+									Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
+										public void onFailure(Throwable caught) {
+											Window.alert(caught.getMessage());											
+										}
 
-									@Override
-									public void onFailure(Throwable caught) {
-										Window.alert(caught.getMessage());											
-									}
-
-									@Override
-									public void onSuccess(SimResult[] result) {	
-										if (result == null) {
-											int temp = 0;
-											try {
-												temp = Integer.parseInt(textBoxTemp.getText());
-											}
-											catch (Exception e) {
-											}
-											
-											Main.SimService.simulate(p.getID(), temp, new AsyncCallback<SimResult>() {
-
-												@Override
-												public void onFailure(Throwable caught) {
-													Window.alert(caught.getMessage());
-												}
-
-												@Override
-												public void onSuccess(SimResult result) {
-													updateData(result.getData());
-												}
+										public void onSuccess(SimResult[] result) {	
+											if (result == null) {
+												Window.alert("Ingen resultater");
 												
-											});// :O
-										}
-										else  {
-											updateData(result[0].getData());
-										}
-									}										
-								});
+											}
+											else  {
+												updateData(result);
+											}
+										}										
+									});
+								}
 							}						
 						});
 						herp.add(html);
@@ -110,16 +106,20 @@ public class ProfileList extends Composite {
 			});		
 	}
 	
-	private void updateData(Integer[] d) {
+	private void updateData(SimResult[] results) {
 		DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, "_");
 		data.addColumn(ColumnType.NUMBER, "kW");
 		
 		data.addRows(24);
-		for (int i = 0; i < 24; i++)
-		{
+		for (int i = 0; i < 24; i++) {
 			data.setValue(i, 0, i + ":00");
-			data.setValue(i, 1, d[i]);												
+		}
+		
+		for (int j = 0; j < results.length; j++) {
+			for (int i = 0; i < 24; i++) {
+				data.setValue(i, j + 1, results[j].getData()[i]);
+			}
 		}
 													
 		Main.mainPanel.showWidget(UI.SIMGRAPHICS);
