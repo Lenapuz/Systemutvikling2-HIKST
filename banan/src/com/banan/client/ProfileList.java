@@ -13,7 +13,13 @@ import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 
+/***
+ * 
+ * @author 490427
+ *
+ */
 public class ProfileList extends Composite {
+	
 	private VerticalPanel herp;
 	
 	public ProfileList()
@@ -52,10 +58,12 @@ public class ProfileList extends Composite {
 						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "<button class=\"btn btn-primary profilelist_button\" id=\"new-" + p.getID() + "\">Ny simulering</button><button class=\"btn btn-primary profilelist_button\" id=\"res-" + p.getID() + "\">Resultater</button></div>");
 						
 						html.addClickHandler(new ClickHandler() {
+							
 							public void onClick(ClickEvent event) {	
 								Element newSim = Document.get().getElementById("new-" + p.getID());
 								Element showResults = Document.get().getElementById("res-" + p.getID());
 								Element target = Element.as(event.getNativeEvent().getEventTarget());
+								
 								if (newSim.isOrHasChild(target)) {
 									int temp = 0;
 									try {
@@ -79,6 +87,7 @@ public class ProfileList extends Composite {
 									});// :O
 								}
 								else if (showResults.isOrHasChild(target)) {
+									
 									Main.SimService.GetSimResultByProfileId(p.getID(), new AsyncCallback<SimResult[]>() {
 										public void onFailure(Throwable caught) {
 											Window.alert(caught.getMessage());											

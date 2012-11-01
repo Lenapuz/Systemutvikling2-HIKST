@@ -14,6 +14,7 @@ public class MainMenu extends Composite
 	Button buttonAddProfile;
 	Button buttonLogout;
 	Button buttonUserAdmin;
+	Button buttonProfileEdit;
 	
 	FlowPanel panel;
 	
@@ -44,6 +45,10 @@ public class MainMenu extends Composite
 		buttonUserAdmin = new Button("Brukeradministrasjon");
 		buttonUserAdmin.addStyleName("menu_item");
 		//buttonUserAdmin.addStyleName("btn");
+		
+		buttonProfileEdit = new Button("Profil Edit");
+		buttonProfileEdit.addStyleName("menu_item");
+		
 		
 		buttonSim.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
@@ -87,6 +92,18 @@ public class MainMenu extends Composite
 			}			
 		});
 		
+		/**
+		 * 
+		 */
+		buttonProfileEdit.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				p.showWidget(UI.EDITPROFILE);
+			}
+		});
+		
 		addButtons();		
 	}
 	
@@ -99,6 +116,7 @@ public class MainMenu extends Composite
 	private void addButtons()
 	{
 		panel.add(buttonSim);
+		panel.add(buttonProfileEdit);
 		
 		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulenter"))
 		{

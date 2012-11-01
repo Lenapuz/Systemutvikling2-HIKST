@@ -242,6 +242,39 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			db.disconnect();
 		}
 	}
+
+	@Override
+	public Profile DeleteProfile(Profile profile)throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		boolean result;
+		try
+		{
+			this.db.connect();
+			Statement statement = db.createStatement();
+			String query = "DELETE FROM profil WHERE profil_ind='" + profile.getID()+"'";
+			int i = statement.executeUpdate(query);
+			
+			
+			if(i > 0)
+			{
+				profile.setStatusMessage("Profil ble slettet");
+			}
+			else
+			{
+				profile.setStatusMessage("Kunne ikke slette angitt profil");
+			}
+			return profile;
+		}
+		catch (Exception ex)
+		{
+			profile.setStatusMessage(ex.getMessage());
+			return profile;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
 	
 	/**
 	 * To do med Heatsource

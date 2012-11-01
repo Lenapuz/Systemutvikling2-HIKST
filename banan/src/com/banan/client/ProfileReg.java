@@ -2,6 +2,7 @@ package com.banan.client;
 
 import java.util.ArrayList;
 
+import com.banan.shared.Profile;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -344,6 +345,12 @@ public class ProfileReg extends Composite {
 	public String getStatusMessage() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void setData(Profile p){
+		
+		textBoxName.setText(p.getName());
+		
 	}
 	
 	

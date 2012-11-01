@@ -17,7 +17,11 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-
+/***
+ * 
+ * @author Gruppe 2
+ *
+ */
 public class Main implements EntryPoint 
 {
 	public static final UserServiceAsync UserService = GWT.create(UserService.class);
@@ -34,6 +38,12 @@ public class Main implements EntryPoint
 	
 	public static UserAdmin userAdmin = new UserAdmin();
 	public static Registration userEdit = new Registration();
+	
+	public static ProfileEdit profileEdit = new ProfileEdit();
+	
+	
+	
+
 	
 	//onAction Events.
 	public void onModuleLoad() 
@@ -188,6 +198,7 @@ public class Main implements EntryPoint
 		mainPanel.add(userAdmin); // 6
 		mainPanel.add(userEdit); // 7
 		mainPanel.add(new Portal()); // 8...
+	    mainPanel.add(profileEdit); 
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
 			@Override
