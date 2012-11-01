@@ -39,7 +39,9 @@ public class Main implements EntryPoint
 	public static UserAdmin userAdmin = new UserAdmin();
 	public static Registration userEdit = new Registration();
 	
-	public static ProfileEdit profileEdit = new ProfileEdit();
+	public static ProfileAdministration profileAdministration = new ProfileAdministration();
+	
+	public static ProfileReg profileAdmin = new ProfileReg();
 	
 	
 	
@@ -198,7 +200,7 @@ public class Main implements EntryPoint
 		mainPanel.add(userAdmin); // 6
 		mainPanel.add(userEdit); // 7
 		mainPanel.add(new Portal()); // 8...
-	    mainPanel.add(profileEdit); 
+	    mainPanel.add(profileAdministration); 
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
 			@Override

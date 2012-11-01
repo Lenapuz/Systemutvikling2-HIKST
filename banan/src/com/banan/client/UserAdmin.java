@@ -94,6 +94,7 @@ public class UserAdmin extends Composite
 		Button b;
 		
 		row++;
+		
 		flextable.setWidget(row, 0, new Label(u.getName()));
 		flextable.setWidget(row, 1, new Label(u.getUsername()));
 		flextable.setWidget(row, 2, new Label(u.getType()));

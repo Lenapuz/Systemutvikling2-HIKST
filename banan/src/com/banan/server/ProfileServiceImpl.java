@@ -246,22 +246,22 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 	@Override
 	public Profile DeleteProfile(Profile profile)throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		boolean result;
+		
 		try
 		{
 			this.db.connect();
 			Statement statement = db.createStatement();
-			String query = "DELETE FROM profil WHERE profil_ind='" + profile.getID()+"'";
+			String query = "DELETE FROM profil WHERE profil_id='" + profile.getID()+"'";
 			int i = statement.executeUpdate(query);
 			
 			
 			if(i > 0)
 			{
-				profile.setStatusMessage("Profil ble slettet");
+				profile.setStatusMessage(profile.getName() + " ble slettet");
 			}
 			else
 			{
-				profile.setStatusMessage("Kunne ikke slette angitt profil");
+				profile.setStatusMessage("Kunne ikke slette angitt profil: " + profile.getName());
 			}
 			return profile;
 		}

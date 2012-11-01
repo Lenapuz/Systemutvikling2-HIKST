@@ -353,6 +353,13 @@ public class ProfileReg extends Composite {
 		
 	}
 	
+	public void setProfileData(Profile profile){
+		
+		textBoxName.setText(profile.getName());
+		
+		//textBoxFullName.setText(user.getName());
+	}
+	
 	
 	
 }
