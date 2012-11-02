@@ -20,7 +20,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double koefissientVarmetapNyeHus = 0.40;
 	private static final double skaleringsFaktorTemperaturVarmeBehov = -1.2963;
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
-	
+	private static final int gjsnittligForbrukPrKvm = 35;
 	public SimServiceImpl()
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
@@ -32,7 +32,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
-		double res = 1;
+		//double res = 1;
 		
 		//I enne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
@@ -45,8 +45,8 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			} 
 			else 
 			{		
+				int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
 				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
-				res *= Integer.parseInt(p.getHouseSize());
 				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));
 				resultat[i] = (int)res;
 			}
