@@ -22,6 +22,8 @@ public class ProfilAdmin extends Composite {
 	private FlexTable flextable = new FlexTable();
 	private int row = 0;
 	
+	
+	private FlexTable fucktable;
 	Button b;
 	
 	/**
