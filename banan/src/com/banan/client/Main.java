@@ -112,7 +112,13 @@ public class Main implements EntryPoint
 								SessionService.set("login", (Integer)UI.INTRO, new AsyncCallback<Void>() {
 									public void onFailure(Throwable caught) { }
 									public void onSuccess(Void result) { }									
-								});								
+								});
+								
+								SessionService.set("usrId", (Integer)User.getId(), new AsyncCallback<Void>() {
+									public void onFailure(Throwable caught) { }
+									public void onSuccess(Void result) { }									
+								});
+								
 							}
 							else
 							{
@@ -212,6 +218,44 @@ public class Main implements EntryPoint
 			public void onSuccess(Integer result) {
 				if (result != null)
 				{
+					SessionService.get("usrId", new AsyncCallback<Integer>() 
+					{
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(Integer result) 
+						{
+							UserService.getUser(result, new AsyncCallback<User>()
+							{
+
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(
+										com.banan.shared.User result) 
+								{
+									// TODO Auto-generated method stub
+									User = result;
+									menu.updateButtons();
+									register.updateForm();
+									userEdit.updateForm();
+								}
+								
+							});
+							
+						}
+						
+					});
+					
 					menuPanel.setVisible(true);
 					menuPanel.showWidget(UI.MAIN_MENU);
 					mainPanel.showWidget(result);
