@@ -39,7 +39,7 @@ public class Main implements EntryPoint
 	public static UserAdmin userAdmin = new UserAdmin();
 	public static Registration userEdit = new Registration();
 	
-	public static ProfileAdministration profileAdministration = new ProfileAdministration();
+	public static ProfilAdmin profileAdministration = new ProfilAdmin();
 	
 	public static ProfileReg profileAdmin = new ProfileReg();
 	
