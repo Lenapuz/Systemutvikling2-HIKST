@@ -16,6 +16,35 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
 	}
 	
+	public User getUser(int id)
+	{
+		User tmpUser = new User();
+		try
+		{
+			db.connect();
+			Statement statement = db.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM konsulent WHERE Id="+id);
+			if (result.next())
+			{
+				tmpUser = new User(result.getInt("Id"), result.getString("Brukernavn"),result.getString("Brukernavn"),result.getString("Passord"),result.getString("status"));
+			}
+			else
+			{
+				tmpUser.setStatusMessage("Brukeren finnes ikke.");
+			}
+			return tmpUser;
+		}
+		catch (Exception ex)
+		{
+			tmpUser.setStatusMessage(ex.getMessage());
+			return tmpUser;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+	
 	public User login(User user) throws IllegalArgumentException 
 	{
 		try
@@ -25,6 +54,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 			ResultSet result = statement.executeQuery("SELECT * FROM konsulent WHERE Brukernavn='" + user.getUsername() + "' AND Passord=MD5('" + user.getPassword() + "')");
 			if (result.next())
 			{
+				user = new User(Integer.parseInt(result.getString("id")), result.getString("Brukernavn"),result.getString("Brukernavn"),result.getString("Passord"),result.getString("status"));
 				user.login();
 				user.setType(result.getString("status"));
 			}
