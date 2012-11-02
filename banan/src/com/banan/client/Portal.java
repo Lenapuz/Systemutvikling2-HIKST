@@ -22,8 +22,8 @@ public class Portal extends Composite {
 	public Portal() 
 	{
 		HorizontalPanel panel = new HorizontalPanel();
-		panel.setCellHorizontalAlignment(buttonSøk, HasHorizontalAlignment.ALIGN_RIGHT);
-		panel.setCellHorizontalAlignment(textBoxSøk, HasHorizontalAlignment.ALIGN_RIGHT);
+		//panel.setCellHorizontalAlignment(buttonSøk, HasHorizontalAlignment.ALIGN_RIGHT);
+		//panel.setCellHorizontalAlignment(textBoxSøk, HasHorizontalAlignment.ALIGN_RIGHT);
 		panel.addStyleName("portal");
 		initWidget(panel);
 		
