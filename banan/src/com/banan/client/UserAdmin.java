@@ -48,7 +48,10 @@ public class UserAdmin extends Composite
 						flextable.setWidget(row, 0, new Label("Fultnavn:"));
 						flextable.setWidget(row, 1, new Label("Brukernavn:"));
 						flextable.setWidget(row, 2, new Label("Type:"));
-						flextable.setWidget(row, 3, new Label("Slett:"));
+						if(Main.User.getType().equals("Admin"))
+						{
+							flextable.setWidget(row, 3, new Label("Slett:"));
+						}
 						flextable.setWidget(row, 4, new Label("Edit:"));
 						
 						for(final User u : result)
@@ -77,7 +80,10 @@ public class UserAdmin extends Composite
 						flextable.setWidget(row, 0, new Label("Fultnavn:"));
 						flextable.setWidget(row, 1, new Label("Brukernavn:"));
 						flextable.setWidget(row, 2, new Label("Type:"));
-						flextable.setWidget(row, 3, new Label("Slett:"));
+						if(Main.User.getType().equals("Admin"))
+						{
+							flextable.setWidget(row, 3, new Label("Slett:"));
+						}
 						flextable.setWidget(row, 4, new Label("Edit:"));
 						
 						for(final User u : result)
@@ -94,48 +100,55 @@ public class UserAdmin extends Composite
 		Button b;
 		
 		row++;
+		
 		flextable.setWidget(row, 0, new Label(u.getName()));
 		flextable.setWidget(row, 1, new Label(u.getUsername()));
 		flextable.setWidget(row, 2, new Label(u.getType()));
-		b = new Button();
-		b.setText("Edit");
-		
-		b.addClickHandler(new ClickHandler() 
+		if(Main.User.getType().equals("Konsulent") || Main.User.getType().equals("Admin"))
 		{
-			public void onClick(ClickEvent event) 
-			{				
-				Main.userEdit.setData(u);
-				Main.mainPanel.showWidget(UI.EDITUSER);
-			}			
-		});
-		flextable.setWidget(row, 3, b);
-		b = new Button();
-		b.setText("Slett");
-		flextable.setWidget(row, 4, b);
-		b.addClickHandler(new ClickHandler()
-		{
-			@Override 
-			public void onClick(ClickEvent event) 
+			b = new Button();
+			b.setText("Edit");
+			b.addClickHandler(new ClickHandler() 
 			{
-				Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
+				public void onClick(ClickEvent event) 
+				{				
+					Main.userEdit.setData(u);
+					Main.mainPanel.showWidget(UI.EDITUSER);
+				}			
+			});
+			flextable.setWidget(row, 3, b);
+		}
+		
+		if(Main.User.getType().equals("Admin"))
+		{
+			b = new Button();
+			b.setText("Slett");
+			flextable.setWidget(row, 4, b);
+			b.addClickHandler(new ClickHandler()
+			{
+				@Override 
+				public void onClick(ClickEvent event) 
 				{
-
-					@Override 
-					public void onFailure(Throwable caught) 
+					Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
 					{
-						Window.alert(caught.getMessage());	
-					}
-
-					@Override
-					public void onSuccess(User result) 
-					{
-						reload();
-						Window.alert(result.getStatusMessage());
-						row--;
-					}				
-				});
-			}
-			
-		});
+	
+						@Override 
+						public void onFailure(Throwable caught) 
+						{
+							Window.alert(caught.getMessage());	
+						}
+	
+						@Override
+						public void onSuccess(User result) 
+						{
+							reload();
+							Window.alert(result.getStatusMessage());
+							row--;
+						}				
+					});
+				}
+				
+			});
+		}
 	}
 }

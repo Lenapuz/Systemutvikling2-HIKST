@@ -18,17 +18,13 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double koefissientVarmetapGamleHus = 0.50;
 	private static final double koefissientVarmetapMiddelsHus = 0.45;
 	private static final double koefissientVarmetapNyeHus = 0.40;
-	
-	//Gjennomsnittlig oppvarmingsbehov per kvm
+	private static final double skaleringsFaktorTemperaturVarmeBehov = -1.2963;
+	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
 	private static final int gjsnittligForbrukPrKvm = 35;
-	
 	public SimServiceImpl()
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
 	}
-	
-	//TODO: void newSimResult(int[] result, int profil_id) legge inn nytt resultat
-	//
 	
 	//Selve kalkuleringsmetoden
 	public SimResult simulate(int profileID, int temperatur)
@@ -36,22 +32,11 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
-		int tempInne = 20;
-		int tempUte = temperatur;
-		int deltaTemp = (tempInne - tempUte);
+		//double res = 1;
 		
-		
-		
-		//I denne løkka gjøres simuleringen
+		//I enne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			int res = gjsnittligForbrukPrKvm * Integer.parseInt(p.getHouseSize());
-			//int res = gjsnittligForbrukPrKvm;
-			//res*= byggårForbruksFaktor(Integer.parseInt(p.getBuildYear()));
-			//res*= beboereForbruksFaktor(Integer.parseInt(p.getHouseResidents()));
-			res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
-			
-			//res += getOppvarmingsForbruk(Integer.parseInt(p.getHouseSize()), deltaTemp, Integer.parseInt(p.getBuildYear()));
 			
 			//Hvis hus størrelse er lik 0, ingen utregning
 			if (Integer.parseInt(p.getHouseSize()) == 0)
@@ -60,10 +45,14 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			} 
 			else 
 			{		
-				resultat[i] = res;
+				int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
+				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
+				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));
+				resultat[i] = (int)res;
 			}
-			res *= Integer.parseInt(p.getHouseSize());
+			
 		}
+		
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
 		
@@ -72,55 +61,6 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return result;
 	}
 	
-	//Faktorer til bruk i utregning
-	/*public static double byggårForbruksFaktor(int byggår)
-	{
-		if (byggår > 1997)
-		{		
-			return 0.5;
-		}
-		else if (byggår > 1987 && byggår < 1997)
-		{
-			return 0.8;
-		}
-		else
-		{
-			return 1;
-		}	
-	}
-	//ikke i bruk
-	public static double beboereForbruksFaktor(int beboere)	
-	{
-		if (beboere == 1)
-		{
-			return 1.0;			
-		}
-		else if(beboere == 2)
-		{
-			return 1.3;
-		}
-		else if(beboere == 3)
-		{
-			return 1.5;
-		}
-		else if(beboere == 4)
-		{
-			return 1.65;
-		}
-		else if(beboere == 5)
-		{
-			return 1.8;
-		}
-		else if(beboere == 6)
-		{
-			return 1.9;
-		}
-		else if(beboere > 6)
-		{
-			return 2.0;
-		}
-		else return 1;
-	}*/
 	
 	public static int tempToCelsius(int tempKelvin)
 	{
@@ -202,23 +142,30 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		return powerConsumption[time];
 	}
-	//strømforbruk i kWh, areal i m^2
-	public static double getOppvarmingsForbruk(int areal, int deltaTemp, int byggår)
+	
+	//strømforbruk i kWh/m^2
+	//bare nøyaktig for temp [-50,20]
+	public static double getOppvarmingsForbrukPerKvm(int uteTemp, int byggår)
 	{
-		double res = areal * deltaTemp;
+		if(uteTemp<20 && uteTemp >-50)
+		{
+			double res = skaleringsFaktorTemperaturVarmeBehov*uteTemp+varmeBehovVedNullGraderKonstant;
+			if (byggår > 1997)
+			{		
+				return res * koefissientVarmetapNyeHus;
+			}
+			else if (byggår > 1987 && byggår < 1997)
+			{
+				return res * koefissientVarmetapMiddelsHus;
+			}
+			else
+			{
+				return res * koefissientVarmetapGamleHus;
+			}	
+		}
+		else 
+			return 0;
 		
-		if (byggår > 1997)
-		{		
-			return res * koefissientVarmetapNyeHus;
-		}
-		else if (byggår > 1987 && byggår < 1997)
-		{
-			return res * koefissientVarmetapMiddelsHus;
-		}
-		else
-		{
-			return res * koefissientVarmetapGamleHus;
-		}	
 	}
 	
 	//Databasemetoder
@@ -237,7 +184,6 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-	
 	public SimResult[] GetSimResultByProfileId(int profile_id) throws IllegalArgumentException 
 	{
 		try
@@ -275,7 +221,6 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-
 	public void DeleteSimResult(int id) throws IllegalArgumentException 
 	{
 		try
@@ -305,6 +250,4 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-	
-	
 }

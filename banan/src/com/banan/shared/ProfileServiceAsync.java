@@ -4,9 +4,9 @@ import com.banan.shared.Profile;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /***
- * Inerface som kaller på metoden registrer og Profilesom pusher til DB i tabell "profiler"
+ * Inerface som kaller pï¿½ metoden registrer og Profilesom pusher til DB i tabell "profiler"
  * @author Martin
- * NB! NB! disse to metodene gjør det samme, skal få rettet dette opp til kun 1 metode.
+ * NB! NB! disse to metodene gjï¿½r det samme, skal fï¿½ rettet dette opp til kun 1 metode.
  */
 
 public interface ProfileServiceAsync 
@@ -14,4 +14,10 @@ public interface ProfileServiceAsync
 	void register(Profile profile, AsyncCallback<Profile> callback);
 	void profil(Profile profile, AsyncCallback<Profile> callback);
 	void getProfiles(AsyncCallback<Profile[]> callback);
+	
+	void DeleteProfile(Profile profile, AsyncCallback<Profile> callback) throws IllegalArgumentException;
+	
+	
+	
+	
 }
