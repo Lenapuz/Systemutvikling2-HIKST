@@ -118,15 +118,16 @@ public class MainMenu extends Composite
 		panel.add(buttonSim);
 		panel.add(buttonProfileEdit);
 		
-		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulenter"))
+		if(Main.User.getType().equals("Admin") || Main.User.getType().equals("Konsulent"))
 		{
 			panel.add(buttonAddProfile);
+			panel.add(buttonUserAdmin);
 		}
 				
 		if(Main.User.getType().equals("Admin"))
 		{
 			panel.add(buttonRegister);
-			panel.add(buttonUserAdmin);
+			
 		}
 		panel.add(buttonLogout);
 	}
