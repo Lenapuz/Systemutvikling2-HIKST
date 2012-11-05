@@ -14,13 +14,13 @@ import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
 
 public class ProfileList extends Composite {
-	private VerticalPanel herp;
+	private DeckPanel container;
 	
 	public ProfileList()
 	{
-		herp = new VerticalPanel();
-		herp.addStyleName("profilelist");
-		initWidget(herp);
+		container = new DeckPanel();
+		
+		initWidget(container);
 		Main.ProfileService.getProfiles(
 			new AsyncCallback<Profile[]>() {
 				public void onFailure(Throwable caught) 
@@ -29,7 +29,7 @@ public class ProfileList extends Composite {
 				}
 
 				public void onSuccess(Profile[] result) 
-				{
+				{				
 					FlowPanel fp = new FlowPanel();
 					fp.addStyleName("profilelist_bar");
 					
@@ -45,7 +45,20 @@ public class ProfileList extends Composite {
 					hp.add(labelTemp);
 					hp.add(textBoxTemp);
 					fp.add(hp);
+					VerticalPanel herp = new VerticalPanel();
+					//container.add(herp);
+					//container.showWidget(0);
+					herp.addStyleName("profilelist");
 					herp.add(fp);
+					
+					int pages = 1 + result.length / 10;
+					if (pages % 10 == 0) {
+						pages--;
+					}
+					int count = 0;
+					boolean added = true;
+
+					boolean first = true;
 					
 					for (final Profile p : result)
 					{
@@ -97,11 +110,40 @@ public class ProfileList extends Composite {
 								}
 							}						
 						});
+												
 						herp.add(html);
+						count++;
+						
+						if (count == 10 || first) {
+							first = false;
+							
+							container.add(herp);
+							
+							if (count == 10 || count == result.length) {
+								String s = "<div class=\"profilelist_pagination\">";
+								for (int i = 0; i < pages; i++) {
+									s += "<a id=\"page-" + i + "\">" + (i + 1) + "</a>";
+								}
+								s += "</div";
+								HTML pagination = new HTML(s);
+								pagination.addClickHandler(new ClickHandler() {
+									public void onClick(ClickEvent event) {
+										Element target = Element.as(event.getNativeEvent().getEventTarget());
+										int page = Integer.parseInt(target.getId().split("-")[1]);
+										container.showWidget(page);
+									}						
+								});
+								herp.add(pagination);
+								
+								if (count == 10) {
+									herp = new VerticalPanel();
+									first = true;
+								}
+							}
+						}
 					}
 					
-					HTML pagination = new HTML("<div class=\"profilelist_pagination\"><a>1</a><a>2</a><a>3</a><a>4</a></div>");
-					herp.add(pagination);
+					container.showWidget(0);
 				}
 			});		
 	}
