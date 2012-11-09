@@ -232,6 +232,10 @@ header h1 {
 	float: right;
 }
 
+.portal button {
+	margin-left: 5px;
+	margin-top: -9px;
+}
 .profileAdmin td td, .userAdmin td td {
 	padding: 5px 10px;
 }
