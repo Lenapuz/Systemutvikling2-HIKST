@@ -15,6 +15,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 //Husk komentarer
+/***
+ * Brukes for editering av rpfileer
+ */
 public class ProfilAdmin extends Composite {
 	
 	
@@ -58,7 +61,6 @@ public class ProfilAdmin extends Composite {
 				flextable.setWidget(row, 3, new Label("Slett: "));
 				flextable.setWidget(row, 4, new Label("Edit: "));
 		
-				
 				for(Profile p : result)
 				{
 					addProfileToTable(p);
