@@ -44,6 +44,8 @@ public class ProfileReg extends Composite {
 	private ListBox listBoxSelect;
     private ListBox listBoxType;
     private ListBox listBoxIsolated;
+    
+    
 	
     //Constructor
 	public ProfileReg(){
@@ -152,7 +154,7 @@ public class ProfileReg extends Composite {
 		
 		
 		
-		p1.add(labelFirstName);
+		/*p1.add(labelFirstName);
 		p1.add(textBoxFirstName);
 		panel.add(p1);
 		p1 = new HorizontalPanel();
@@ -190,7 +192,7 @@ public class ProfileReg extends Composite {
 		p1.add(labelEmailAdresse);
 		p1.add(textBoxEmailAdresse);
 		panel.add(p1);
-		p1 = new HorizontalPanel();
+		p1 = new HorizontalPanel();*/
 		
 		
 		//andre greier
@@ -350,8 +352,14 @@ public class ProfileReg extends Composite {
 	public void setData(Profile p){
 		
 		textBoxName.setText(p.getName());
+		textBoxBuildYear.setText(p.getBuildYear());
+		textBoxHouseSize.setText(p.getHouseSize());
+		textBoxHouseResidents.setText(p.getHouseResidents());
+		
 		
 	}
+	
+	
 	
 	public void setProfileData(Profile profile){
 		

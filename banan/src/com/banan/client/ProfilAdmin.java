@@ -75,23 +75,27 @@ public class ProfilAdmin extends Composite {
 		
 		row++;
 		
+		/**
+		 * Editering av profil
+		 */
 		flextable.setWidget(row, 0, new Label(p.getName()));
-		flextable.setWidget(row, 1, new Label(p.getHouseSize()));
-		flextable.setWidget(row, 2, new Label(p.getBuildYear()));
+		flextable.setWidget(row, 1, new Label(p.getBuildYear()));
+		flextable.setWidget(row, 2, new Label(p.getHouseSize()));
+		flextable.setWidget(row, 3, new Label(p.getHouseResidents()));
 		
 		b = new Button();
 		b.setText("Edit");
-		
 		b.addClickHandler( new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				Main.profileAdmin.setData(p);
-				Main.mainPanel.showWidget(UI.PROFIL);
+				Main.profileEdit.setData(p);
+				Main.mainPanel.showWidget(UI.EDITPROFILE2);
+				
 				//Main.mainPanel.showWidget(UI.EDITPROFILE);
 			}
-		});
+		});//end of edit
 		
 			/**
 			 * Sletting av profil
@@ -122,7 +126,7 @@ public class ProfilAdmin extends Composite {
 						}
 					});
 				}
-			});
+			});//end of delete profile
 		
 		panel.add(flextable);
 		

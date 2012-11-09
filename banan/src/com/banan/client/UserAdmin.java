@@ -107,8 +107,10 @@ public class UserAdmin extends Composite
 			{				
 				Main.userEdit.setData(u);
 				Main.mainPanel.showWidget(UI.EDITUSER);
+				
 			}			
 		});
+		
 		flextable.setWidget(row, 3, b);
 		b = new Button();
 		b.setText("Slett");
