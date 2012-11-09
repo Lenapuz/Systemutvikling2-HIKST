@@ -9,12 +9,15 @@ import com.google.gwt.user.client.ui.*;
 
 public class MainMenu extends Composite 
 {
+	Button buttonHome;
 	Button buttonSim;
 	Button buttonRegister;
 	Button buttonAddProfile;
 	Button buttonLogout;
 	Button buttonUserAdmin;
 	Button buttonProfileEdit;
+	
+	Button buttonSelected;
 	
 	FlowPanel panel;
 	
@@ -23,6 +26,10 @@ public class MainMenu extends Composite
 		panel = new FlowPanel();
 		panel.addStyleName("main_menu");
 		initWidget(panel);
+		
+		buttonHome = new Button("Hjem");
+		buttonHome.addStyleName("menu_item selected");
+		buttonSelected = buttonHome;
 		
 		//Knapper til MainPanel 
 		buttonSim = new Button("Simulering");
@@ -41,7 +48,6 @@ public class MainMenu extends Composite
 		buttonAddProfile = new Button("Ny profil");
 		buttonAddProfile.addStyleName("menu_item");
 		//buttonAddProfile.addStyleName("btn");
-		
 		buttonUserAdmin = new Button("Brukeradministrasjon");
 		buttonUserAdmin.addStyleName("menu_item");
 		//buttonUserAdmin.addStyleName("btn");
@@ -49,11 +55,23 @@ public class MainMenu extends Composite
 		buttonProfileEdit = new Button("Profiladministrasjon");
 		buttonProfileEdit.addStyleName("menu_item");
 		
+		buttonHome.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event)
+			{
+				p.showWidget(UI.INTRO);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonHome;
+				buttonSelected.addStyleName("selected");
+			}
+		});
 		
 		buttonSim.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) 
 			{
 				p.showWidget(UI.SIMULATION);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonSim;
+				buttonSelected.addStyleName("selected");
 			}			
 		});
 		
@@ -62,6 +80,9 @@ public class MainMenu extends Composite
 			public void onClick(ClickEvent event) 
 			{
 				p.showWidget(UI.REGISTRATION);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonRegister;
+				buttonSelected.addStyleName("selected");
 			}			
 		});
 		
@@ -70,6 +91,9 @@ public class MainMenu extends Composite
 			public void onClick(ClickEvent event) 
 			{
 				p.showWidget(UI.PROFIL);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonAddProfile;
+				buttonSelected.addStyleName("selected");
 			}			
 		});
 				
@@ -89,6 +113,9 @@ public class MainMenu extends Composite
 			{	
 				Main.userAdmin.reload();
 				p.showWidget(UI.USERADMIN);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonUserAdmin;
+				buttonSelected.addStyleName("selected");
 			}			
 		});
 		
@@ -101,6 +128,9 @@ public class MainMenu extends Composite
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				p.showWidget(UI.EDITPROFILE);
+				buttonSelected.removeStyleName("selected");
+				buttonSelected = buttonProfileEdit;
+				buttonSelected.addStyleName("selected");
 			}
 		});
 		
@@ -115,6 +145,7 @@ public class MainMenu extends Composite
 	
 	private void addButtons()
 	{
+		panel.add(buttonHome);
 		panel.add(buttonSim);
 		panel.add(buttonProfileEdit);
 		
