@@ -32,7 +32,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		Integer[] resultat = new Integer[24];
-		//double res = 1;
+		double res = 1;
 		
 		//I enne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
@@ -42,14 +42,16 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			if (Integer.parseInt(p.getHouseSize()) == 0)
 			{
 				resultat[i] = 0;
+				res = 1;
 			} 
 			else 
 			{		
-				int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
-				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));
-				res *= 0.01;
+				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
 				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));
+				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
+				res*= Integer.parseInt(p.getHouseSize());
 				resultat[i] = (int)res;
+				res = 1;
 			}			
 		}
 		
