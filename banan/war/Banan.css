@@ -248,6 +248,10 @@ header h1 {
 	background: #CCC;
 }
 
+.profileAdmin td tr:last-child, .userAdmin td tr:last-child {
+	border-bottom: 5px solid #0084FF;
+}
+
 .profileAdmin td tr:first-child, .userAdmin td tr:first-child {
 	background: #0084FF;
 	font: bold 16px Open Sans, sans-serif;
