@@ -232,6 +232,24 @@ header h1 {
 	float: right;
 }
 
+.profileAdmin td td, .userAdmin td td {
+	padding: 5px 10px;
+}
+
+.profileAdmin td td:first-child, .userAdmin td td:first-child {
+	width: 100%;
+}
+
+.profileAdmin td tr:nth-child(even), .userAdmin td tr:nth-child(even) {
+	background: #CCC;
+}
+
+.profileAdmin td tr:first-child, .userAdmin td tr:first-child {
+	background: #0084FF;
+	font: bold 16px Open Sans, sans-serif;
+	color: #FFF;
+}
+
 .clearfix:after {
     content: ".";
     display: block;

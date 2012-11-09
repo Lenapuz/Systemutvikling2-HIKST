@@ -45,11 +45,11 @@ public class UserAdmin extends Composite
 					@Override
 					public void onSuccess(User[] result) 
 					{
-						flextable.setWidget(row, 0, new Label("Fultnavn:"));
-						flextable.setWidget(row, 1, new Label("Brukernavn:"));
-						flextable.setWidget(row, 2, new Label("Type:"));
-						flextable.setWidget(row, 3, new Label("Slett:"));
-						flextable.setWidget(row, 4, new Label("Edit:"));
+						flextable.setWidget(row, 0, new Label("Fullt navn"));
+						flextable.setWidget(row, 1, new Label("Brukernavn"));
+						flextable.setWidget(row, 2, new Label("Type"));
+						flextable.setWidget(row, 3, new Label("Rediger"));
+						flextable.setWidget(row, 4, new Label("Slett"));
 						
 						for(final User u : result)
 						{
@@ -61,6 +61,7 @@ public class UserAdmin extends Composite
 	}
 	
 	public void reload() {
+		row = 0;
 		flextable.clear();
 		Main.UserService.GetUsers(
 				new AsyncCallback<User[]>() 
@@ -74,11 +75,11 @@ public class UserAdmin extends Composite
 					@Override
 					public void onSuccess(User[] result) 
 					{
-						flextable.setWidget(row, 0, new Label("Fultnavn:"));
-						flextable.setWidget(row, 1, new Label("Brukernavn:"));
-						flextable.setWidget(row, 2, new Label("Type:"));
-						flextable.setWidget(row, 3, new Label("Slett:"));
-						flextable.setWidget(row, 4, new Label("Edit:"));
+						flextable.setWidget(row, 0, new Label("Fullt navn"));
+						flextable.setWidget(row, 1, new Label("Brukernavn"));
+						flextable.setWidget(row, 2, new Label("Type"));
+						flextable.setWidget(row, 3, new Label("Rediger"));
+						flextable.setWidget(row, 4, new Label("Slett"));
 						
 						for(final User u : result)
 						{
@@ -100,6 +101,7 @@ public class UserAdmin extends Composite
 		flextable.setWidget(row, 2, new Label(u.getType()));
 		b = new Button();
 		b.setText("Edit");
+		b.addStyleName("btn");
 		
 		b.addClickHandler(new ClickHandler() 
 		{
@@ -114,6 +116,7 @@ public class UserAdmin extends Composite
 		flextable.setWidget(row, 3, b);
 		b = new Button();
 		b.setText("Slett");
+		b.addStyleName("btn");
 		flextable.setWidget(row, 4, b);
 		b.addClickHandler(new ClickHandler()
 		{
