@@ -42,6 +42,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			if (Integer.parseInt(p.getHouseSize()) == 0)
 			{
 				resultat[i] = 0;
+				res = 1;
 			} 
 			else 
 			{		
@@ -50,6 +51,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
 				res*= Integer.parseInt(p.getHouseSize());
 				resultat[i] = (int)res;
+				res = 1;
 			}			
 		}
 		
