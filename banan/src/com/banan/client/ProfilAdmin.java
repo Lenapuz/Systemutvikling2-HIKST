@@ -15,6 +15,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 //Husk komentarer
+/***
+ * Brukes for editering av rpfileer
+ */
 public class ProfilAdmin extends Composite {
 	
 	
@@ -52,13 +55,12 @@ public class ProfilAdmin extends Composite {
 			@Override
 			public void onSuccess(Profile[] result) {
 				// TODO Auto-generated method stub
-				flextable.setWidget(row, 0, new Label("Navn: "));
-				flextable.setWidget(row, 1, new Label("Størrelse: "));
-				flextable.setWidget(row, 2, new Label("Bygge År: "));
-				flextable.setWidget(row, 3, new Label("Slett: "));
-				flextable.setWidget(row, 4, new Label("Edit: "));
-		
-				
+				flextable.setWidget(row, 0, new Label("Navn"));
+				flextable.setWidget(row, 1, new Label("Størrelse"));
+				flextable.setWidget(row, 2, new Label("Byggeår"));
+				flextable.setWidget(row, 3, new Label("Rediger"));
+				flextable.setWidget(row, 4, new Label("Slett"));
+						
 				for(Profile p : result)
 				{
 					addProfileToTable(p);
@@ -75,23 +77,28 @@ public class ProfilAdmin extends Composite {
 		
 		row++;
 		
+		/**
+		 * Editering av profil
+		 */
 		flextable.setWidget(row, 0, new Label(p.getName()));
-		flextable.setWidget(row, 1, new Label(p.getHouseSize()));
-		flextable.setWidget(row, 2, new Label(p.getBuildYear()));
+		flextable.setWidget(row, 1, new Label(p.getBuildYear()));
+		flextable.setWidget(row, 2, new Label(p.getHouseSize()));
+		flextable.setWidget(row, 3, new Label(p.getHouseResidents()));
 		
 		b = new Button();
 		b.setText("Edit");
-		
+		b.addStyleName("btn");
 		b.addClickHandler( new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				Main.profileAdmin.setData(p);
-				Main.mainPanel.showWidget(UI.PROFIL);
+				Main.profileEdit.setData(p);
+				Main.mainPanel.showWidget(UI.EDITPROFILE2);
+				
 				//Main.mainPanel.showWidget(UI.EDITPROFILE);
 			}
-		});
+		});//end of edit
 		
 			/**
 			 * Sletting av profil
@@ -99,6 +106,7 @@ public class ProfilAdmin extends Composite {
 			flextable.setWidget(row, 3, b);
 			b = new Button();
 			b.setText("Slett");
+			b.addStyleName("btn");
 			flextable.setWidget(row, 4, b);			
 			b.addClickHandler(new ClickHandler() {
 				
@@ -122,7 +130,7 @@ public class ProfilAdmin extends Composite {
 						}
 					});
 				}
-			});
+			});//end of delete profile
 		
 		panel.add(flextable);
 		
@@ -150,11 +158,11 @@ public class ProfilAdmin extends Composite {
 					@Override
 					public void onSuccess(Profile[] result) 
 					{
-						flextable.setWidget(row, 0, new Label("Fultnavn:"));
-						flextable.setWidget(row, 1, new Label("Brukernavn:"));
-						flextable.setWidget(row, 2, new Label("Type:"));
-						flextable.setWidget(row, 3, new Label("Slett:"));
-						flextable.setWidget(row, 4, new Label("Edit:"));
+						flextable.setWidget(row, 0, new Label("Navn"));
+						flextable.setWidget(row, 1, new Label("Størrelse"));
+						flextable.setWidget(row, 2, new Label("Byggeår"));
+						flextable.setWidget(row, 3, new Label("Rediger"));
+						flextable.setWidget(row, 4, new Label("Slett"));
 						
 						for(final Profile p : result)
 						{

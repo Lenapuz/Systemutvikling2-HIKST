@@ -20,4 +20,5 @@ public class UI
 	public static final int EDITUSER = 7;
 	public static final int PORTAL = 8;
 	public static final int EDITPROFILE = 9;
+	public static final int EDITPROFILE2 = 10;
 }

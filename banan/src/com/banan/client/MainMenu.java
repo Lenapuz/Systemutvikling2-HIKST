@@ -29,7 +29,7 @@ public class MainMenu extends Composite
 		buttonSim.addStyleName("menu_item");
 		//buttonSim.addStyleName("btn");
 		
-		buttonRegister = new Button("Legg til konsulent");
+		buttonRegister = new Button("Ny bruker");
 		buttonRegister.addStyleName("menu_item");
 		//buttonRegister.addStyleName("btn");
 		
@@ -38,7 +38,7 @@ public class MainMenu extends Composite
 		buttonLogout.addStyleName("floatright");
 		//buttonLogout.addStyleName("btn");
 		
-		buttonAddProfile = new Button("Opprett profil");
+		buttonAddProfile = new Button("Ny profil");
 		buttonAddProfile.addStyleName("menu_item");
 		//buttonAddProfile.addStyleName("btn");
 		
@@ -46,7 +46,7 @@ public class MainMenu extends Composite
 		buttonUserAdmin.addStyleName("menu_item");
 		//buttonUserAdmin.addStyleName("btn");
 		
-		buttonProfileEdit = new Button("Profil Edit");
+		buttonProfileEdit = new Button("Profiladministrasjon");
 		buttonProfileEdit.addStyleName("menu_item");
 		
 		

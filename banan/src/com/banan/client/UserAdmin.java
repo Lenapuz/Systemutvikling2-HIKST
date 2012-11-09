@@ -45,14 +45,11 @@ public class UserAdmin extends Composite
 					@Override
 					public void onSuccess(User[] result) 
 					{
-						flextable.setWidget(row, 0, new Label("Fultnavn:"));
-						flextable.setWidget(row, 1, new Label("Brukernavn:"));
-						flextable.setWidget(row, 2, new Label("Type:"));
-						if(Main.User.getType().equals("Admin"))
-						{
-							flextable.setWidget(row, 3, new Label("Slett:"));
-						}
-						flextable.setWidget(row, 4, new Label("Edit:"));
+						flextable.setWidget(row, 0, new Label("Fullt navn"));
+						flextable.setWidget(row, 1, new Label("Brukernavn"));
+						flextable.setWidget(row, 2, new Label("Type"));
+						flextable.setWidget(row, 3, new Label("Rediger"));
+						flextable.setWidget(row, 4, new Label("Slett"));
 						
 						for(final User u : result)
 						{
@@ -64,6 +61,7 @@ public class UserAdmin extends Composite
 	}
 	
 	public void reload() {
+		row = 0;
 		flextable.clear();
 		Main.UserService.GetUsers(
 				new AsyncCallback<User[]>() 
@@ -77,14 +75,11 @@ public class UserAdmin extends Composite
 					@Override
 					public void onSuccess(User[] result) 
 					{
-						flextable.setWidget(row, 0, new Label("Fultnavn:"));
-						flextable.setWidget(row, 1, new Label("Brukernavn:"));
-						flextable.setWidget(row, 2, new Label("Type:"));
-						if(Main.User.getType().equals("Admin"))
-						{
-							flextable.setWidget(row, 3, new Label("Slett:"));
-						}
-						flextable.setWidget(row, 4, new Label("Edit:"));
+						flextable.setWidget(row, 0, new Label("Fullt navn"));
+						flextable.setWidget(row, 1, new Label("Brukernavn"));
+						flextable.setWidget(row, 2, new Label("Type"));
+						flextable.setWidget(row, 3, new Label("Rediger"));
+						flextable.setWidget(row, 4, new Label("Slett"));
 						
 						for(final User u : result)
 						{
@@ -104,51 +99,49 @@ public class UserAdmin extends Composite
 		flextable.setWidget(row, 0, new Label(u.getName()));
 		flextable.setWidget(row, 1, new Label(u.getUsername()));
 		flextable.setWidget(row, 2, new Label(u.getType()));
-		if(Main.User.getType().equals("Konsulent") || Main.User.getType().equals("Admin"))
-		{
-			b = new Button();
-			b.setText("Edit");
-			b.addClickHandler(new ClickHandler() 
-			{
-				public void onClick(ClickEvent event) 
-				{				
-					Main.userEdit.setData(u);
-					Main.mainPanel.showWidget(UI.EDITUSER);
-				}			
-			});
-			flextable.setWidget(row, 3, b);
-		}
+		b = new Button();
+		b.setText("Edit");
+		b.addStyleName("btn");
 		
-		if(Main.User.getType().equals("Admin"))
+		b.addClickHandler(new ClickHandler() 
 		{
-			b = new Button();
-			b.setText("Slett");
-			flextable.setWidget(row, 4, b);
-			b.addClickHandler(new ClickHandler()
-			{
-				@Override 
-				public void onClick(ClickEvent event) 
-				{
-					Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
-					{
-	
-						@Override 
-						public void onFailure(Throwable caught) 
-						{
-							Window.alert(caught.getMessage());	
-						}
-	
-						@Override
-						public void onSuccess(User result) 
-						{
-							reload();
-							Window.alert(result.getStatusMessage());
-							row--;
-						}				
-					});
-				}
+			public void onClick(ClickEvent event) 
+			{				
+				Main.userEdit.setData(u);
+				Main.mainPanel.showWidget(UI.EDITUSER);
 				
-			});
-		}
+			}			
+		});
+		
+		flextable.setWidget(row, 3, b);
+		b = new Button();
+		b.setText("Slett");
+		b.addStyleName("btn");
+		flextable.setWidget(row, 4, b);
+		b.addClickHandler(new ClickHandler()
+		{
+			@Override 
+			public void onClick(ClickEvent event) 
+			{
+				Main.UserService.DeleteUser(u, new AsyncCallback<User>() 
+				{
+
+					@Override 
+					public void onFailure(Throwable caught) 
+					{
+						Window.alert(caught.getMessage());	
+					}
+
+					@Override
+					public void onSuccess(User result) 
+					{
+						reload();
+						Window.alert(result.getStatusMessage());
+						row--;
+					}				
+				});
+			}
+			
+		});
 	}
 }

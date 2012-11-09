@@ -39,9 +39,8 @@ public class Main implements EntryPoint
 	public static UserAdmin userAdmin = new UserAdmin();
 	public static Registration userEdit = new Registration();
 	
-	public static ProfilAdmin profileAdministration = new ProfilAdmin();
-	
-	public static ProfileReg profileAdmin = new ProfileReg();
+	public static ProfilAdmin profileAdmin = new ProfilAdmin();
+	public static ProfileReg profileEdit = new ProfileReg();
 	
 	
 	
@@ -151,6 +150,8 @@ public class Main implements EntryPoint
 			}
 		});
 		
+		
+		
 		// on onAction for � registree brukere,konsulent eller Administraotr
 				userEdit.addRegisterHandler(new ActionHandler() {
 					public void onAction()
@@ -171,6 +172,10 @@ public class Main implements EntryPoint
 							});	
 					}
 				});
+				
+				
+				
+				
 		
 		// Starter Profil registrering OnAction() 
 		// Fungerer ikke! feil i SQL sp�rring ser ut til!! hvis ikke,
@@ -198,6 +203,8 @@ public class Main implements EntryPoint
 		
 		});
 		
+		
+		
 		HTML intro = new HTML("<div class=\"foo\"><h1>Velkommen!</h1></div>");
 		introPanel.add(intro);
 		
@@ -206,7 +213,8 @@ public class Main implements EntryPoint
 		mainPanel.add(userAdmin); // 6
 		mainPanel.add(userEdit); // 7
 		mainPanel.add(new Portal()); // 8...
-	    mainPanel.add(profileAdministration); 
+	    mainPanel.add(profileAdmin); //9 
+	    mainPanel.add(profileEdit);
 		
 		SessionService.get("login", new AsyncCallback<Integer>() {
 			@Override
