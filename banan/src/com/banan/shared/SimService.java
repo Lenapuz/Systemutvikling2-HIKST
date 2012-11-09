@@ -9,5 +9,5 @@ public interface SimService extends RemoteService
 {
 	SimResult simulate(int profileID, int temperatur);
 	SimResult[] GetSimResultByProfileId(int profileID);
-	
+	void purgeIt();
 }
