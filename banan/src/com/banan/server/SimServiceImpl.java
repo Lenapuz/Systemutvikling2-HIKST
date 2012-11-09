@@ -15,12 +15,13 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private Database db;	
 	//koefissienter bør kunne finjusteres fra admin panel
 	//tatt fra lærebøker om termodynamikk
+	double gjsnittligForbrukApparater = 1.34;
 	private static final double koefissientVarmetapGamleHus = 0.50;
 	private static final double koefissientVarmetapMiddelsHus = 0.45;
 	private static final double koefissientVarmetapNyeHus = 0.40;
 	private static final double skaleringsFaktorTemperaturVarmeBehov = -1.2963;
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
-	private static final int gjsnittligForbrukPrKvm = 35;
+	//private static final int gjsnittligForbrukPrKvm = 35;
 	public SimServiceImpl()
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
@@ -47,9 +48,10 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			else 
 			{		
 				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
-				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));
-				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
-				res*= Integer.parseInt(p.getHouseSize());
+				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
+				res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
+				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// ganger med forbruksendring gjennom døgnet (ssb)
+				res *= Integer.parseInt(p.getHouseSize()); //kvm
 				resultat[i] = (int)res;
 				res = 1;
 			}			
@@ -82,32 +84,32 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		
 		if (beboere == 1)
 		{
-			beboerFaktorMin = 1.0;	
-			beboerFaktorMax = 0.9;
+			beboerFaktorMin = 0.8;	
+			beboerFaktorMax = 0.7;
 		}
 		else if (beboere == 2)
 		{
-			beboerFaktorMin = 1.20;  // gjennomsnitts husstand, Max = Min = Max 
-			beboerFaktorMax = 1.20;
+			beboerFaktorMin = 1.0;  // gjennomsnitts husstand, Max = Min = Max 
+			beboerFaktorMax = 1.0;
 		}
 		else if (beboere == 3 )
 		{
-			beboerFaktorMin = 1.45;
-			beboerFaktorMax = 1.50;
+			beboerFaktorMin = 1.28;
+			beboerFaktorMax = 1.30;
 		}
 		else if (beboere == 4)
 		{
-			beboerFaktorMin = 1.60;
-			beboerFaktorMax = 1.90;
+			beboerFaktorMin = 1.45;
+			beboerFaktorMax = 1.70;
 		}
 		else if (beboere == 5)
 		{
-			beboerFaktorMin = 1.70;
-			beboerFaktorMax = 2.02;
+			beboerFaktorMin = 1.55;
+			beboerFaktorMax = 1.82;
 		}
 		else {
-			beboerFaktorMin =  1.80; 	
-			beboerFaktorMax =  2.13;  
+			beboerFaktorMin =  1.65; 	
+			beboerFaktorMax =  1.93;  
 		}
 		
 		// PowerConsumption tall er gitt snitt forbruk av strøm fra time til time. (gjennomsnitts husstand 2 personer)
