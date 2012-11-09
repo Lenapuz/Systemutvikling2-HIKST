@@ -29,7 +29,7 @@ public class Portal extends Composite {
 		initWidget(vp);
 		
 		textBoxSøk = new TextBox();
-		textBoxSøk.getElement().setPropertyString("placeholder", "Søk");
+		textBoxSøk.getElement().setPropertyString("placeholder", "ID");
 		buttonSøk = new Button("Søk");
 		buttonSøk.addStyleName("btn btn-primary");
 		

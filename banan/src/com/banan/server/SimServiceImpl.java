@@ -254,4 +254,34 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
+
+	@Override
+	public void purgeIt() {
+		try
+		{
+			this.db.connect();
+			Statement statement = db.createStatement();
+			String query = "DELETE FROM result";
+			int i = statement.executeUpdate(query);
+			
+			
+			if(i > 0)
+			{
+				//success
+			}
+			else
+			{
+				//dildo
+			}
+			
+		}
+		catch (Exception ex)
+		{
+			
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
 }

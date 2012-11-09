@@ -40,10 +40,33 @@ public class ProfileList extends Composite {
 					labelTemp.addStyleName("profilelist_bar_item");
 					textBoxTemp.addStyleName("profilelist_bar_item");
 					
+					Button buttonEmpty = new Button("Tøm han!");
+					buttonEmpty.addClickHandler(new ClickHandler() {
+						public void onClick(ClickEvent event) {
+							Main.SimService.purgeIt(new AsyncCallback<Void>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(Void result) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+							});
+						}
+					});
+					
+					
 					HorizontalPanel hp = new HorizontalPanel();
 					hp.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 					hp.add(labelTemp);
 					hp.add(textBoxTemp);
+					hp.add(buttonEmpty);
 					fp.add(hp);
 					VerticalPanel herp = new VerticalPanel();
 					//container.add(herp);

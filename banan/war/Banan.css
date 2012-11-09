@@ -67,7 +67,7 @@ button {
 	padding: 10px;
 }
 
-.menu_item:hover {
+.menu_item:hover, .menu_item.selected {
 	background: #0084FF;
 	color: #FFF;
 }
