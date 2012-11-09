@@ -69,6 +69,7 @@ public class Main implements EntryPoint
 		portalHTML.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				mainPanel.showWidget(UI.PORTAL);
+				RootPanel.get("headerz").getElement().setInnerHTML("Kundeportal");
 			}			
 		});		
 		p.add(portalHTML);
