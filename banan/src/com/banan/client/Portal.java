@@ -21,11 +21,12 @@ public class Portal extends Composite {
 	
 	public Portal() 
 	{
-		HorizontalPanel panel = new HorizontalPanel();
-		//panel.setCellHorizontalAlignment(buttonSøk, HasHorizontalAlignment.ALIGN_RIGHT);
-		//panel.setCellHorizontalAlignment(textBoxSøk, HasHorizontalAlignment.ALIGN_RIGHT);
+		VerticalPanel vp = new VerticalPanel();
+		FlowPanel panel = new FlowPanel();
 		panel.addStyleName("portal");
-		initWidget(panel);
+		vp.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		vp.add(panel);
+		initWidget(vp);
 		
 		textBoxSøk = new TextBox();
 		textBoxSøk.getElement().setPropertyString("placeholder", "Søk");

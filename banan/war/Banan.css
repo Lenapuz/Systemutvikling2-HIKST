@@ -232,6 +232,11 @@ header h1 {
 	float: right;
 }
 
+.portal button {
+	margin-left: 5px;
+	margin-top: -9px;
+}
+
 .clearfix:after {
     content: ".";
     display: block;
