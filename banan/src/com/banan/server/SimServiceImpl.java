@@ -71,7 +71,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
 				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
 				//res*=h.getheatFactor(); //varmefaktor fra oppvarming
-				res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
+				res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport (12% vannoppvarming, 22% elektriske apparater)
 				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// ganger med forbruksendring gjennom døgnet (ssb)
 				res *= Integer.parseInt(p.getHouseSize()); // kvm
 				
