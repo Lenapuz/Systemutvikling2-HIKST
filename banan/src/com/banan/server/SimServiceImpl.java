@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.banan.shared.*;
+import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
@@ -25,20 +26,23 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
 	
 		
-	private ArrayList<Heatsource> hs;
+	//private ArrayList<Heatsource> hs;
+	private HashMap<String, Heatsource> hm;
 	
 	public SimServiceImpl()
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
-		hs = new ArrayList<Heatsource>();
+		//hs = new ArrayList<Heatsource>();
 		Heatsource[] hsarr;
+		hm = new HashMap<>();
 		
 		ProfileServiceImpl p = new ProfileServiceImpl();
 		hsarr = p.getHeatsources();
 		
 		for(int i = 0;i<hsarr.length;i++)
 		{
-			hs.add(hsarr[i]);
+			//hs.add(hsarr[i]);
+			hm.put(hsarr[i].getName(),hsarr[i]);
 		}
 				
 	}
@@ -50,7 +54,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		
-		//h = hs.get(this.getHeatSourceIdByName(p.getPrimHeating())); 
+		//h = hm.get(this.getHeatSourceByName(p.getPrimHeating())); 
 		Integer[] resultat = new Integer[24];
 		double res = 1;
 		
@@ -68,15 +72,17 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			} 
 			else 
 			{		
+				
 				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
 				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
-				//res*=h.getheatFactor(); //varmefaktor fra oppvarming
+				//res *=h.getheatFactor(); //varmefaktor fra oppvarming
 				res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
 				res *= this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// ganger med forbruksendring gjennom døgnet (ssb)
 				res *= Integer.parseInt(p.getHouseSize()); // kvm
 				
 				resultat[i] = (int)res;
 				res = 1;
+				
 			}			
 		}
 		
@@ -281,10 +287,12 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//støttemetoder
 	
 	//denne må fikses
-	public int getHeatSourceIdByName(String name)
+	public double getHeatSourceByName(String name)
 	{
-		return hs.indexOf(name);	
+		Heatsource htemp = hm.get(name);
+		return htemp.getheatFactor();	
 	}
+	
 	@Override
 	public void purgeIt() {
 		try
