@@ -145,6 +145,7 @@ public class ProfilAdmin extends Composite {
 	 *
 	 */
 	public void reload() {
+		row = 0;
 		flextable.clear();
 		Main.ProfileService.getProfiles(
 				new AsyncCallback<Profile[]>() 

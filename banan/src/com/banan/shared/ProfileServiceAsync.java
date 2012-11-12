@@ -16,7 +16,7 @@ public interface ProfileServiceAsync
 	void getProfiles(AsyncCallback<Profile[]> callback);
 	
 	void DeleteProfile(Profile profile, AsyncCallback<Profile> callback) throws IllegalArgumentException;
-	
+	void EditProfile(Profile profile, AsyncCallback<Profile> callback);
 	
 	
 	

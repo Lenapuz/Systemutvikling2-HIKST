@@ -17,6 +17,5 @@ public interface ProfileService extends RemoteService
 	
 	//User DeleteUser(User user) throws IllegalArgumentException;
 	Profile DeleteProfile(Profile profile) throws IllegalArgumentException;
-	
-	//Profile editProfile(Profile profile) throws IllegalArgumentException;
+	Profile EditProfile(Profile profile) throws IllegalArgumentException;
 }

@@ -181,6 +181,32 @@ public class Main implements EntryPoint
 		// Starter Profil registrering OnAction() 
 		// Fungerer ikke! feil i SQL sp�rring ser ut til!! hvis ikke,
 		// s� ligger feilen en anne plass.
+			
+		profileEdit.addProfileHandler(new ActionHandler()
+		{
+			
+			@Override
+			public void onAction() 
+			{
+				//new Profile(profil.getName(), profil.getBuildYear(),profil.getIsisolated(),profil.getTypePofile(), profil.getPrimHeating(), profil.getHouseResidents() , profil.getHouseSize())
+				ProfileService.EditProfile(new Profile (profileEdit.getName() , profileEdit.getBuildYear(),profileEdit.getIsisolated(),profileEdit.getTypePofile(), profileEdit.getPrimHeating(), profileEdit.getHouseResidents() , profileEdit.getHouseSize()), new AsyncCallback<Profile>() 
+				{
+					
+					public void onFailure(Throwable caught)
+					{
+						Window.alert(caught.getMessage());
+					}
+					
+					public void onSuccess(Profile result) {
+						// TODO Auto-generated method stub
+						
+						Window.alert(result.getStatusMessage());
+					}
+				});		
+			}
+		});	
+		
+				
 		profil.addProfileHandler(new ActionHandler(){
 			public void onAction()
 			{
@@ -203,6 +229,8 @@ public class Main implements EntryPoint
 			}
 		
 		});
+		
+		
 		
 		
 		

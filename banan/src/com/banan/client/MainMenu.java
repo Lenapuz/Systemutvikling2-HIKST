@@ -131,6 +131,7 @@ public class MainMenu extends Composite
 				buttonSelected.removeStyleName("selected");
 				buttonSelected = buttonProfileEdit;
 				buttonSelected.addStyleName("selected");
+				Main.profileAdmin.reload();
 			}
 		});
 		
@@ -170,6 +171,7 @@ public class MainMenu extends Composite
 		panel.remove(buttonRegister);
 		panel.remove(buttonUserAdmin);	
 		panel.remove(buttonLogout);
+		panel.remove(buttonProfileEdit);
 	}
 	
 	

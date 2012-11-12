@@ -1,6 +1,7 @@
 package com.banan.server;
 
 import com.banan.shared.*;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.sql.*;
@@ -21,6 +22,8 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 	{
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
 	}
+	
+	
 	
 	public Profile register(Profile profile) throws IllegalArgumentException
 	{
@@ -266,6 +269,41 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			return profile;
 		}
 		catch (Exception ex)
+		{
+			profile.setStatusMessage(ex.getMessage());
+			return profile;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+
+
+
+	@Override
+	public Profile EditProfile(Profile profile) throws IllegalArgumentException 
+	{
+		try
+		{
+			this.db.connect();
+			Statement statement = db.createStatement();
+			
+			String query = "UPDATE profil SET name = '" + profile.getName() + "', build_year = '" + profile.getBuildYear() + "', is_isolated = '" + profile.getIsisolated() + "', profil_type = '" + profile.getTypePofile() + "', prim_heating = '" + profile.getPrimHeating() + "', house_residents = '" + profile.getHouseResidents() + "', house_size = '" + profile.getHouseSize() +"'  WHERE name = '" + profile.getName() + "'";
+			int i = statement.executeUpdate(query);
+			
+			if(i > 0)
+			{
+				profile.setStatusMessage("Profilen ble oppdatert");
+				return profile;
+			}
+			else
+			{
+				profile.setStatusMessage("Profilen ble ikke oppdatert");
+				return profile;
+			}
+		}
+		catch(Exception ex)
 		{
 			profile.setStatusMessage(ex.getMessage());
 			return profile;
