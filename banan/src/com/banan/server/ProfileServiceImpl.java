@@ -166,7 +166,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			ArrayList<Heatsource> tempHeatsource = new ArrayList<Heatsource>();
 			while (result.next())
 			{
-				tempHeatsource.add(new Heatsource(result.getInt("id"), result.getString("name"), result.getDouble("varmefaktor")));
+				tempHeatsource.add(new Heatsource(result.getInt("id"),  result.getString("name").toLowerCase(), result.getDouble("varmefaktor")));
 			}
 			
 			Heatsource[] heatsource = new Heatsource[tempHeatsource.size()];
