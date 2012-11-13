@@ -24,6 +24,7 @@ public class ProfilAdmin extends Composite {
 	private VerticalPanel panel;
 	private FlexTable flextable = new FlexTable();
 	private int row = 0;
+	public static Profile[] res;
 	
 	
 	private FlexTable fucktable;
@@ -38,7 +39,11 @@ public class ProfilAdmin extends Composite {
 		panel.addStyleName("profileAdmin");
 		initWidget(panel);		
 		
-		
+		flextable.setWidget(row, 0, new Label("Navn"));
+		flextable.setWidget(row, 1, new Label("Størrelse"));
+		flextable.setWidget(row, 2, new Label("Byggeår"));
+		flextable.setWidget(row, 3, new Label("Rediger"));
+		flextable.setWidget(row, 4, new Label("Slett"));
 		
 		Main.ProfileService.getProfiles(new AsyncCallback<Profile[]>() {
 			
@@ -52,14 +57,11 @@ public class ProfilAdmin extends Composite {
 			/**
 			 * @param result
 			 */
+			
 			@Override
 			public void onSuccess(Profile[] result) {
 				// TODO Auto-generated method stub
-				flextable.setWidget(row, 0, new Label("Navn"));
-				flextable.setWidget(row, 1, new Label("Størrelse"));
-				flextable.setWidget(row, 2, new Label("Byggeår"));
-				flextable.setWidget(row, 3, new Label("Rediger"));
-				flextable.setWidget(row, 4, new Label("Slett"));
+				res = result;
 						
 				for(Profile p : result)
 				{
@@ -88,6 +90,7 @@ public class ProfilAdmin extends Composite {
 		b = new Button();
 		b.setText("Edit");
 		b.addStyleName("btn");
+		
 		b.addClickHandler( new ClickHandler() {
 			
 			@Override
@@ -99,11 +102,11 @@ public class ProfilAdmin extends Composite {
 				//Main.mainPanel.showWidget(UI.EDITPROFILE);
 			}
 		});//end of edit
-		
+		flextable.setWidget(row, 3, b);
 			/**
 			 * Sletting av profil
 			 */
-			flextable.setWidget(row, 3, b);
+			
 			b = new Button();
 			b.setText("Slett");
 			b.addStyleName("btn");
@@ -137,9 +140,68 @@ public class ProfilAdmin extends Composite {
 	}//end of method 
 	
 	
-	public void F(){
+public void addProfileToTableIndex(final Profile p, int r){
 		
-	}
+		Button b;
+		
+		/**
+		 * Editering av profil
+		 */
+		flextable.setWidget(r, 0, new Label(p.getName()));
+		flextable.setWidget(r, 1, new Label(p.getBuildYear()));
+		flextable.setWidget(r, 2, new Label(p.getHouseSize()));
+		flextable.setWidget(r, 3, new Label(p.getHouseResidents()));
+		
+		b = new Button();
+		b.setText("Edit");
+		b.addStyleName("btn");
+		b.addClickHandler( new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				Main.profileEdit.setData(p);
+				Main.mainPanel.showWidget(UI.EDITPROFILE2);
+				
+				//Main.mainPanel.showWidget(UI.EDITPROFILE);
+			}
+		});//end of edit
+		
+			/**
+			 * Sletting av profil
+			 */
+			flextable.setWidget(r, 3, b);
+			b = new Button();
+			b.setText("Slett");
+			b.addStyleName("btn");
+			flextable.setWidget(r, 4, b);			
+			b.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					Main.ProfileService.DeleteProfile(p, new AsyncCallback<Profile>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							Window.alert(caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(Profile result) {
+							// TODO Auto-generated method stub
+							reload();
+							Window.alert(result.getStatusMessage());
+							row--;
+						}
+					});
+				}
+			});//end of delete profile
+		
+		panel.add(flextable);
+		
+	}//end of method 
 	
 	/**
 	 *
@@ -147,6 +209,7 @@ public class ProfilAdmin extends Composite {
 	public void reload() {
 		row = 0;
 		flextable.clear();
+		
 		Main.ProfileService.getProfiles(
 				new AsyncCallback<Profile[]>() 
 				{
@@ -171,11 +234,8 @@ public class ProfilAdmin extends Composite {
 						}
 						panel.add(flextable);
 					}
-				});	
-	}
-	
-
-	
-		
+				});
+		}
 	
 }//End of class
+

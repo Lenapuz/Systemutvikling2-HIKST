@@ -131,7 +131,7 @@ public class MainMenu extends Composite
 				buttonSelected.removeStyleName("selected");
 				buttonSelected = buttonProfileEdit;
 				buttonSelected.addStyleName("selected");
-				Main.profileAdmin.reload();
+				//Main.profileAdmin.reload();
 			}
 		});
 		

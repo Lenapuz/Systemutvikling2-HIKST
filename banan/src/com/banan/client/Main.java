@@ -2,11 +2,15 @@ package com.banan.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.Thread;
+import java.util.Iterator;
 
 import com.banan.server.ProfileServiceImpl;
 import com.banan.shared.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -199,8 +203,20 @@ public class Main implements EntryPoint
 					
 					public void onSuccess(Profile result) {
 						// TODO Auto-generated method stub
-						
 						Window.alert(result.getStatusMessage());
+						
+						for(int i = 0; i < profileAdmin.res.length; i++)
+						{
+							if(profileAdmin.res[i].getName().equals(result.getName()))
+							{
+								profileAdmin.addProfileToTableIndex(result, ++i);
+								profileAdmin.res[i] = result;
+								//profileAdmin.reload();
+								break;
+							}
+						}
+						//Main.profileAdmin.reload();
+
 					}
 				});		
 			}
