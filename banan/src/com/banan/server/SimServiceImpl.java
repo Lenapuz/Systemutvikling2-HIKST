@@ -43,8 +43,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		{
 			//hs.add(hsarr[i]);
 			hm.put(hsarr[i].getName(),hsarr[i]);
-		}
-				
+		}				
 	}
 	
 	//Selve kalkuleringsmetoden
@@ -62,8 +61,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		//I enne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-			
-			
+				
 			//Hvis hus størrelse er lik 0, ingen utregning
 			if (Integer.parseInt(p.getHouseSize()) == 0)
 			{
@@ -81,13 +79,10 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 				//res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
 				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
 				
-				
 				resultat[i] = (int)res;
-				res = 1;
-				
+				res = 1;		
 			}			
-		}
-		
+		}		
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
 		
@@ -174,42 +169,6 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		beboerFaktorMin =  1200; 	
 		beboerFaktorMax =  1500;  
 	}
-	
-	/*public double hourlyPowerConsumption(int time, int beboere)
-	{
-		double[] powerConsumption = new double[24];
-		double beboerFaktorMin = 0;
-		double beboerFaktorMax = 0;
-		
-		if (beboere == 1)
-		{
-			beboerFaktorMin = 0.8;	
-			beboerFaktorMax = 0.7;
-		}
-		else if (beboere == 2)
-		{
-			beboerFaktorMin = 1.0;  // gjennomsnitts husstand, Max = Min = Max 
-			beboerFaktorMax = 1.0;
-		}
-		else if (beboere == 3 )
-		{
-			beboerFaktorMin = 1.28;
-			beboerFaktorMax = 1.30;
-		}
-		else if (beboere == 4)
-		{
-			beboerFaktorMin = 1.45;
-			beboerFaktorMax = 1.70;
-		}
-		else if (beboere == 5)
-		{
-			beboerFaktorMin = 1.55;
-			beboerFaktorMax = 1.82;
-		}
-		else {
-			beboerFaktorMin =  1.65; 	
-			beboerFaktorMax =  1.93;  
-		}*/
 		
 		// PowerConsumption tall er gitt snitt forbruk av strøm fra time til time. (gjennomsnitts husstand 2 personer)
 		
