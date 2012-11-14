@@ -185,6 +185,7 @@ public class Main implements EntryPoint
 		// Starter Profil registrering OnAction() 
 		// Fungerer ikke! feil i SQL sp�rring ser ut til!! hvis ikke,
 		// s� ligger feilen en anne plass.
+				
 			
 		profileEdit.addProfileHandler(new ActionHandler()
 		{
