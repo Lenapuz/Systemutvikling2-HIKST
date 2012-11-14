@@ -75,9 +75,7 @@ public class Profile implements Serializable {
 		this.isIsolated = isIsolated;
 		this.houseResidents = houseResidents;
 		this.houseSize = houseSize;
-	}
-	
-	
+	}	
 	
 	public void setID(int id) {
 		this.ID = id;
