@@ -85,7 +85,7 @@ public class ProfileList extends Composite {
 					
 					for (final Profile p : result)
 					{
-						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">" + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "<button class=\"btn btn-primary profilelist_button\" id=\"new-" + p.getID() + "\">Ny simulering</button><button class=\"btn btn-primary profilelist_button\" id=\"res-" + p.getID() + "\">Resultater</button></div>");
+						HTML html = new HTML("<div class=\"profilelist_item\"><div class=\"profile_name\">(" +p.getID() + ") " + p.getName() + "</div>" + "Byggeår: " + p.getBuildYear() + ", Størrelse: " + p.getHouseSize() + "kvm, Beboere: " + p.getHouseResidents() + "<button class=\"btn btn-primary profilelist_button\" id=\"new-" + p.getID() + "\">Ny simulering</button><button class=\"btn btn-primary profilelist_button\" id=\"res-" + p.getID() + "\">Resultater</button></div>");
 						
 						html.addClickHandler(new ClickHandler() {
 							public void onClick(ClickEvent event) {	
