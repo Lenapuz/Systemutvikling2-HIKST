@@ -17,7 +17,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private Database db;	
 	//koefissienter bør kunne finjusteres fra admin panel
 	//tatt fra lærebøker om termodynamikk
-	double gjsnittligForbrukApparater = 1.34;
+	double gjsnittligForbrukApparater = 1.43; // forklaring se "hourlyPowerConsumption"
 	private static int maxHeatSources = 10;
 	private static final double koefissientVarmetapGamleHus = 0.50;
 	private static final double koefissientVarmetapMiddelsHus = 0.45;
@@ -98,7 +98,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 				
 				//andre strømforbrukende artikler
 				sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// Endringer i lys og el.app. bruk gjennom døgnet 
-				sumApparaterForbruk *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
+				sumApparaterForbruk *= gjsnittligForbrukApparater; // forklaring se "hourlyPowerConsumption"  
 				
 				//summerer alt som resultat
 				res+= sumOppvarmingsForbruk;
@@ -163,6 +163,11 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return heating[time];
 	}
 	
+	
+	// ca. Snitt i strømforbruk 2000w per time for 2,2 personer. gir 680w i el.apparater (36% jamfør NVE energirap. 2012).  
+	// beboere == 2; sammenregnet døgn gir 16320 / 10383,6 Power.Con. = 1.57.  snitt av døgnet skal være 680w på 2.2 beboere,       
+	// 1.57 / (2.2 beboere / 2 beboere) = 1.43
+	// legge til faktor "gjsnittligForbrukApparater" = 1.43
 	public double hourlyPowerConsumption(int time, int beboere)
 	{
 		double[] powerConsumption = new double[24];
@@ -182,21 +187,21 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	else if (beboere == 3 )
 	{
 		beboerFaktorMin = 890;
-		beboerFaktorMax = 900;
+		beboerFaktorMax = 950;
 	}
 	else if (beboere == 4)
 	{
 		beboerFaktorMin = 1000;
-		beboerFaktorMax = 1200;
+		beboerFaktorMax = 1300;
 	}
 	else if (beboere == 5)
 	{
 		beboerFaktorMin = 1100;
-		beboerFaktorMax = 1300;
+		beboerFaktorMax = 1450;
 	}
 	else {
 		beboerFaktorMin =  1200; 	
-		beboerFaktorMax =  1500;  
+		beboerFaktorMax =  1700;  
 	}
 		
 		// PowerConsumption tall er gitt snitt forbruk av strøm fra time til time. (gjennomsnitts husstand 2 personer)
@@ -227,7 +232,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		powerConsumption[18] = 0.89 * beboerFaktorMin;
 		powerConsumption[19] = 0.91 * beboerFaktorMin;
 		powerConsumption[20] = 0.92 * beboerFaktorMin;
-		powerConsumption[21] = 1.00 * beboerFaktorMin;
+		powerConsumption[21] = 0.96 * beboerFaktorMin;
 		powerConsumption[22] = 0.92 * beboerFaktorMin;
 		powerConsumption[23] = 0.88 * beboerFaktorMin;
 		
