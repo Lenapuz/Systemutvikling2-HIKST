@@ -17,7 +17,14 @@ public class Profile implements Serializable {
 	private String buildYear;
 	private String statusMessage;
 	private String typeProfile; //loft/kjeller
+	
 	private String primHeating;
+	private String primShare;
+	private String secHeating;
+	private String secShare;
+	private String thirdHeating;
+	private String thirdShare;
+	
 	private String isIsolated;
 	private String houseResidents;
 	private String houseSize;
@@ -38,6 +45,7 @@ public class Profile implements Serializable {
 		isIsolated="";
 	}
 
+	//gammel konstruktør
 	public Profile(String name, String buildYear,String isIsolated, String typeProfile, String primHeating,  String houseResidents, String houseSize)
 	{
 		this.name = name;		
@@ -49,18 +57,27 @@ public class Profile implements Serializable {
 		this.houseSize = houseSize;
 	}
 	
-	/*public Profile(String Firstname, String MellomNavn, String EtterNavn, String Adresse, String ZipCode, String City, String PhoneNumber, String EmailAddress)
+	//ny konstruktør med 3 heatsources, bruk denne
+	public Profile(String name, String buildYear,String isIsolated, String typeProfile, String primHeating,  String primShare
+			, String secHeating, String secShare, String thirdHeating, String thirdShare, String houseResidents, String houseSize)
 	{
-		this.FirstName = Firstname;
-		this.MellomNavn = MellomNavn;
-		this.EtterNavn = EtterNavn;
-		this.Adresse = Adresse;
-		this.ZipCode = ZipCode;
-		this.City = City;
-		this.PhoneNumber = PhoneNumber;
-		this.EmailAddress = EmailAddress;
+		this.name = name;		
+		this.buildYear = buildYear;
+		this.typeProfile = typeProfile;
 		
-	}*/
+		this.primHeating = primHeating;
+		this.primShare = primShare;
+		this.secHeating = secHeating;
+		this.secShare = secShare;
+		this.thirdHeating = thirdHeating;
+		this.thirdShare = thirdShare;
+		
+		this.isIsolated = isIsolated;
+		this.houseResidents = houseResidents;
+		this.houseSize = houseSize;
+	}
+	
+	
 	
 	public void setID(int id) {
 		this.ID = id;
@@ -84,6 +101,48 @@ public class Profile implements Serializable {
 	{
 		this.isIsolated = isIsolated;
 	}
+	
+	public String getPrimShare() {
+		return primShare;
+	}
+
+	public void setPrimShare(String primShare) {
+		this.primShare = primShare;
+	}
+
+	public String getSecHeating() {
+		return secHeating;
+	}
+
+	public void setSecHeating(String secHeating) {
+		this.secHeating = secHeating;
+	}
+
+	public String getSecShare() {
+		return secShare;
+	}
+
+	public void setSecShare(String secShare) {
+		this.secShare = secShare;
+	}
+
+	public String getThirdHeating() {
+		return thirdHeating;
+	}
+
+	public void setThirdHeating(String thirdHeating) {
+		this.thirdHeating = thirdHeating;
+	}
+
+	public String getThirdShare() {
+		return thirdShare;
+	}
+
+	public void setThirdShare(String thirdShare) {
+		this.thirdShare = thirdShare;
+	}
+	
+	
 	
 	/*public String getFirstname()
 	{
@@ -187,7 +246,7 @@ public class Profile implements Serializable {
 		
 		return sb.toString();
 	}
-	
+
 	
 	
 	
