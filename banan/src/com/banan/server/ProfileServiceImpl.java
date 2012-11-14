@@ -295,13 +295,6 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			if(i > 0)
 			{
 				profile.setStatusMessage("Profilen ble oppdatert");
-				query = "ALTER TABLE profil ADD prim_heatingProsent float AFTER thir_heating ";
-				i = statement.executeUpdate(query);
-				query = "ALTER TABLE profil ADD sec_heatingProsent float AFTER prim_heatingProsent ";
-				i = statement.executeUpdate(query);
-				query = "ALTER TABLE profil ADD thir_heatingProsent float AFTER sec_heatingProsent ";
-				i = statement.executeUpdate(query);
-				
 				return profile;
 			}
 			else
