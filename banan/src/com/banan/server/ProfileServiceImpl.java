@@ -130,7 +130,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 			ArrayList<Profile> tempProfiles = new ArrayList<Profile>();
 			while (result.next())
 			{
-				Profile p = new Profile(result.getString("name"), result.getString("build_year"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("is_isolated"), result.getString("house_residents"), result.getString("house_size"));
+				Profile p = new Profile(result.getString("name"), result.getString("build_year"), result.getString("is_isolated"), result.getString("profil_type"), result.getString("prim_heating"), result.getString("house_residents"), result.getString("house_size"));
 				p.setID(result.getInt("profil_id"));
 				tempProfiles.add(p);
 			}

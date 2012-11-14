@@ -34,7 +34,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		db = new Database("kark.hin.no/gruppe16", "gruppe16", "php@hin-16");
 		//hs = new ArrayList<Heatsource>();
 		Heatsource[] hsarr;
-		hm = new HashMap<>();
+		hm = new HashMap<String, Heatsource>();
 		
 		ProfileServiceImpl p = new ProfileServiceImpl();
 		hsarr = p.getHeatsources();
@@ -42,46 +42,75 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		for(int i = 0;i<hsarr.length;i++)
 		{
 			//hs.add(hsarr[i]);
-			hm.put(hsarr[i].getName(),hsarr[i]);
-		}				
+			hm.put(hsarr[i].getName().toLowerCase(),hsarr[i]);
+		}
+		System.out.println("Hashmap length after add: " + hm.size());
 	}
 	
 	//Selve kalkuleringsmetoden
-	Heatsource h;
+	//Heatsource h;
 	public SimResult simulate(int profileID, int temperatur)
 	{		
 		ProfileServiceImpl psim = new ProfileServiceImpl();
 		Profile p = psim.getProfileByProfileId(profileID);
 		
-		//h = hm.get(this.getHeatSourceByName(p.getPrimHeating())); 
+		h = (Heatsource)hm.get(p.getPrimHeating().toLowerCase()); 
+		
+		
+		//DEBUGGING
+		/*Object o = hm.get("varmepumpe");
+		System.out.println("object.class:" + o.getClass());
+		if(o == null)
+		{
+			System.out.println("varmepumpe returnerer null");
+		}*/
+		//System.out.println(o.toString());
+		//System.out.println("Primheating: " + p.getPrimHeating().toString());
+		//System.out.println("Primheating: " + Integer.parseInt(p.getPrimHeating()));
+		//System.out.println("fra p.getPrimHeating()");
+		//System.out.println("h.tostring inc");
+		System.out.println("h.toString(): "+ h.toString());
+		
+		
 		Integer[] resultat = new Integer[24];
-		double res = 1;
+		double res = 0;
+		double sumOppvarmingsForbruk = 0;
+		double sumApparaterForbruk = 0;
 		
 		
 		//I enne løkka gjøres simuleringen
 		for (int i = 0; i < 24; i++)
 		{
-				
 			//Hvis hus størrelse er lik 0, ingen utregning
 			if (Integer.parseInt(p.getHouseSize()) == 0)
 			{
 				resultat[i] = 0;
-				res = 1;
+				res = 0;
 			} 
+			
 			else 
 			{		
-				res += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
-				res *= Integer.parseInt(p.getHouseSize()); // kvm
-				res -= Integer.parseInt(p.getHouseSize()); //fjerne res = 1w per kvm fra utregningen
-				res *= this.hourlyHeating(i); // Endringer i oppvarming gjennom døgnet
-				res += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// Endringer i lys og el.app. bruk gjennom døgnet 
-				//res *=h.getheatFactor(); //varmefaktor fra oppvarming
-				//res *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
-				//int res = gjsnittligForbrukPrKvm *  Integer.parseInt(p.getHouseSize());
+				//oppvarming
+				sumOppvarmingsForbruk += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
+				sumOppvarmingsForbruk *= h.getheatFactor(); //varmefaktor fra oppvarming
+				sumOppvarmingsForbruk *= this.hourlyHeating(i); // Endringer i oppvarming gjennom døgnet
+				sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize()); // kvm
+				
+				//andre strømforbrukende artikler
+				sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// Endringer i lys og el.app. bruk gjennom døgnet 
+				sumApparaterForbruk *= gjsnittligForbrukApparater;   // snittstrømforbruk på annet enn oppvarming jamfør NVE 2012 energirapport
+				
+				//summerer alt som resultat
+				res+= sumOppvarmingsForbruk;
+				res+= sumApparaterForbruk;
+				
 				
 				resultat[i] = (int)res;
-				res = 1;		
-			}			
+				sumApparaterForbruk = 0;
+				sumOppvarmingsForbruk = 0;
+				res = 0;	
+			}		
+				
 		}		
 		
 		SimResult result = new SimResult(0,p.getID(),resultat);	
@@ -350,5 +379,15 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		{
 			db.disconnect();
 		}
+	}
+	
+	//arvid debugging
+	static Heatsource h = new Heatsource(0, "Varmepumpe", 0.90);
+	
+	public static void main(String[] args)
+	{
+		SimServiceImpl s = new SimServiceImpl();
+		s.simulate(74, 20);
+		
 	}
 }
