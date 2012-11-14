@@ -129,12 +129,12 @@ public class ProfilAdmin extends Composite {
 							// TODO Auto-generated method stub
 							reload();
 							Window.alert(result.getStatusMessage());
-							row--;
+							
 						}
 					});
 				}
 			});//end of delete profile
-		
+	
 		panel.add(flextable);
 		
 	}//end of method 
@@ -189,9 +189,21 @@ public void addProfileToTableIndex(final Profile p, int r){
 						}
 
 						@Override
-						public void onSuccess(Profile result) {
+						public void onSuccess(Profile result) 
+						{
 							// TODO Auto-generated method stub
-							reload();
+							int i = 0;
+							for(Profile p : res)
+							{
+								if(result.getName().equals(p.getName()))
+								{
+									flextable.removeRow(++i);
+									
+									break;
+								}
+								i++;
+							}
+							//reload();
 							Window.alert(result.getStatusMessage());
 							row--;
 						}

@@ -207,7 +207,6 @@ public class ProfileReg extends Composite {
 		p = new HorizontalPanel();*/
 		
 		p.add(labelName);
-		textBoxName.setEnabled(false);
 		p.add(textBoxName);
 		panel.add(p);
 		p = new HorizontalPanel();

@@ -302,6 +302,7 @@ public class ProfileServiceImpl  extends RemoteServiceServlet implements Profile
 				profile.setStatusMessage("Profilen ble ikke oppdatert");
 				return profile;
 			}
+			
 		}
 		catch(Exception ex)
 		{
