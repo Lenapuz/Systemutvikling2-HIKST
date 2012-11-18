@@ -1,6 +1,9 @@
 package com.banan.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 /***
  * Klasen er laget p� samme m�te som User.java.class. 
@@ -29,6 +32,10 @@ public class Profile implements Serializable {
 	private String houseResidents;
 	private String houseSize;
 	
+	//private ArrayList<Heatsource> hs;
+	
+	
+	
 	/*private String FirstName;
 	private String MellomNavn;
 	private String EtterNavn;
@@ -43,6 +50,7 @@ public class Profile implements Serializable {
 		typeProfile ="";
 		primHeating="";
 		isIsolated="";
+		
 	}
 
 	//gammel konstruktør
@@ -75,6 +83,7 @@ public class Profile implements Serializable {
 		this.isIsolated = isIsolated;
 		this.houseResidents = houseResidents;
 		this.houseSize = houseSize;
+		//hs = new ArrayList<Heatsource>();
 	}
 	
 	

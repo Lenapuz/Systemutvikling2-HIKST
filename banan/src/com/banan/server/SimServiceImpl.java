@@ -26,7 +26,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
 	
 		
-	//private ArrayList<Heatsource> hs;
+	//private HashMap<double, Heatsource> hm
 	private HashMap<String, Heatsource> hm;
 	
 	public SimServiceImpl()
