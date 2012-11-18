@@ -61,18 +61,6 @@ public class SimResult implements Serializable
 		
 	}
 	
-	//TODO
-	public String getMagic ()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append(data[0]);
-		for(int i = 1; i < data.length; i++)
-		{
-			sb.append("," + data[i]);
-			
-		}
-		return sb.toString();
-	}
 	public SimResult(int id, int profil_id, Integer[]data)
 	{
 		this.id = id;
@@ -93,7 +81,39 @@ public class SimResult implements Serializable
 		
 		
 	}
-	
+
+	//TODO
+	public int getTotalEnergyConsumption()//kwh
+	{
+		int res = 0;
+		for(int i =0;i<data.length;i++)
+		{
+			res += data[i];
+		}
+		return res;
+	}
+	public int getAvgEnergyConsumption()//kw
+	{
+		int res = 0;
+		for(int i =0;i<data.length;i++)
+		{
+			res += data[i];
+		}
+		res /= data.length;
+		return res;
+	}
+
+	public String getMagic ()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(data[0]);
+		for(int i = 1; i < data.length; i++)
+		{
+			sb.append("," + data[i]);
+			
+		}
+		return sb.toString();
+	}
 	
 	public void setData(Integer[] data)
 	{
@@ -108,7 +128,9 @@ public class SimResult implements Serializable
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < 24; i ++)
+		sb.append("\nID: " + id);
+		sb.append("\nprofile_id: "+profil_id+"\n");
+		for(int i = 0; i < data.length; i ++)
 		{
 			sb.append(data[i] + ",");
 		}

@@ -152,8 +152,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return result;
 	}
 	
-	//Simuler flere profiler
-	//ikke testet enda men har chuck norris seal of approval
+	//bruk heller metode med dager argument
 	public SimResult[] simulate(int profileID[], int temperatur)
 	{		
 		ProfileServiceImpl psim = new ProfileServiceImpl();
@@ -270,6 +269,137 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		return resultater.toArray(new SimResult[resultater.size()]);
 	}
+	
+	//for å simulere flere profiler mer enn ett døgn
+	//bruk denne uansett fra nå av
+	public SimResult[] simulate(int profileID[], int temperatur,int dager)
+	{		
+		if(dager == 0)
+		{
+			dager = 1;
+		}
+		ProfileServiceImpl psim = new ProfileServiceImpl();
+		Profile p;
+		ArrayList<Profile> profiler = new ArrayList<Profile>();
+		ArrayList<Heatsource> varmekilder = new ArrayList<Heatsource>();
+		ArrayList<SimResult> resultater = new ArrayList<SimResult>();
+				
+		for(int i = 0;i<profileID.length;i++)
+		{
+			p = psim.getProfileByProfileId(profileID[i]);
+			profiler.add(p);
+			h = (Heatsource)hm.get(p.getPrimHeating().toLowerCase()); 
+			varmekilder.add(h);
+			System.out.println("Added profile: " +p.toString());
+		}
+		
+		//DEBUGGING
+		/*Object o = hm.get("varmepumpe");
+		System.out.println("object.class:" + o.getClass());
+		if(o == null)
+		{
+			System.out.println("varmepumpe returnerer null");
+		}*/
+		//System.out.println(o.toString());
+		//System.out.println("Primheating: " + p.getPrimHeating().toString());
+		//System.out.println("Primheating: " + Integer.parseInt(p.getPrimHeating()));
+		//System.out.println("fra p.getPrimHeating()");
+		//System.out.println("h.tostring inc");
+		System.out.println("h.toString(): "+ h.toString());
+		
+		
+		Integer[] resultat = new Integer[24*dager];
+		double res = 0;
+		double sumOppvarmingsForbruk = 0;
+		double sumApparaterForbruk = 0;
+		System.out.println("profiler.size: "+profiler.size());
+		for(int j = 0;j<profiler.size();j++)
+		{
+			p = profiler.get(j);
+		
+			int resultBuffer = 0;
+			
+			for(int k = 0;k<dager;k++)
+			{
+				if(k != 0)
+				{
+				resultBuffer +=24;
+				}
+				//I enne løkka gjøres simuleringen
+				for (int i = 0; i < 24; i++)
+				{
+					//Hvis hus størrelse er lik 0, ingen utregning
+					if (Integer.parseInt(p.getHouseSize()) == 0)
+					{
+						resultat[i+resultBuffer] = 0;
+						res = 0;
+					} 
+					
+					else 
+					{		
+						//oppvarming
+						sumOppvarmingsForbruk += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
+						sumOppvarmingsForbruk *= varmekilder.get(j).getheatFactor(); //varmefaktor fra oppvarming
+						
+						
+						
+						/////////////////
+						
+						// Kan dette over være en vei å gå? if sjekker mot "noe" som man krysser av (som Aleks sa)?
+						
+						/*if ("helg")
+						{
+							sumOppvarmingsForbruk *= this.hourlyHeatingWeekend(i); 
+							sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+							
+							sumApparaterForbruk += this.hourlyPowerConsumptionWeekend(i, Integer.parseInt(p.getHouseResidents()));
+							sumApparaterForbruk *= gjsnittligForbrukApparater;
+						}
+						else
+						{
+							sumOppvarmingsForbruk *= this.hourlyHeating(i);
+							sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+							
+							sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
+							sumApparaterForbruk *= gjsnittligForbrukApparater; 
+						}
+						res+= sumOppvarmingsForbruk;
+						res+= sumApparaterForbruk;*/
+						
+						
+						//////////////////
+						
+						sumOppvarmingsForbruk *= this.hourlyHeating(i); // Endringer i oppvarming gjennom døgnet
+						sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize()); // kvm
+						
+						//andre strømforbrukende artikler
+						sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// Endringer i lys og el.app. bruk gjennom døgnet 
+						sumApparaterForbruk *= gjsnittligForbrukApparater; // forklaring se "hourlyPowerConsumption"  
+						
+						//summerer alt som resultat
+						res+= sumOppvarmingsForbruk;
+						res+= sumApparaterForbruk;
+						
+						System.out.println("\nResultat "+i + "\nBuffer "+resultBuffer+"\n"+ "\nRes " + res);
+						resultat[i+resultBuffer] = (int)res;
+						sumApparaterForbruk = 0;
+						sumOppvarmingsForbruk = 0;
+						res = 0;	
+					}		
+						
+				}		
+			}
+			SimResult result = new SimResult(0,p.getID(),resultat);	
+			
+			this.registerSimResult(result);
+			resultater.add(result);
+			
+			System.out.println("ADDED SIMRESULT**"+ result.toString());
+		
+		}
+		return resultater.toArray(new SimResult[resultater.size()]);
+	}
+	
 	
 	public static int tempToCelsius(int tempKelvin)
 	{
@@ -515,6 +645,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.connect();
 			Statement statement = db.createStatement();
 			int i = statement.executeUpdate("INSERT result (profil_id, magic) VALUES('" + result.getProfil_id()+ "','" + result.getMagic() + "')");
+			System.out.println("ADDED SIMRESULT TO DATABASE MAGIC: "+result.getMagic());
 		}
 		catch (Exception ex)
 		{
@@ -635,8 +766,18 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	
 	public static void main(String[] args)
 	{
+		int[] profiler = new int[3];
+		profiler[0] = 74;
+		profiler[1] = 46;
+		profiler[2] = 43;
+				
 		SimServiceImpl s = new SimServiceImpl();
-		s.simulate(74, 20);
+		//s.simulate(74, 20);
+		SimResult[] resultater = s.simulate(profiler, 0,3);
+		for(int i = 0;i < resultater.length;i++)
+		{
+			System.out.println(resultater[i]);
+		}
 		
 	}
 }
