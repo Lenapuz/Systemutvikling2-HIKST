@@ -93,6 +93,35 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 				//oppvarming
 				sumOppvarmingsForbruk += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
 				sumOppvarmingsForbruk *= h.getheatFactor(); //varmefaktor fra oppvarming
+				
+				
+				
+				/////////////////
+				
+				// Kan dette over være en vei å gå? if sjekker mot "noe" som man krysser av (som Aleks sa)?
+				
+				/*if ("helg")
+				{
+					sumOppvarmingsForbruk *= this.hourlyHeatingWeekend(i); 
+					sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+					
+					sumApparaterForbruk += this.hourlyPowerConsumptionWeekend(i, Integer.parseInt(p.getHouseResidents()));
+					sumApparaterForbruk *= gjsnittligForbrukApparater;
+				}
+				else
+				{
+					sumOppvarmingsForbruk *= this.hourlyHeating(i);
+					sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+					
+					sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
+					sumApparaterForbruk *= gjsnittligForbrukApparater; 
+				}
+				res+= sumOppvarmingsForbruk;
+				res+= sumApparaterForbruk;*/
+				
+				
+				//////////////////
+				
 				sumOppvarmingsForbruk *= this.hourlyHeating(i); // Endringer i oppvarming gjennom døgnet
 				sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize()); // kvm
 				
@@ -142,7 +171,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		heating[4] = 0.75;
 		heating[5] = 0.75;
 		heating[6] = 0.75;
-		heating[7] = 0.80;
+		heating[7] = 0.85;
 		heating[8] = 1.00;
 		heating[9] = 1.00;
 		heating[10] = 1.00;
@@ -158,11 +187,41 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		heating[20] = 1.00;
 		heating[21] = 1.00;
 		heating[22] = 1.00;
-		heating[23] = 0.80;
+		heating[23] = 0.85;
 		
 		return heating[time];
 	}
 	
+	public double hourlyHeatingWeekend(int time) //fredag, lørdag og søndag
+	{
+		double[] heatingWeekend = new double[24];
+		heatingWeekend[0] = 1.00;
+		heatingWeekend[1] = 0.85;
+		heatingWeekend[2] = 0.75;
+		heatingWeekend[3] = 0.75;
+		heatingWeekend[4] = 0.75;
+		heatingWeekend[5] = 0.75;
+		heatingWeekend[6] = 0.75;
+		heatingWeekend[7] = 0.75;
+		heatingWeekend[8] = 0.75;
+		heatingWeekend[9] = 0.85;
+		heatingWeekend[10] = 1.00;
+		heatingWeekend[11] = 1.00;
+		heatingWeekend[12] = 1.00;
+		heatingWeekend[13] = 1.00;
+		heatingWeekend[14] = 1.00;
+		heatingWeekend[15] = 1.00;
+		heatingWeekend[16] = 1.00;
+		heatingWeekend[17] = 1.00;
+		heatingWeekend[18] = 1.00; 
+		heatingWeekend[19] = 1.00;
+		heatingWeekend[20] = 1.00;
+		heatingWeekend[21] = 1.00;
+		heatingWeekend[22] = 1.00;
+		heatingWeekend[23] = 1.00;
+		
+		return heatingWeekend[time];
+	}
 	
 	// ca. Snitt i strømforbruk 2000w per time for 2,2 personer. gir 680w i el.apparater (36% jamfør NVE energirap. 2012).  
 	// beboere == 2; sammenregnet døgn gir 16320 / 10383,6 Power.Con. = 1.57.  snitt av døgnet skal være 680w på 2.2 beboere,       
@@ -224,9 +283,9 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		powerConsumption[10] = 0.85 * beboerFaktorMin;
 		powerConsumption[11] = 0.83 * beboerFaktorMin;
 		powerConsumption[12] = 0.59 * beboerFaktorMax;
-		powerConsumption[13] = 0.43 * beboerFaktorMax;
-		powerConsumption[14] = 0.43 * beboerFaktorMax;
-		powerConsumption[15] = 0.50 * beboerFaktorMax;
+		powerConsumption[13] = 0.52 * beboerFaktorMax;
+		powerConsumption[14] = 0.51 * beboerFaktorMax;
+		powerConsumption[15] = 0.58 * beboerFaktorMax;
 		powerConsumption[16] = 0.84 * beboerFaktorMin;
 		powerConsumption[17] = 0.88 * beboerFaktorMin;
 		powerConsumption[18] = 0.89 * beboerFaktorMin;
@@ -237,6 +296,70 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		powerConsumption[23] = 0.88 * beboerFaktorMin;
 		
 		return powerConsumption[time];
+	}
+	
+	public double hourlyPowerConsumptionWeekend(int time, int beboere)
+	{
+		double[] powerConsumptionWeekend = new double[24];
+		double beboerFaktorMin = 0;
+		double beboerFaktorMax = 0;
+	
+	if (beboere == 1)
+	{
+		beboerFaktorMin = 550;	
+		beboerFaktorMax = 450;
+	}
+	else if (beboere == 2)
+	{
+		beboerFaktorMin = 680; 
+		beboerFaktorMax = 680;	
+	}
+	else if (beboere == 3 )
+	{
+		beboerFaktorMin = 890;
+		beboerFaktorMax = 950;
+	}
+	else if (beboere == 4)
+	{
+		beboerFaktorMin = 1000;
+		beboerFaktorMax = 1300;
+	}
+	else if (beboere == 5)
+	{
+		beboerFaktorMin = 1100;
+		beboerFaktorMax = 1450;
+	}
+	else {
+		beboerFaktorMin =  1200; 	
+		beboerFaktorMax =  1700;  
+	}
+		 
+		powerConsumptionWeekend[0] = 0.85 * beboerFaktorMin;
+		powerConsumptionWeekend[1] = 0.50 * beboerFaktorMax;
+		powerConsumptionWeekend[2] = 0.39 * beboerFaktorMax;
+		powerConsumptionWeekend[3] = 0.26 * beboerFaktorMax;
+		powerConsumptionWeekend[4] = 0.24 * beboerFaktorMax;
+		powerConsumptionWeekend[5] = 0.23 * beboerFaktorMax;
+		powerConsumptionWeekend[6] = 0.32 * beboerFaktorMax;
+		powerConsumptionWeekend[7] = 0.33 * beboerFaktorMax;
+		powerConsumptionWeekend[8] = 0.49 * beboerFaktorMax;
+		powerConsumptionWeekend[9] = 0.85 * beboerFaktorMin;
+		powerConsumptionWeekend[10] = 0.86 * beboerFaktorMin;
+		powerConsumptionWeekend[11] = 0.85 * beboerFaktorMin;
+		powerConsumptionWeekend[12] = 0.51 * beboerFaktorMax;
+		powerConsumptionWeekend[13] = 0.52 * beboerFaktorMax;
+		powerConsumptionWeekend[14] = 0.59 * beboerFaktorMax;
+		powerConsumptionWeekend[15] = 0.60 * beboerFaktorMax;
+		powerConsumptionWeekend[16] = 0.89 * beboerFaktorMin;
+		powerConsumptionWeekend[17] = 0.90 * beboerFaktorMin;
+		powerConsumptionWeekend[18] = 0.92 * beboerFaktorMin;
+		powerConsumptionWeekend[19] = 0.95 * beboerFaktorMin;
+		powerConsumptionWeekend[20] = 0.96 * beboerFaktorMin;
+		powerConsumptionWeekend[21] = 1.00 * beboerFaktorMin;
+		powerConsumptionWeekend[22] = 0.96 * beboerFaktorMin;
+		powerConsumptionWeekend[23] = 0.90 * beboerFaktorMin;
+		
+		return powerConsumptionWeekend[time];
 	}
 	
 	//strømforbruk i kWh/m^2

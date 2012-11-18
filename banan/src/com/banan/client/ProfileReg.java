@@ -38,6 +38,7 @@ public class ProfileReg extends Composite {
 	private TextBox textBoxCity;
 	private TextBox textBoxPhoneNumber;
 	private TextBox textBoxEmailAdresse;
+	private TextBox textHeatProsent;
 	
 	 
 	//ListBoxs
@@ -105,12 +106,15 @@ public class ProfileReg extends Composite {
 		textBoxHouseResidents = new TextBox();
 		
 		//listbox add Items 
-		Label labelSelect = new Label("Fyring:");
+		Label labelSelect = new Label("Primær:");
 		labelSelect.setWidth("80px");
 		listBoxSelect = new ListBox();
+		listBoxSelect.addItem("N/A");
 		listBoxSelect.addItem("Varmepumpe");
 		listBoxSelect.addItem("Oljefyring");
 		listBoxSelect.addItem("Sentralvarme");
+		textHeatProsent = new TextBox();
+		
 		
 		//list box
 		Label labelIsolated = new Label("Isolert:");
@@ -223,9 +227,48 @@ public class ProfileReg extends Composite {
 		p.add(textBoxHouseResidents);
 		panel.add(p);
 		p = new HorizontalPanel();
+		
+		p.add(labelSelect);
+		p.add(listBoxSelect);	
+		textHeatProsent.setWidth("30px");
+		p.add(textHeatProsent);
+		panel.add(p);
+		
+		p = new HorizontalPanel();
+		listBoxSelect = new ListBox();
+		labelSelect = new Label();
+		labelSelect.setWidth("80px");
+		listBoxSelect.addItem("N/A");
+		listBoxSelect.addItem("Varmepumpe");
+		listBoxSelect.addItem("Oljefyring");
+		listBoxSelect.addItem("Sentralvarme");
+		labelSelect.setText("Sekundær");
+		listBoxSelect.setWidth("165px");
+		textHeatProsent = new TextBox();
+		textHeatProsent.setWidth("30px");
+		
 		p.add(labelSelect);
 		p.add(listBoxSelect);		
+		p.add(textHeatProsent);
 		panel.add(p);
+		
+		p = new HorizontalPanel();
+		labelSelect = new Label();
+		labelSelect.setWidth("80px");
+		listBoxSelect = new ListBox();
+		listBoxSelect.addItem("N/A");
+		listBoxSelect.addItem("Varmepumpe");
+		listBoxSelect.addItem("Oljefyring");
+		listBoxSelect.addItem("Sentralvarme");
+		labelSelect.setText("Tertiær");
+		listBoxSelect.setWidth("165px");
+		textHeatProsent = new TextBox();
+		textHeatProsent.setWidth("30px");
+		p.add(labelSelect);
+		p.add(listBoxSelect);	
+		p.add(textHeatProsent);
+		panel.add(p);
+		
 		p = new HorizontalPanel();
 		p.add(labelIsolated);
 		p.add(listBoxIsolated);
