@@ -27,6 +27,10 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
 	
 		
+	private double totalForbrukKwh =0;
+	private double totalForbrukKroner = 0;
+	private double stromPrisPerOre = 35.20;
+	
 	//private HashMap<double, Heatsource> hm
 	private HashMap<String, Heatsource> hm;
 	
@@ -381,6 +385,8 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 						res+= sumApparaterForbruk;
 						
 						System.out.println("\nResultat "+i + "\nBuffer "+resultBuffer+"\n"+ "\nRes " + res);
+						this.setTotalForbrukKwh(totalForbrukKwh+res);
+						this.setTotalForbrukKroner(totalForbrukKroner+res*stromPrisPerOre/100);
 						resultat[i+resultBuffer] = (int)res;
 						sumApparaterForbruk = 0;
 						sumOppvarmingsForbruk = 0;
@@ -780,4 +786,30 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		}
 		
 	}
+
+	public double getTotalForbrukKwh() {
+		return totalForbrukKwh;
+	}
+
+	public void setTotalForbrukKwh(double totalForbrukKwh) {
+		this.totalForbrukKwh = totalForbrukKwh;
+	}
+
+	public double getTotalForbrukKroner() {
+		return totalForbrukKroner;
+	}
+
+	public void setTotalForbrukKroner(double totalForbrukKroner) {
+		this.totalForbrukKroner = totalForbrukKroner;
+	}
+
+	public double getStromPrisPerOre() {
+		return stromPrisPerOre;
+	}
+
+	public void setStromPrisPerOre(double stromPrisPerOre) {
+		this.stromPrisPerOre = stromPrisPerOre;
+	}
+
+	
 }
