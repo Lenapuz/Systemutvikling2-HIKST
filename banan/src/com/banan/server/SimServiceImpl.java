@@ -10,6 +10,7 @@ import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.visualization.client.DataTable;
 import com.google.gwt.visualization.client.AbstractDataTable.ColumnType;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class SimServiceImpl extends RemoteServiceServlet implements SimService
 {
@@ -49,6 +50,8 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	
 	//Selve kalkuleringsmetoden
 	//Heatsource h;
+	
+	//Simuler 1 profil
 	public SimResult simulate(int profileID, int temperatur)
 	{		
 		ProfileServiceImpl psim = new ProfileServiceImpl();
@@ -149,6 +152,124 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 		return result;
 	}
 	
+	//Simuler flere profiler
+	//ikke testet enda men har chuck norris seal of approval
+	public SimResult[] simulate(int profileID[], int temperatur)
+	{		
+		ProfileServiceImpl psim = new ProfileServiceImpl();
+		Profile p;
+		ArrayList<Profile> profiler = new ArrayList<Profile>();
+		ArrayList<Heatsource> varmekilder = new ArrayList<Heatsource>();
+		ArrayList<SimResult> resultater = new ArrayList<SimResult>();
+		//private ArrayList list;
+		//= psim.getProfileByProfileId(profileID);
+		for(int i = 0;i<profileID.length;i++)
+		{
+			p = psim.getProfileByProfileId(profileID[i]);
+			profiler.add(p);
+			h = (Heatsource)hm.get(p.getPrimHeating().toLowerCase()); 
+			varmekilder.add(h);
+		}
+		
+		
+		
+		
+		//DEBUGGING
+		/*Object o = hm.get("varmepumpe");
+		System.out.println("object.class:" + o.getClass());
+		if(o == null)
+		{
+			System.out.println("varmepumpe returnerer null");
+		}*/
+		//System.out.println(o.toString());
+		//System.out.println("Primheating: " + p.getPrimHeating().toString());
+		//System.out.println("Primheating: " + Integer.parseInt(p.getPrimHeating()));
+		//System.out.println("fra p.getPrimHeating()");
+		//System.out.println("h.tostring inc");
+		System.out.println("h.toString(): "+ h.toString());
+		
+		
+		Integer[] resultat = new Integer[24];
+		double res = 0;
+		double sumOppvarmingsForbruk = 0;
+		double sumApparaterForbruk = 0;
+		
+		for(int j = 0;j<profiler.size();j++)
+		{
+			p = profiler.get(j);
+		
+			//I enne løkka gjøres simuleringen
+			for (int i = 0; i < 24; i++)
+			{
+				//Hvis hus størrelse er lik 0, ingen utregning
+				if (Integer.parseInt(p.getHouseSize()) == 0)
+				{
+					resultat[i] = 0;
+					res = 0;
+				} 
+				
+				else 
+				{		
+					//oppvarming
+					sumOppvarmingsForbruk += getOppvarmingsForbrukPerKvm(temperatur,Integer.parseInt(p.getBuildYear()));  //varmeforbrukperKVM mot varmetaphus
+					sumOppvarmingsForbruk *= varmekilder.get(j).getheatFactor(); //varmefaktor fra oppvarming
+					
+					
+					
+					/////////////////
+					
+					// Kan dette over være en vei å gå? if sjekker mot "noe" som man krysser av (som Aleks sa)?
+					
+					/*if ("helg")
+					{
+						sumOppvarmingsForbruk *= this.hourlyHeatingWeekend(i); 
+						sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+						
+						sumApparaterForbruk += this.hourlyPowerConsumptionWeekend(i, Integer.parseInt(p.getHouseResidents()));
+						sumApparaterForbruk *= gjsnittligForbrukApparater;
+					}
+					else
+					{
+						sumOppvarmingsForbruk *= this.hourlyHeating(i);
+						sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize());
+						
+						sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	
+						sumApparaterForbruk *= gjsnittligForbrukApparater; 
+					}
+					res+= sumOppvarmingsForbruk;
+					res+= sumApparaterForbruk;*/
+					
+					
+					//////////////////
+					
+					sumOppvarmingsForbruk *= this.hourlyHeating(i); // Endringer i oppvarming gjennom døgnet
+					sumOppvarmingsForbruk *= Integer.parseInt(p.getHouseSize()); // kvm
+					
+					//andre strømforbrukende artikler
+					sumApparaterForbruk += this.hourlyPowerConsumption(i, Integer.parseInt(p.getHouseResidents()));	// Endringer i lys og el.app. bruk gjennom døgnet 
+					sumApparaterForbruk *= gjsnittligForbrukApparater; // forklaring se "hourlyPowerConsumption"  
+					
+					//summerer alt som resultat
+					res+= sumOppvarmingsForbruk;
+					res+= sumApparaterForbruk;
+					
+					
+					resultat[i] = (int)res;
+					sumApparaterForbruk = 0;
+					sumOppvarmingsForbruk = 0;
+					res = 0;	
+				}		
+					
+			}		
+		
+		SimResult result = new SimResult(0,p.getID(),resultat);	
+		
+		this.registerSimResult(result);
+		resultater.add(result);
+		
+		}
+		return resultater.toArray(new SimResult[resultater.size()]);
+	}
 	
 	public static int tempToCelsius(int tempKelvin)
 	{
