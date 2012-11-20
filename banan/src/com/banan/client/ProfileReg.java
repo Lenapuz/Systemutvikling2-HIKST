@@ -2,11 +2,13 @@ package com.banan.client;
 
 import java.util.ArrayList;
 
+
 import com.banan.shared.Profile;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+
 /***
  * Classe for skjemabiten for � registrere profil. denne vil da bli brukt p� annen m�te!
  * men utgangspunktet er der � kan endres p�.
@@ -48,7 +50,10 @@ public class ProfileReg extends Composite {
     
     
 	
-    //Constructor
+  
+    /***
+     * Konstructør som Definerer div elementer-
+     */
 	public ProfileReg(){
 		
 		panel = new VerticalPanel();
@@ -341,6 +346,7 @@ public class ProfileReg extends Composite {
 		return textBoxEmailAdresse.getText();
 	}*/
 	
+
 	public String getHouseResidents()
 	{
 		return textBoxHouseResidents.getText();
@@ -374,6 +380,10 @@ public class ProfileReg extends Composite {
 		return listBoxIsolated.getItemText(listBoxIsolated.getSelectedIndex());
 	}
 	
+	/**
+	 * Brukes for og legge til en profil i handler Arraylist
+	 * @param handler
+	 */
 	public void addProfileHandler(ActionHandler handler)
 	{
 		profilHandlers.add(handler);
@@ -392,6 +402,11 @@ public class ProfileReg extends Composite {
 		return null;
 	}
 	
+	/**
+	 * Brukes for og hente ut data til profilAdmin
+	 * {@link profilAdmin}
+	 * @param p
+	 */
 	public void setData(Profile p){
 		
 		textBoxName.setText(p.getName());
