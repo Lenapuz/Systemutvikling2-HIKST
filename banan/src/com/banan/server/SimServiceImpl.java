@@ -727,7 +727,37 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			db.disconnect();
 		}
 	}
-
+	public int GetSimResultNumberByProfileId(int profile_id) throws IllegalArgumentException 
+	{
+		try
+		{		
+			this.db.connect();
+			Statement statement = db.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM result WHERE profil_id='" + profile_id +"'");
+			
+			int results = 0;
+			
+			while (result.next())
+			{
+				results++;
+			}
+			
+						
+			
+			
+			return results;
+			
+		}
+		catch(Exception ex)
+		{
+			return 0;
+		}
+		finally
+		{
+			db.disconnect();
+		}
+	}
+	
 	//støttemetoder
 	
 	//denne må fikses
@@ -770,22 +800,24 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//arvid debugging
 	static Heatsource h = new Heatsource(0, "Varmepumpe", 0.90);
 	
-	/*public static void main(String[] args)
+	public static void main(String[] args)
 	{
 		int[] profiler = new int[3];
 		profiler[0] = 74;
 		profiler[1] = 46;
 		profiler[2] = 43;
-				
+		/*		
 		SimServiceImpl s = new SimServiceImpl();
 		//s.simulate(74, 20);
-		SimResult[] resultater = s.simulate(profiler, 0,3);
+		//SimResult[] resultater = s.simulate(profiler, 0,3);
 		for(int i = 0;i < resultater.length;i++)
 		{
 			System.out.println(resultater[i]);
 		}
-		
-	}*/
+		*/
+		SimServiceImpl s = new SimServiceImpl();
+		System.out.println(s.GetSimResultNumberByProfileId(profiler[2]));
+	}
 
 	public double getTotalForbrukKwh() {
 		return totalForbrukKwh;
