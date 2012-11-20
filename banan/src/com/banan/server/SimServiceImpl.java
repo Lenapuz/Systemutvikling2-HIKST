@@ -276,7 +276,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	
 	//for å simulere flere profiler mer enn ett døgn
 	//bruk denne uansett fra nå av
-	public SimResult[] simulate(int profileID[], int temperatur,int dager)
+	public SimResult simulate(int profileID[], int temperatur, int dager)
 	{		
 		if(dager == 0)
 		{
@@ -403,7 +403,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			System.out.println("ADDED SIMRESULT**"+ result.toString());
 		
 		}
-		return resultater.toArray(new SimResult[resultater.size()]);
+		return resultater.get(0);
 	}
 	
 	
@@ -770,7 +770,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	//arvid debugging
 	static Heatsource h = new Heatsource(0, "Varmepumpe", 0.90);
 	
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		int[] profiler = new int[3];
 		profiler[0] = 74;
@@ -785,7 +785,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 			System.out.println(resultater[i]);
 		}
 		
-	}
+	}*/
 
 	public double getTotalForbrukKwh() {
 		return totalForbrukKwh;
@@ -810,6 +810,4 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	public void setStromPrisPerOre(double stromPrisPerOre) {
 		this.stromPrisPerOre = stromPrisPerOre;
 	}
-
-	
 }

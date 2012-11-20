@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("sim")
 public interface SimService extends RemoteService
 {
-	SimResult simulate(int profileID, int temperatur);
+	SimResult simulate(int profileID[], int temperatur, int dager);
 	SimResult[] GetSimResultByProfileId(int profileID);
 	void purgeIt();
 }

@@ -40,6 +40,14 @@ public class ProfileList extends Composite {
 					labelTemp.addStyleName("profilelist_bar_item");
 					textBoxTemp.addStyleName("profilelist_bar_item");
 					
+					Label labelDays = new Label("Dager");
+					
+					final TextBox textBoxDays = new TextBox();
+					textBoxDays.setWidth("50px");
+					
+					textBoxDays.addStyleName("profilelist_bar_item");
+					labelDays.addStyleName("profilelist_bar_item");
+					
 					Button buttonEmpty = new Button("Tøm han!");
 					buttonEmpty.addClickHandler(new ClickHandler() {
 						public void onClick(ClickEvent event) {
@@ -66,6 +74,8 @@ public class ProfileList extends Composite {
 					hp.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 					hp.add(labelTemp);
 					hp.add(textBoxTemp);
+					hp.add(labelDays);
+					hp.add(textBoxDays);
 					hp.add(buttonEmpty);
 					fp.add(hp);
 					VerticalPanel herp = new VerticalPanel();
@@ -94,13 +104,16 @@ public class ProfileList extends Composite {
 								Element target = Element.as(event.getNativeEvent().getEventTarget());
 								if (newSim.isOrHasChild(target)) {
 									int temp = 0;
+									int days = 1;
+									
 									try {
 										temp = Integer.parseInt(textBoxTemp.getText());
+										days = Integer.parseInt(textBoxDays.getText());
 									}
 									catch (Exception e) {
 									}
 									
-									Main.SimService.simulate(p.getID(), temp, new AsyncCallback<SimResult>() {
+									Main.SimService.simulate(new int[] { p.getID() }, temp, days, new AsyncCallback<SimResult>() {
 
 										@Override
 										public void onFailure(Throwable caught) {
@@ -177,14 +190,18 @@ public class ProfileList extends Composite {
 		for (int j = 0; j < results.length; j++) {
 			data.addColumn(ColumnType.NUMBER, "ID: " + results[j].getId());
 		}
-		
-		data.addRows(24);
-		for (int i = 0; i < 24; i++) {
+		int max = 0;
+		for (int i = 0; i < results.length; i++) {
+			if (results[i].getData().length > max)
+				max = results[i].getData().length;
+		}
+		data.addRows(max);
+		for (int i = 0; i < max; i++) {
 			data.setValue(i, 0, i + ":00");
 		}
 		
 		for (int j = 0; j < results.length; j++) {
-			for (int i = 0; i < 24; i++) {
+			for (int i = 0; i < results[j].getData().length; i++) {
 				data.setValue(i, j + 1, results[j].getData()[i]);
 			}
 		}
