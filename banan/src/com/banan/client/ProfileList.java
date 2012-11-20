@@ -33,8 +33,9 @@ public class ProfileList extends Composite {
 					FlowPanel fp = new FlowPanel();
 					fp.addStyleName("profilelist_bar");
 					
-					Label labelTemp = new Label("Temperatur");
+					Label labelTemp = new Label("Temperatur");					
 					final TextBox textBoxTemp = new TextBox();
+					textBoxTemp.setText("23");
 					textBoxTemp.setWidth("50px");
 					
 					labelTemp.addStyleName("profilelist_bar_item");
@@ -43,6 +44,7 @@ public class ProfileList extends Composite {
 					Label labelDays = new Label("Dager");
 					
 					final TextBox textBoxDays = new TextBox();
+					textBoxDays.setText("1");
 					textBoxDays.setWidth("50px");
 					
 					textBoxDays.addStyleName("profilelist_bar_item");
