@@ -88,17 +88,27 @@ public class SimulationGraphics extends Composite {
 	public void shoveData(DataTable table)
 	{
 		String r = "<div style=\"margin: 20px 30px; margin-top: 0px;\"><div class=\"clearfix\"><h1>Rapport</h1>";	
-		int total = 0;
-		for (int i = 0; i < 24; i++)
+		
+		
+		for (int j = 1; j < table.getNumberOfColumns(); j++)
 		{
-			int f = table.getValueInt(i, 1);
-			total += f;
-			r += "<div class=\"rapport_item\">" +
-					"<p>" + i +":00</p>" +
-					"<p class=\"rapport_kw\">" + f + "kW</p>" +
-				 "</div>";
+			int total = 0;
+			r += "<h2 style=\"margin-left:5px;\">" + table.getColumnLabel(j) + "</h2>";
+			for (int i = 0; i < table.getNumberOfRows(); i++)
+			{
+				try {
+					int f = table.getValueInt(i, j);
+					total += f;
+					r += "<div class=\"rapport_item\">" +
+							"<p>" + i +":00</p>" +
+							"<p class=\"rapport_kw\">" + f + "kW</p>" +
+						 "</div>";
+				} catch(Exception e) { }
+			}
+			r += "<p class=\"rapport_summary\">Totalt: <b>" + total + " kWh</b></p>";
+
 		}
-		r += "</div><p class=\"rapport_summary\">Totalt: <b>" + total + " kWh</b></p></div>";
+		r += "</div></div>";
 		rapport.setHTML(r);
 		chart.draw(table, chartOptions);
 	}
