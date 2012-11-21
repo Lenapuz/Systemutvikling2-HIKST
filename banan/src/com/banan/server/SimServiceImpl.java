@@ -27,7 +27,7 @@ public class SimServiceImpl extends RemoteServiceServlet implements SimService
 	private static final double varmeBehovVedNullGraderKonstant = 25.9259;
 	
 		
-	private double totalForbrukKwh =0;
+	private double totalForbrukKwh = 0;
 	private double totalForbrukKroner = 0;
 	private double stromPrisPerOre = 35.20;
 	
